@@ -18,7 +18,6 @@ public class Tank : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         //calculate new position and rotation values 
