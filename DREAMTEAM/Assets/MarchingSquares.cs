@@ -20,6 +20,7 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField][Range(0.01f, 0.4f)] private float noiseScale = 0.1f;
     [SerializeField][Range(0.05f, 2f)] private float gridResolution = 1f;
     [SerializeField][Range(0f, 1f)] private float heightThreshold = 0.5f;
+    [SerializeField][Range(0f, 15)] private int BorderSize = 1;
 
     [SerializeField] private int Seed = 0;
 
@@ -34,6 +35,21 @@ public class MarchingSquares : MonoBehaviour
     //Using lists allows us to have dynamic grid sizes
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
+
+    //This dictionary will return a list of triangles cointined for a single point (Thats why we have a V3 key)
+    private Dictionary<Vector3, List<Triangle>> vertexToTriangles = new Dictionary<Vector3, List<Triangle>>();
+
+    struct Triangle
+    {
+        public int v1, v2, v3;
+
+        public Triangle(int V1, int V2, int V3)
+        {
+            v1 = V1;
+            v2 = V2;
+            v3 = V3;
+        }
+    }
 
     private void Start()
     {
@@ -63,14 +79,14 @@ public class MarchingSquares : MonoBehaviour
         {
             for (int y = 0; y <= gridSizeY; y++)
             {
-                //These values represent the edges of the board and all should be 1 to delimit the playing space
-                if (x == 0 || x == gridSizeX || y == 0 || y == gridSizeY)
+                //These values represent the edges of the board plus the border size and all should be 1 to delimit the playing space
+                if (x <= BorderSize || x >= gridSizeX - BorderSize || y <= BorderSize || y >= gridSizeY - BorderSize)
                 {
                     heightMap[x, y] = 1;
                 }
                 else
                 {
-                    heightMap[x, y] = Mathf.PerlinNoise(x * noiseScale + seedx, y * noiseScale + seedy); //Z offset allows us to move through the image
+                    heightMap[x, y] = Mathf.PerlinNoise(x * noiseScale + seedx, y * noiseScale + seedy); //add the seed values to randomize nosie position  
                 }
             }
         }
@@ -198,6 +214,19 @@ public class MarchingSquares : MonoBehaviour
                 triangles.Add(triangle + vertexCount);
             }
         }
+    }
+
+    //This function adds triangles to the dictionry
+    private void AddTriangleToVertex(Vector3 vertex, Triangle triangle)
+    {
+        //If its the first time we encounter this key
+        if (!vertexToTriangles.ContainsKey(vertex))
+        {
+            //create a new list for the key
+            vertexToTriangles[vertex] = new List<Triangle>();
+        }
+        //add the triangle to the assaciated key list
+        vertexToTriangles[vertex].Add(triangle);
     }
 
     private void CreateMesh()
