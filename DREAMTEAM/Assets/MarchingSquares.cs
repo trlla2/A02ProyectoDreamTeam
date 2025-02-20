@@ -36,6 +36,21 @@ public class MarchingSquares : MonoBehaviour
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
 
+    //This dictionary will return a list of triangles cointined for a single point (Thats why we have a V3 key)
+    private Dictionary<Vector3, List<Triangle>> vertexToTriangles = new Dictionary<Vector3, List<Triangle>>();
+
+    struct Triangle
+    {
+        public int v1, v2, v3;
+
+        public Triangle(int V1, int V2, int V3)
+        {
+            v1 = V1;
+            v2 = V2;
+            v3 = V3;
+        }
+    }
+
     private void Start()
     {
         UpdateGrid();
@@ -199,6 +214,19 @@ public class MarchingSquares : MonoBehaviour
                 triangles.Add(triangle + vertexCount);
             }
         }
+    }
+
+    //This function adds triangles to the dictionry
+    private void AddTriangleToVertex(Vector3 vertex, Triangle triangle)
+    {
+        //If its the first time we encounter this key
+        if (!vertexToTriangles.ContainsKey(vertex))
+        {
+            //create a new list for the key
+            vertexToTriangles[vertex] = new List<Triangle>();
+        }
+        //add the triangle to the assaciated key list
+        vertexToTriangles[vertex].Add(triangle);
     }
 
     private void CreateMesh()
