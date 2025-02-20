@@ -20,6 +20,7 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField][Range(0.01f, 0.4f)] private float noiseScale = 0.1f;
     [SerializeField][Range(0.05f, 2f)] private float gridResolution = 1f;
     [SerializeField][Range(0f, 1f)] private float heightThreshold = 0.5f;
+    [SerializeField][Range(0f, 15)] private int BorderSize = 1;
 
     [SerializeField] private int Seed = 0;
 
@@ -63,14 +64,14 @@ public class MarchingSquares : MonoBehaviour
         {
             for (int y = 0; y <= gridSizeY; y++)
             {
-                //These values represent the edges of the board and all should be 1 to delimit the playing space
-                if (x == 0 || x == gridSizeX || y == 0 || y == gridSizeY)
+                //These values represent the edges of the board plus the border size and all should be 1 to delimit the playing space
+                if (x <= BorderSize || x >= gridSizeX - BorderSize || y <= BorderSize || y >= gridSizeY - BorderSize)
                 {
                     heightMap[x, y] = 1;
                 }
                 else
                 {
-                    heightMap[x, y] = Mathf.PerlinNoise(x * noiseScale + seedx, y * noiseScale + seedy); //Z offset allows us to move through the image
+                    heightMap[x, y] = Mathf.PerlinNoise(x * noiseScale + seedx, y * noiseScale + seedy); //add the seed values to randomize nosie position  
                 }
             }
         }
