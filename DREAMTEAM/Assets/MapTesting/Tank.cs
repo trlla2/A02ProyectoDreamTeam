@@ -25,6 +25,6 @@ public class Tank : MonoBehaviour
         rotation += Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed * 100.0f;
         //aply
         rb.velocity = transform.up * VerticalVel;
-        rb.transform.rotation = Quaternion.Euler(0,0, -rotation);
+        rb.transform.rotation = Quaternion.Euler(0,0, rb.transform.rotation.z + rotation);
     }
 }

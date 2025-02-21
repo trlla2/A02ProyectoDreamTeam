@@ -244,13 +244,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1607c87ae493e34c88161fe30ea1356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tank1: {fileID: 476123034109462582, guid: 5a0675d107cab9a4f9f6907d5a1c2536, type: 3}
-  tank2: {fileID: 7714318057708041154, guid: c1bf6a1ff4fcc724b8859ce81aa93cc2, type: 3}
+  tank1: {fileID: 8358943600120684580, guid: d2995a3119a7b574498b74419e890474, type: 3}
+  tank2: {fileID: 8358943600120684580, guid: d2995a3119a7b574498b74419e890474, type: 3}
   player1Points: 0
   player2Points: 0
   pointsForDeath: 100
   isAliveTank1: 0
   isAliveTank2: 0
+  rotationOffset: -90
 --- !u!4 &1095170220
 Transform:
   m_ObjectHideFlags: 0
