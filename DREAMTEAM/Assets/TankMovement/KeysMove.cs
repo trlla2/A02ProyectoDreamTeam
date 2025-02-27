@@ -2,7 +2,7 @@ using UnityEngine;
 
 //No se si este codigo sera el final, solo es para tener algo que se mueva
 [RequireComponent(typeof(Rigidbody2D))]
-public class WASDMove : MonoBehaviour
+public class KeysMove : MonoBehaviour
 {
     [SerializeField]
     private float speed;
@@ -27,8 +27,8 @@ public class WASDMove : MonoBehaviour
     {
         rb.velocity = new Vector2(movementX * speed * Time.deltaTime, movementY * speed + Time.deltaTime);
 
-        float horizontalInput = Input.GetAxisRaw("HorizontalAD");
-        float verticalInput = Input.GetAxisRaw("VerticalWS");
+        float horizontalInput = Input.GetAxisRaw("HorizontalKeys");
+        float verticalInput = Input.GetAxisRaw("VerticalKeys");
 
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
         float inputMagnitude = Mathf.Clamp01(movementDirection.magnitude);
