@@ -29,7 +29,7 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField] private bool drawGizmos = true;
 
     private MeshFilter meshFilter;
-    private EdgeCollider2D edgeCollider;
+    private PolygonCollider2D polygonCollider;
 
     private float[,] heightMap; //float array where we'll store perlin noise values
 
@@ -68,11 +68,11 @@ public class MarchingSquares : MonoBehaviour
     public void UpdateGrid()
     {
         meshFilter = GetComponent<MeshFilter>();
-        edgeCollider = GetComponent<EdgeCollider2D>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
         GenerateHeightMap(Seed);
         MarchSquares();
         CreateMesh();
-        UpdateEdgeCollider();
+        UpdatePolygonCollider();
     }
 
     private void GenerateHeightMap(int seed)
@@ -144,8 +144,7 @@ public class MarchingSquares : MonoBehaviour
         //provides us with it
         switch (configuration)
         {
-            case 0:
-                return;
+            case 0: break;
             case 1:
                 localVertices = new Vector3[] { new Vector3(0, 1f), new Vector3(0, 0.5f), new Vector3(0.5f, 1) };
                 localTriangles = new int[] { 2, 1, 0 };
@@ -214,6 +213,9 @@ public class MarchingSquares : MonoBehaviour
             foreach (Vector3 vert in localVertices)
             {
                 Vector3 newVert = new Vector3((vert.x + offsetX) * gridResolution, (vert.y + offsetY) * gridResolution, 0);
+                //Round up to 3 decimal places to avoid precision errors
+                newVert.x = Mathf.Round(newVert.x * 1000) / 1000;
+                newVert.y = Mathf.Round(newVert.y * 1000) / 1000;
                 vertices.Add(newVert);
             }
             // Add the local triangles to the global triangles list, adjusting for vertex count
@@ -245,94 +247,124 @@ public class MarchingSquares : MonoBehaviour
         vertexToTriangles[vertex].Add(triangle);
     }
 
-    private void UpdateEdgeCollider()
+    private void UpdatePolygonCollider()
     {
         outlines.Clear();
         processedVertices.Clear();
-        edgeCollider.points = new Vector2[0];
+        polygonCollider.points = null;
 
-        // Iterate through all vertices
+        //We'll use this to define the ammount of paths there are in the map 
+        polygonCollider.pathCount = 0;
+
+        //Find all potential outlines in the mesh by going thru all vertices that have not already been procesed
         for (int i = 0; i < vertices.Count; i++)
         {
-            // Skip if the vertex has already been processed, continue means move to the next i value without executing the remaining code
-            if (processedVertices.Contains(i)) continue;
-
-            // Start a new outline
-            List<int> newOutline = new List<int>();
-            FindOutline(i, processedVertices, newOutline);
-
-            // Add the new outline to the list of outlines
-            if (newOutline.Count > 0)
+            if (!processedVertices.Contains(i))
             {
-                outlines.Add(newOutline);
+                //cerate a new outline
+                List<int> newOutline = new List<int>();
+
+                FindOutline(i, newOutline);
+
+                if (newOutline.Count > 0)
+                {
+                    outlines.Add(newOutline);
+                }
             }
         }
 
-        List<Vector2> edges = new List<Vector2>();
-
+        //Filter out unwanted colliders
+        List<List<int>> validOutlines = new List<List<int>>();
         foreach (var outline in outlines)
         {
-            for (int i = 0; i < outline.Count; i++)
+            bool isValidOutline = true;
+
+            // Check if outline is part of map border
+            foreach (int vertexIndex in outline)
             {
-                int vertexIndex = outline[i];
-                edges.Add(new Vector2(vertices[vertexIndex].x, vertices[vertexIndex].y));
+                Vector3 vertex = vertices[vertexIndex];
+
+                // Calculate original grid position
+                float originalX = vertex.x / gridResolution;
+                float originalY = vertex.y / gridResolution;
+
+                // Check if vertex is within border area
+                if (originalX < BorderSize || originalX > gridSizeX - BorderSize ||
+                    originalY < BorderSize || originalY > gridSizeY - BorderSize)
+                {
+                    isValidOutline = false;
+                    break;
+                }
             }
-            edgeCollider.points = edges.ToArray();
+            if (isValidOutline)
+            {
+                validOutlines.Add(outline);
+            }
+        }
+        //Set the path number to the outlines ammount
+        polygonCollider.pathCount = validOutlines.Count;
+
+        //Apply filtered outlines to polygon collider
+        for (int i = 0; i < validOutlines.Count; i++)
+        {
+            List<Vector2> path = new List<Vector2>();
+            foreach (int j in validOutlines[i]) 
+            {
+                path.Add(new Vector2(vertices[j].x, vertices[j].y));
+            }
+
+            // Ensure closed loop
+            if (path.Count > 0 && path[0] != path[path.Count - 1])
+            {
+                path.Add(path[0]);
+            }
+
+            polygonCollider.SetPath(i, path.ToArray());
         }
     }
     //Trace a single outline starting form a givn vertex
-    private void FindOutline(int startVertex, HashSet<int> processedVertices, List<int> outline)
+    private void FindOutline(int startVertex, List<int> outline)
     {
         int currentVertex = startVertex;
-        int nextVertex = -1; // assing -1 for the moment so we can detect errors
 
-        do
+        outline.Add(currentVertex);
+        processedVertices.Add(currentVertex);
+
+        while (true)
         {
-            outline.Add(currentVertex); // Add the current vertex to the outline
-            processedVertices.Add(currentVertex); //Add the current vertex to the hashset so we dont iterate thru it again
+            int nextVertex = -1; 
+            List<Triangle> triangles = vertexToTriangles[vertices[currentVertex]];
 
-            // Find the next vertex in the outline
-            nextVertex = FindNextOutlineVertex(currentVertex, processedVertices);
-            currentVertex = nextVertex;
-
-        } while (currentVertex != startVertex && currentVertex != -1); // do until the next vertex is the start vertex (complete circuit) or there's no next vertex
-
-        // Close the loop
-        if (currentVertex == startVertex)
-        {
-            outline.Add(startVertex);
-        }
-    }
-
-    private int FindNextOutlineVertex(int currentVertex, HashSet<int> processedVertices)
-    {
-        // Get all triangles from the dictionary that include the current vertex
-        List<Triangle> connectedTriangles = vertexToTriangles[vertices[currentVertex]];
-
-        // Iterate through the edges of the connected triangles
-        foreach (Triangle triangle in connectedTriangles)
-        {
-            // Get triangle edges and store them in an array
-            int[] edgeVertices = new int[] { triangle.v1, triangle.v2, triangle.v3 };
-
-            for (int i = 0; i < 3; i++)
+            // Check all triangles containing the current vertex
+            foreach (Triangle tri in triangles)
             {
-                int v1 = edgeVertices[i];
-                int v2 = edgeVertices[(i + 1) % 3]; // round up the index (so if i+1 = 3 it'll be converted to 0)
+                int[] edges = { tri.v1, tri.v2, tri.v3 };
 
-                // Check if the Edge(form v1 to v2) is part of the outline and has not been procesed
-                if (v1 == currentVertex && IsEdgeUnique(v1, v2) && !processedVertices.Contains(v2))
+                // Check each edge connection
+                for (int i = 0; i < 3; i++)
                 {
-                    return v2;
+                    // Get adjacent vertex round up to not exeed i
+                    int adj = edges[(i + 1) % 3];
+
+                    //If we find an adjecent vertex that forms a unique edge for unly one triangle (so it defines the outline) and has not been processed yet
+                    if (edges[i] == currentVertex && IsEdgeUnique(edges[i], adj) && !processedVertices.Contains(adj))
+                    {
+                        nextVertex = adj; // Found valid next vertex
+                        break;
+                    }
                 }
-                if (v2 == currentVertex && IsEdgeUnique(v2, v1) && !processedVertices.Contains(v1))
-                {
-                    return v1;
-                }
+                if (nextVertex != -1) break; // Exit early if path found
             }
+
+            // if No next vertex found (dead end) or the Next vertex is the start vertex (loop completed)
+            if (nextVertex == -1 || nextVertex == startVertex) break;
+
+            // Add next vertex to outline and mark as processed
+            outline.Add(nextVertex);
+            processedVertices.Add(nextVertex);
+
+            currentVertex = nextVertex; // Move to next vertex
         }
-        // No next vertex found
-        return -1;
     }
 
     //This function checks if a specific edge is only contained in one triangle
