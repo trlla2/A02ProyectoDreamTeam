@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//No se si este codigo sera el final, solo es para tener algo que se mueva
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class WASDMove : MonoBehaviour
 {
@@ -12,7 +12,8 @@ public class WASDMove : MonoBehaviour
     private Rigidbody2D rb;
 
     //kinda wish this wasnt here but couldn't think of another way
-    //float rotation = 0;
+
+    float rotation = 0;
 
     float movementX;
     float movementY;
@@ -25,6 +26,12 @@ public class WASDMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        //calculate new position and rotation values 
+        float VerticalVel = Input.GetAxis("VerticalWASD") * Time.deltaTime * speed * 100.0f;
+        rotation += Input.GetAxis("HorizontalWASD") * Time.deltaTime * RotationSpeed * 100.0f;
+        //aply
+        rb.velocity = transform.up * VerticalVel;
+        rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
         rb.velocity = new Vector2(movementX * speed * Time.deltaTime, movementY * speed + Time.deltaTime);
 
         float horizontalInput = Input.GetAxisRaw("HorizontalAD");
