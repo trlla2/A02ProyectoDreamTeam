@@ -1,11 +1,8 @@
 using UnityEngine;
 
-<<<<<<< HEAD
-=======
 //No se si este codigo sera el final, solo es para tener algo que se mueva
->>>>>>> origin/Tanques
 [RequireComponent(typeof(Rigidbody2D))]
-public class WASDMove : MonoBehaviour
+public class KeysMove : MonoBehaviour
 {
     [SerializeField]
     private float speed;
@@ -15,12 +12,6 @@ public class WASDMove : MonoBehaviour
     private Rigidbody2D rb;
 
     //kinda wish this wasnt here but couldn't think of another way
-<<<<<<< HEAD
-    float rotation = 0;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-=======
     //float rotation = 0;
 
     float movementX;
@@ -30,23 +21,14 @@ public class WASDMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         movementX = 0;
         movementY = 0;
->>>>>>> origin/Tanques
     }
 
     void FixedUpdate()
     {
-<<<<<<< HEAD
-        //calculate new position and rotation values 
-        float VerticalVel = Input.GetAxis("VerticalWASD") * Time.deltaTime * speed * 100.0f;
-        rotation += Input.GetAxis("HorizontalWASD") * Time.deltaTime * RotationSpeed * 100.0f;
-        //aply
-        rb.velocity = transform.up * VerticalVel;
-        rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
-=======
         rb.velocity = new Vector2(movementX * speed * Time.deltaTime, movementY * speed + Time.deltaTime);
 
-        float horizontalInput = Input.GetAxisRaw("HorizontalAD");
-        float verticalInput = Input.GetAxisRaw("VerticalWS");
+        float horizontalInput = Input.GetAxisRaw("HorizontalKeys");
+        float verticalInput = Input.GetAxisRaw("VerticalKeys");
 
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
         float inputMagnitude = Mathf.Clamp01(movementDirection.magnitude);
@@ -81,6 +63,5 @@ public class WASDMove : MonoBehaviour
         //{
         //    movementY = 0;
         //}
->>>>>>> origin/Tanques
     }
 }
