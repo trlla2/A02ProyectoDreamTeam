@@ -2,7 +2,7 @@ using UnityEngine;
 
 //No se si este codigo sera el final, solo es para tener algo que se mueva
 [RequireComponent(typeof(Rigidbody2D))]
-public class Movement : MonoBehaviour
+public class TankMovement : MonoBehaviour
 {
     [SerializeField]
     private float speed;
