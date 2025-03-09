@@ -21,8 +21,8 @@ public class Tank : MonoBehaviour
     void FixedUpdate()
     {
         //calculate new position and rotation values 
-        float VerticalVel = Input.GetAxis("Vertical") * Time.deltaTime * speed * 100.0f;
-        rotation += Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed * 100.0f;
+        float VerticalVel = Input.GetAxis("VerticalArrows") * Time.deltaTime * speed * 100.0f;
+        rotation += Input.GetAxis("HorizontalArrows") * Time.deltaTime * RotationSpeed * 100.0f;
         //aply
         rb.velocity = transform.up * VerticalVel;
         rb.transform.rotation = Quaternion.Euler(0,0, rb.transform.rotation.z + rotation);
