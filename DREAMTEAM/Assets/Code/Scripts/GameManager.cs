@@ -66,16 +66,25 @@ public class GameManager : MonoBehaviour
 
         //spawn tanks
 
+        // set tanks Inputs
+        temp1.GetComponent<TankMovement>().SetPlayer1();
+        temp2.GetComponent<TankMovement>().SetPlayer2();
+
 
         //------------------------------------START GAME
     }
 
     public void GetTank1IsDead()
     {
+        player2Points += pointsForDeath;
 
+        Debug.Log("p2: " + player2Points);
     }
     public void GetTank2IsDead()
     {
+        player1Points += pointsForDeath;
+
+        Debug.Log("p1: " + player1Points);
 
     }
 }
