@@ -1,6 +1,8 @@
-using Unity.VisualScripting;
+using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour 
 {
@@ -25,9 +27,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
 
-    [Header("Tank stuff")]
-    [SerializeField] private bool isAliveTank1 = false;
-    [SerializeField] private bool isAliveTank2 = false;
+    [Header("Load Scene Stuff")]
+    [SerializeField] private List<string> biomesMaps;
+
+    //[Header("Tank stuff")]
+    //[SerializeField] private bool isAliveTank1 = false;
+    //[SerializeField] private bool isAliveTank2 = false;
+
+    private static bool endGame = false;
 
     public float rotationOffset = -90f;
 
@@ -36,6 +43,21 @@ public class GameManager : MonoBehaviour
         GetSpawnLocation(new Vector3(0,0,0), new Vector3(0,0,0)); //DEBUG
     }
 
+    private void Update()
+    {
+  
+        if (endGame && Input.GetKeyDown("x")) { 
+            endGame = false;
+
+            // Random between all biomes maps
+            int nextMap = Random.Range(0, biomesMaps.Count - 1);
+
+            SceneManager.LoadScene(biomesMaps[nextMap]);
+        }
+
+       
+
+    }
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
@@ -76,15 +98,27 @@ public class GameManager : MonoBehaviour
 
     public void GetTank1IsDead()
     {
-        player2Points += pointsForDeath;
+        player2Points += pointsForDeath; // add points
 
         Debug.Log("p2: " + player2Points);
+
+        EndGame();// end game function
     }
     public void GetTank2IsDead()
     {
-        player1Points += pointsForDeath;
+        player1Points += pointsForDeath; // add poitns
 
         Debug.Log("p1: " + player1Points);
 
+        EndGame(); // end game function
     }
+
+    private void EndGame()
+    {
+        // show for UI game ended
+
+        Debug.Log("Pres x to continue");
+
+        endGame = true; // set gameend true
+    } 
 }
