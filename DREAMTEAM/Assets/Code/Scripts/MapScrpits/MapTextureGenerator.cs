@@ -6,7 +6,7 @@ public class DepthTileBand
 {
     public float minHeight;
     public float maxHeight;
-    public Tile[] tiles;
+    public UnityEngine.Tilemaps.Tile[] tiles;
 }
 
 public class MapTextureGenerator : MonoBehaviour
@@ -61,7 +61,7 @@ public class MapTextureGenerator : MonoBehaviour
         {
             if (height >= band.minHeight && height <= band.maxHeight)
             {
-                Tile selectedTile = band.tiles[Random.Range(0, band.tiles.Length)];
+                UnityEngine.Tilemaps.Tile selectedTile = band.tiles[Random.Range(0, band.tiles.Length)];
                 backgroundTilemap.SetTile(position, selectedTile);
                 break;
             }
