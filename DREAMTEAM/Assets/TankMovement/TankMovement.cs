@@ -43,4 +43,8 @@ public class TankMovement : MonoBehaviour
         rb.velocity = transform.up * VerticalVel;
         rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
     }
+
+
+    public void SetPlayer1() { player = 1;  }
+    public void SetPlayer2() { player = 2;  }
 }

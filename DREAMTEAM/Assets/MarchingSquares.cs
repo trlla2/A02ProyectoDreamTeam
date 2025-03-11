@@ -16,12 +16,12 @@ using UnityEngine;
 public class MarchingSquares : MonoBehaviour
 {
     [Header("Grid Settings")]
-    [SerializeField][Range(5, 500)] private int gridSizeX = 15;
-    [SerializeField][Range(5, 500)] private int gridSizeY = 15;
+    [Range(5, 500)] public int gridSizeX = 15;
+    [Range(5, 500)] public int gridSizeY = 15;
     [SerializeField][Range(0.01f, 0.4f)] private float noiseScale = 0.1f;
-    [SerializeField][Range(0.05f, 2f)] private float gridResolution = 1f;
+    [Range(0.05f, 2f)] public float gridResolution = 1f;
     [SerializeField][Range(0f, 1f)] private float heightThreshold = 0.5f;
-    [SerializeField][Range(0f, 15)] private int BorderSize = 1;
+    [SerializeField][Range(0f, 30)] private int BorderSize = 1;
 
     [SerializeField] private int Seed = 0;
 
@@ -31,7 +31,7 @@ public class MarchingSquares : MonoBehaviour
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
 
-    private float[,] heightMap; //float array where we'll store perlin noise values
+    public float[,] heightMap; //float array where we'll store perlin noise values
 
     //Using lists allows us to have dynamic grid sizes
     private List<Vector3> vertices = new List<Vector3>();
@@ -45,6 +45,8 @@ public class MarchingSquares : MonoBehaviour
 
     //We'll use this hashset to trak wich vertices we have already procesed, using hashsets makes it easier and faster to check contained members inside it
     HashSet<int> processedVertices = new HashSet<int>();
+
+    public MapTextureGenerator textureGenerator;
 
     struct Triangle
     {
@@ -73,6 +75,7 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
+        textureGenerator.Initial();
     }
 
     private void GenerateHeightMap(int seed)
@@ -113,7 +116,7 @@ public class MarchingSquares : MonoBehaviour
             {
                 //this floats represent the square vertecies and store the values for each one, we count the vertecies of a square 
                 //clock-wise (so top left is n1, top rigth is n2, bottom rigth is n3 and bottom left is n4) this is important because
-                //when creating meshes in unity triangles need to be inputed clockwise to determine the facin firection
+                //when creating meshes in unity triangles need to be inputed clockwise to determine the facin direction
                 float a = heightMap[x, y];
                 float b = heightMap[x + 1, y];
                 float c = heightMap[x + 1, y + 1];
@@ -373,14 +376,25 @@ public class MarchingSquares : MonoBehaviour
     {
         int count = 0;
         List<Triangle> trianglesContainingV1 = vertexToTriangles[vertices[v1]];
+        List<Triangle> trianglesContainingV2 = vertexToTriangles[vertices[v2]];
 
-        //Iterate thru the triangles in the dictionary
+        //Iterate thru the triangles in the dictionary associated to the V1 key
         foreach (Triangle triangle in trianglesContainingV1)
         {
             //check if the given vertices form an edge in any triangle
             if ((triangle.v1 == v1 && triangle.v2 == v2) ||
                 (triangle.v2 == v1 && triangle.v3 == v2) ||
                 (triangle.v3 == v1 && triangle.v1 == v2))
+            {
+                count++;
+            }
+        }
+        //same for the V2 key
+        foreach (Triangle triangle in trianglesContainingV2)
+        {
+            if ((triangle.v1 == v2 && triangle.v2 == v1) ||
+                (triangle.v2 == v2 && triangle.v3 == v1) ||
+                (triangle.v3 == v2 && triangle.v1 == v1))
             {
                 count++;
             }
