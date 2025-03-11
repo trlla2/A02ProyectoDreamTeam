@@ -115,7 +115,23 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: be093dec847cb3f409b48d7292878d96
+    name: VolumeBiomeInstrument
+  - guid: 365b21c1ca2142e478e691c945930858
+    name: VolumeEnemyInstrument
+  - guid: 1812807d0de22234989791558af012fb
+    name: VolumeFightMusic
+  - guid: aa15dd05508ac374181c969c7d2742b2
+    name: VolumeMaster
+  - guid: 8d9945a78a068fb4787957c7705510a5
+    name: VolumeMusic
+  - guid: 70f8ec3789493ad44b9905cbf0cdbc17
+    name: VolumePoweUpInstrument
+  - guid: c9227e1d18c50e543bc5b4da39e72fbe
+    name: VolumeSFX
+  - guid: c46577b1e9c597f49a5763e7f57bcdec
+    name: VolumeTimeEventInstrument
   m_AudioMixerGroupViews:
   - guids:
     - 82b6c1be2330d064b843bca770d89c67
