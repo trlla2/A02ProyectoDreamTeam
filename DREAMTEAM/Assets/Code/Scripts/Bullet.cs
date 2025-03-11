@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         {
             var contact = targetHit.GetContact(0); //seeks for contact
             Vector2 newDirection = Vector2.Reflect(contact.normal, rb.velocity.normalized); //calculate the direction of the bullet that it has to bounce
-            rb.velocity = newDirection * speed;
+            rb.velocity = newDirection.normalized * speed;
             bounceTime--; //minus bounce time until it destroys
         }
     }
