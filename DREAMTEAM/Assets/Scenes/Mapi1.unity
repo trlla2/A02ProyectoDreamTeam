@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 306644243}
   - component: {fileID: 306644242}
   - component: {fileID: 306644241}
+  - component: {fileID: 306644246}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306644240}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7ce64c821a22214ca277519a4e9927a, type: 3}
   m_Name: 
@@ -295,6 +296,7 @@ Transform:
   m_Children:
   - {fileID: 1916465138}
   - {fileID: 1888001963}
+  - {fileID: 1946394547}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27030,6 +27032,10 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194540632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99bf62e45ad774247a09152cffccf1c6, type: 3}
   m_Name: 
   serializedVersion: 11
   m_SubMeshes:
