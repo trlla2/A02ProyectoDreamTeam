@@ -10,27 +10,13 @@ public class Bullet : MonoBehaviour
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public float bounceTime = 3f;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-
-    }
-
     void Start()
     {
         rb.velocity = transform.up * speed; //give direction to bullet when initiate
     }
 
-    private void FixedUpdate()
-    {
-        Debug.Log(rb.IsAwake());
-
-        //Debug.Log(rb.velocity);
-    }
-
     private void OnCollisionEnter2D (Collision2D targetHit)
     {
-        Debug.Log ("Impacto");
         if (bounceTime <= 0f)
         {
             Destroy(gameObject); //if bounce times is 0, destroy the bullet
