@@ -5,19 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PowerUps/TripleShot")]
 public class TripleShot : PowerUpEffect
 {
-    public Transform firePoint;
-    public GameObject bulletSprite;
+    [SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
 
-    [SerializeField] float spreadAngle = 15f;
     public override void Apply(GameObject target)
     {
-        target.GetComponent<Bullet>();
-        for (int i = 0; i < 3; i++)
-        {
-            target = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-            target.transform.SetParent(firePoint);
-            target.transform.Rotate(0f, spreadAngle * (i - 1), 0f);
+        Weapon weapon = target.GetComponent<Weapon>();
 
+        if (weapon == null)
+        {
+            Debug.LogWarning("El objeto objetivo no tiene un componente Weapon.");
+            return;
         }
+
+        weapon.ActivateTripleShot(powerUpDuration);  // Activa el Power-Up en Weapon
     }
 }
