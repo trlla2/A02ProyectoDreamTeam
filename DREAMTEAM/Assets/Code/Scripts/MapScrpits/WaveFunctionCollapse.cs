@@ -1,176 +1,152 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Tilemap))]
+//This code is an implementation of the popular wave function colapse algorithm, there are a hughe amoun of tutorials and explanations of this algorithim but i found 
+//The coding trains video the easyiest in-depth explanation to understand(https://www.youtube.com/watch?v=rI_y2GAlQFM). For the specific implementation to unity i found Game dev Garnet
+//tutorial really sraigth forward (https://www.youtube.com/watch?v=iJ_GnGD5BZA)
 public class WaveFunctionCollapse : MonoBehaviour
 {
-    [Header("WFC Settings")]
-    public TileBase[] tileSet;
-    public Vector2Int gridSize;
-    public int initialCollapses = 5;
+    [Header("Tilemap Settings")]
+    public Tilemap tilemap;
+    public MapTile[] tileObjects; //All maptile objects well use in the generation
+    public MapTile backupTile; //We'll use this if no other option is availabe
 
-    [Header("Height Constraints")]
-    public AnimationCurve heightProbabilityCurve;
-    public float heightThreshold = 0.2f;
+    private MarchingSquares marchingSquares;
+    private int gridSizeX;
+    private int gridSizeY;
 
-    private Tilemap tilemap;
-    private MarchingSquares mapGenerator;
-    private WFCCell[,] waveGrid;
-    private List<Vector2Int> collapseQueue = new List<Vector2Int>();
+    private List<Cell> gridComponents;//local Cell grid well use
+    private int iteration;//counter to keep track of collapsed cells
+    WaitForEndOfFrame wait;
 
-    void Start()
+
+    //Create the grid using our map size
+    private void Awake()
     {
-        tilemap = GetComponent<Tilemap>();
-        mapGenerator = FindObjectOfType<MarchingSquares>();
-        InitializeWaveGrid();
+        marchingSquares = GetComponent<MarchingSquares>();
+        gridComponents = new List<Cell>();
+
+        // Get grid size from Marching Squares
+        gridSizeX = marchingSquares.gridSizeX;
+        gridSizeY = marchingSquares.gridSizeY;
+
+        wait = new WaitForEndOfFrame();
     }
 
-    void InitializeWaveGrid()
+    public void Initialize()
     {
-        waveGrid = new WFCCell[gridSize.x, gridSize.y];
+        tilemap.ClearAllTiles();
 
-        for (int x = 0; x < gridSize.x; x++)
+        //for all position is the grid, create a new empty cell and add it to gridComponents list
+        for (int y = 0; y < gridSizeY; y++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            for (int x = 0; x < gridSizeX; x++)
             {
-                float height = GetMappedHeight(x, y);
-                waveGrid[x, y] = new WFCCell(new Vector2Int(x, y), height, tileSet);
+                Cell newCell = new Cell(new Vector2Int(x, y), tileObjects, marchingSquares.heightMap);
+                gridComponents.Add(newCell);
             }
         }
-    }
 
-    float GetMappedHeight(int x, int y)
-    {
-        // Convert tilemap coordinates to heightmap coordinates
-        float normalizedX = (float)x / gridSize.x * mapGenerator.gridSizeX;
-        float normalizedY = (float)y / gridSize.y * mapGenerator.gridSizeY;
-        return mapGenerator.heightMap[
-            Mathf.Clamp((int)normalizedX, 0, mapGenerator.gridSizeX - 1),
-            Mathf.Clamp((int)normalizedY, 0, mapGenerator.gridSizeY - 1)
-        ];
-    }
-
-    public void GenerateTilemap()
-    {
         StartCoroutine(RunWFC());
     }
 
-    IEnumerator RunWFC()
+    IEnumerator RunWFC() 
     {
         // Initial height-based collapses
-        CollapseLowestHeightCells();
+        CollapseLowestHeightCells(5);
 
-        while (collapseQueue.Count > 0)
+        while (iteration < gridSizeX * gridSizeY)
         {
-            Vector2Int currentPos = collapseQueue[0];
-            collapseQueue.RemoveAt(0);
-
-            PropagateConstraints(currentPos);
-            yield return null;
+            yield return CheckEntropy();
+            iteration++;
         }
     }
 
-    void CollapseLowestHeightCells()
+    IEnumerator CheckEntropy()
     {
-        List<WFCCell> cells = new List<WFCCell>();
-        for (int x = 0; x < gridSize.x; x++)
+        //1. Filter uncollapsed cells
+        List<Cell> tempGrid = gridComponents;
+        for (int y = 0; y < gridComponents.Count; y++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            if(tempGrid[y].Collapsed)
             {
-                cells.Add(waveGrid[x, y]);
+                tempGrid.RemoveAt(y);
             }
         }
+        if (tempGrid.Count == 0) yield break;
 
-        cells.Sort((a, b) => a.height.CompareTo(b.height));
-
-        for (int i = 0; i < Mathf.Min(initialCollapses, cells.Count); i++)
+        //2. Sort by options count (entropy)
+        Cell temp;
+        //Bubble sort
+        for (int write = 0; write < tempGrid.Count; write++)
         {
-            CollapseCell(cells[i].position);
-        }
-    }
-
-    void CollapseCell(Vector2Int pos)
-    {
-        WFCCell cell = waveGrid[pos.x, pos.y];
-        if (cell.collapsed) return;
-
-        TileBase selectedTile = SelectTileBasedOnHeight(cell);
-        cell.Collapse(selectedTile);
-        tilemap.SetTile(new Vector3Int(pos.x, pos.y, 0), selectedTile);
-
-        collapseQueue.Add(pos);
-    }
-
-    TileBase SelectTileBasedOnHeight(WFCCell cell)
-    {
-        List<TileBase> validTiles = new List<TileBase>();
-        List<float> weights = new List<float>();
-
-        foreach (TileBase tile in cell.possibleTiles)
-        {
-            float weight = heightProbabilityCurve.Evaluate(cell.height);
-
-            if (cell.height < heightThreshold) weight *= 2f;
-
-            validTiles.Add(tile);
-            weights.Add(weight);
-        }
-
-        return validTiles[WeightedRandom(weights)];
-    }
-
-    int WeightedRandom(List<float> weights)
-    {
-        float total = 0;
-        foreach (float w in weights) total += w;
-
-        float random = Random.Range(0, total);
-        for (int i = 0; i < weights.Count; i++)
-        {
-            if (random < weights[i]) return i;
-            random -= weights[i];
-        }
-        return 0;
-    }
-
-    void PropagateConstraints(Vector2Int pos)
-    {
-        foreach (Vector2Int dir in Directions.Cardinal)
-        {
-            Vector2Int neighborPos = pos + dir;
-            if (IsValidPosition(neighborPos))
+            for (int sort = 0; sort < tempGrid.Count - 1; sort++)
             {
-                WFCCell neighbor = waveGrid[neighborPos.x, neighborPos.y];
-                if (neighbor.collapsed) continue;
-
-                TileBase[] validNeighbors = GetValidNeighbors(pos, dir);
-                neighbor.UpdateOptions(validNeighbors);
-
-                if (neighbor.possibleTiles.Count == 1)
+                if (tempGrid[sort].Options.Length > tempGrid[sort + 1].Options.Length)//Sort the cells based on their possible options to colapse
                 {
-                    CollapseCell(neighborPos);
+                    temp = tempGrid[sort + 1];
+                    tempGrid[sort + 1] = tempGrid[sort];
+                    tempGrid[sort] = temp;
                 }
             }
         }
-    }
 
-    TileBase[] GetValidNeighbors(Vector2Int pos, Vector2Int dir)
-    {
-        WFCCell cell = waveGrid[pos.x, pos.y];
-        List<TileBase> valid = new List<TileBase>();
+        //3. Find minimum entropy (available options) value
+        int minEntropy = tempGrid[0].Options.Length;
 
-        foreach (Tile tile in cell.possibleTiles)
+        //4. Filter to only cells with minimum entropy
+        for(int i = 0; i < tempGrid.Count; i++)
         {
-            valid.AddRange(tile.GetNeighborsInDirection(dir));
+            if (tempGrid[i].Options.Length != minEntropy)
+            {
+                tempGrid.RemoveAt(i);
+            }
         }
 
-        return valid.ToArray();
+        yield return wait;
+        
+        // 5. Collapse random cell from filtered list
+        //CollapseCell(tempGrid);
     }
 
-    bool IsValidPosition(Vector2Int pos)
+    //This function makes the initial collapses of the cells with the lowest heigth value
+    void CollapseLowestHeightCells(int count)
     {
-        return pos.x >= 0 && pos.x < gridSize.x && pos.y >= 0 && pos.y < gridSize.y;
+        //To collapse the lowest heght value cells firts we need to move them to a sorted array
+        Cell[] sortedCells = gridComponents.ToArray();//Copy our grid array
+        Cell temp;
+
+        //Bubble sort, again :)
+        for (int write = 0; write < sortedCells.Length; write++)
+        {
+            for (int sort = 0; sort < sortedCells.Length - 1; sort++)
+            {
+                if (sortedCells[sort].HeightValue > sortedCells[sort + 1].HeightValue)//Sort the cells based on their assigned heghit value
+                {
+                    temp = sortedCells[sort + 1];
+                    sortedCells[sort + 1] = sortedCells[sort];
+                    sortedCells[sort] = temp;
+                }
+            }
+        }
+        //Had to search the web for this, Using the Linq library we can use the Take method and reconvert the output to an array
+        sortedCells = sortedCells.Take(count).ToArray();//Shorten the array to have a length = count
+
+
+        foreach (Cell cell in sortedCells)
+        {
+            Vector3Int tilePosition = new Vector3Int(cell.GridPosition.x,cell.GridPosition.y,0);
+
+            // Check for valid options 
+            MapTile selectedTile = (cell.Options.Length > 0)? cell.Options[Random.Range(0, cell.Options.Length)] : backupTile;
+
+            cell.Collapse(new MapTile[] { selectedTile });
+            tilemap.SetTile(tilePosition, selectedTile.tile);
+        }
+
+       // UpdateGeneration();
     }
 }
