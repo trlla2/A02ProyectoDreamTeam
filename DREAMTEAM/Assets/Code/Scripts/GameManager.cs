@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
 
+    [SerializeField] private const int totalStages = 10;
+    private int leftStages = totalStages;
+
     [Header("Load Scene Stuff")]
     [SerializeField] private List<string> biomesMaps;
 
@@ -41,21 +44,29 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         GetSpawnLocation(new Vector3(0,0,0), new Vector3(0,0,0)); //DEBUG
+
+        
     }
 
     private void Update()
     {
   
-        if (endGame && Input.GetKeyDown("x")) { 
+        if (endGame /*&& Input.GetKeyDown("x")*/) { 
             endGame = false;
 
             // Random between all biomes maps
             int nextMap = Random.Range(0, biomesMaps.Count - 1);
 
+            leftStages--;
+            Debug.Log("NxtMap: " + nextMap);
+            Debug.Log("LeftStages: " + leftStages);
             SceneManager.LoadScene(biomesMaps[nextMap]);
         }
 
-       
+        if (Input.GetKeyDown("x"))
+        {
+            endGame = true;
+        }
 
     }
 
