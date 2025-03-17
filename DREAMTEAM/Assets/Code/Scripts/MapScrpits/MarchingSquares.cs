@@ -46,7 +46,6 @@ public class MarchingSquares : MonoBehaviour
     //We'll use this hashset to trak wich vertices we have already procesed, using hashsets makes it easier and faster to check contained members inside it
     HashSet<int> processedVertices = new HashSet<int>();
 
-    public MapTextureGenerator textureGenerator;
 
     struct Triangle
     {
@@ -75,7 +74,6 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
-        //textureGenerator.Initial();
     }
 
     private void GenerateHeightMap(int seed)
