@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     //initialize variables for prefab bullet
-    [SerializeField] public float speed = 10f;
+    [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public float bounceTime = 3f;
 
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.up * speed; //give direction to bullet when initiate
+        rb.velocity = transform.up * bulletSpeed; //give direction to bullet when initiate
     }
 
     private void FixedUpdate()
@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         {
             var contact = targetHit.GetContact(0); //seeks for contact
             Vector2 newDirection = Vector2.Reflect(contact.normal, rb.velocity.normalized); //calculate the direction of the bullet that it has to bounce
-            rb.velocity = newDirection * speed;
+            rb.velocity = newDirection * bulletSpeed;
             bounceTime--; //minus bounce time until it destroys
         }
     }

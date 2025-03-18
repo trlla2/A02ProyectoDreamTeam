@@ -10,9 +10,9 @@ public class Weapon : MonoBehaviour
 
     private bool isTripleShotActive = false;
     private bool isInfiniteBounceActive = false;
+    private bool isBulletSpeedBoostActive = false;
 
 
-    
 
     void Update()
     {
@@ -34,6 +34,11 @@ public class Weapon : MonoBehaviour
             Debug.Log("TripleShotActive");
             TripleShotFire();
         }
+        else if(isBulletSpeedBoostActive)
+        {
+            Debug.Log("BulletSpeedBoostActive");
+            BulletSpeedBoost();
+        }
         else
         {
             Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
@@ -54,7 +59,7 @@ public class Weapon : MonoBehaviour
         
         //Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
 
-    }
+    } //power up of infinite bounce
 
     void TripleShotFire()
     {
@@ -64,7 +69,20 @@ public class Weapon : MonoBehaviour
             Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, spreadAngle * (i - 1));
             Instantiate(bulletSprite, firePoint.position, bulletRotation);
         }
-    }
+    }   // power up of triple shot
+
+    void BulletSpeedBoost()
+    {
+        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
+
+        // Obtener el componente Bullet de la instancia y modificar bullet speed
+        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.bulletSpeed = 50f; //powerup for player to speed up bullet
+        }
+    } // power up of bullet speed boost
 
     public void ActivateTripleShot(float duration)
     {
@@ -76,10 +94,16 @@ public class Weapon : MonoBehaviour
         isInfiniteBounceActive = true;
         //StartCoroutine(DisableTripleShotAfterTime(duration));
     }
+    public void ActivateBulletSpeedBoost(float duration)
+    {
+        isBulletSpeedBoostActive = true;
+        //StartCoroutine(DisableTripleShotAfterTime(duration));
+    }
 
     //private IEnumerator DisableTripleShotAfterTime(float duration)
     //{
     //    yield return new WaitForSeconds(duration);
     //    isTripleShotActive = false;
     //}
+
 }

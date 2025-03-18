@@ -13,7 +13,6 @@ public class BulletBounce : PowerUpEffect
     {
         Weapon weapon = target.GetComponent<Weapon>();
 
-        //  target.GetComponent<Bullet>().bounceTime = 9999f; //powerup for player to bounce the bullet near infinitely in context of a round
         weapon.ActivateinfiniteBounce(powerUpDuration);
     }
 }
