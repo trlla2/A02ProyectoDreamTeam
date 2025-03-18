@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    //private GameObject bullet;
     public Transform firePoint;
     public GameObject bulletSprite;
 
-    private bool isTripleShotActive = false;
+    private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
+
     private bool isInfiniteBounceActive = false;
-
-
-    
 
     void Update()
     {
@@ -24,62 +21,42 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
+        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
+        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
         if (isInfiniteBounceActive)
         {
-            Debug.Log("InfiniteBounceActive");
-            InfiniteBounce();
-        }
-        else if (isTripleShotActive)
-        {
-            Debug.Log("TripleShotActive");
-            TripleShotFire();
+            bulletScript.bounceTime = 9999f;  // Aplica rebote infinito a la bala
         }
         else
         {
-            Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
+            bulletScript.bounceTime = 3f; // Valor predeterminado para rebote normal
         }
-    }
 
-    void InfiniteBounce()
-    {
-        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-
-        // Obtener el componente Bullet de la instancia y modificar bounceTime
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-        if (bulletScript != null)
+        // Verificar si hay algún power-up activo y aplicarlo
+        if (currentPowerUp != null)
         {
-            bulletScript.bounceTime = 9999f; //powerup for player to bounce the bullet near infinitely in context of a round
+            if (currentPowerUp is TripleShot tripleShotPowerUp)
+            {
+                tripleShotPowerUp.Fire();  // Llama a Fire() de TripleShot
+            }
         }
-        
-        //Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-
     }
 
-    void TripleShotFire()
+    public void SetPowerUp(PowerUpEffect powerUp)
     {
-        float spreadAngle = 15f;
-        for (int i = 0; i < 3; i++)
+        currentPowerUp = powerUp;
+
+        // Verificar si el power-up es de rebote infinito y activar el estado correspondiente
+        if (currentPowerUp is InfiniteBounce)
         {
-            Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, spreadAngle * (i - 1));
-            Instantiate(bulletSprite, firePoint.position, bulletRotation);
+            isInfiniteBounceActive = true; // Activar rebote infinito
+            StartCoroutine(DisableInfiniteBounceAfterTime(25f)); // Establecer el tiempo de duración del power-up
         }
     }
-
-    public void ActivateTripleShot(float duration)
+    private IEnumerator DisableInfiniteBounceAfterTime(float duration)
     {
-        isTripleShotActive = true;
-        //StartCoroutine(DisableTripleShotAfterTime(duration));
+        yield return new WaitForSeconds(duration);
+        isInfiniteBounceActive = false; // Desactivar rebote infinito después del tiempo
     }
-    public void ActivateinfiniteBounce(float duration)
-    {
-        isInfiniteBounceActive = true;
-        //StartCoroutine(DisableTripleShotAfterTime(duration));
-    }
-
-    //private IEnumerator DisableTripleShotAfterTime(float duration)
-    //{
-    //    yield return new WaitForSeconds(duration);
-    //    isTripleShotActive = false;
-    //}
 }
