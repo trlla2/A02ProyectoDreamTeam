@@ -11,12 +11,6 @@ public class TripleShot : PowerUpEffect
     {
         Weapon weapon = target.GetComponent<Weapon>();
 
-        if (weapon == null)
-        {
-            Debug.LogWarning("El objeto objetivo no tiene un componente Weapon.");
-            return;
-        }
-
         weapon.ActivateTripleShot(powerUpDuration);  // Activa el Power-Up en Weapon
     }
 }

@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05985fa55ec8b94428ec0151d2d8823d, type: 3}
-  m_Name: TripleShot
+  m_Script: {fileID: 11500000, guid: 71ff974bdd7ebe840ad77035ab00993b, type: 3}
+  m_Name: New Bullet Bounce
   m_EditorClassIdentifier: 
-  powerUpDuration: 5
