@@ -2,28 +2,21 @@ using UnityEngine;
 
 public class Tank_Behaviour : MonoBehaviour
 {
-
-    private Collider2D c;
-    private void Start()
-    {
-        c = GetComponent<Collider2D>();
-    }
+    [Header("SETUP")]
+    [SerializeField]
+    private int player;
 
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.tag == "Bullet")
-        {
-            death();
-        }
-    }
 
-
-    private void death()
+    public void Dead() // death function
     {
         // stuff before dying
-        GameManager.Instance.GetTank1IsDead();
 
         Destroy(this.gameObject);
     }
+
+    public void SetPlayer1() { player = 1; } // Set player 1
+    public void SetPlayer2() { player = 2; } // Set player 2
+
+    public int GetPlayer() { return player; } // return player
 }

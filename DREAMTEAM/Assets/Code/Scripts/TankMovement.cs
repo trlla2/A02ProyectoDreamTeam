@@ -1,6 +1,4 @@
 using UnityEngine;
-
-//No se si este codigo sera el final, solo es para tener algo que se mueva
 [RequireComponent(typeof(Rigidbody2D))]
 public class TankMovement : MonoBehaviour
 {
@@ -9,12 +7,8 @@ public class TankMovement : MonoBehaviour
     [SerializeField]
     private float RotationSpeed;
 
-    [SerializeField]
-    private int player;
-
     private Rigidbody2D rb;
 
-    //kinda wish this wasnt here but couldn't think of another way
     float rotation = 0;
     float horizontalInput;
     float verticalInput;
@@ -25,12 +19,12 @@ public class TankMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(player == 1)
+        if(GetComponent<Tank_Behaviour>().GetPlayer() == 1) // Player 1 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalAD");
             verticalInput = Input.GetAxisRaw("VerticalWS");
 
-        } else if(player == 2)
+        } else if(GetComponent<Tank_Behaviour>().GetPlayer() == 1) // Player 2 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalKeys");
             verticalInput = Input.GetAxisRaw("VerticalKeys");
@@ -43,8 +37,4 @@ public class TankMovement : MonoBehaviour
         rb.velocity = transform.up * VerticalVel;
         rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
     }
-
-
-    public void SetPlayer1() { player = 1;  }
-    public void SetPlayer2() { player = 2;  }
 }
