@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
 
     private bool isInfiniteBounceActive = false;
+    private bool isBulletSpeedBoostActive = false;
 
     void Update()
     {
@@ -33,7 +34,7 @@ public class Weapon : MonoBehaviour
             bulletScript.bounceTime = 3f; // Valor predeterminado para rebote normal
         }
 
-        // Verificar si hay algún power-up activo y aplicarlo
+        // Verificar si hay algï¿½n power-up activo y aplicarlo
         if (currentPowerUp != null)
         {
             if (currentPowerUp is TripleShot tripleShotPowerUp)
@@ -51,12 +52,12 @@ public class Weapon : MonoBehaviour
         if (currentPowerUp is InfiniteBounce)
         {
             isInfiniteBounceActive = true; // Activar rebote infinito
-            StartCoroutine(DisableInfiniteBounceAfterTime(25f)); // Establecer el tiempo de duración del power-up
+            StartCoroutine(DisableInfiniteBounceAfterTime(25f)); // Establecer el tiempo de duraciï¿½n del power-up
         }
     }
     private IEnumerator DisableInfiniteBounceAfterTime(float duration)
     {
         yield return new WaitForSeconds(duration);
-        isInfiniteBounceActive = false; // Desactivar rebote infinito después del tiempo
+        isInfiniteBounceActive = false; // Desactivar rebote infinito despuï¿½s del tiempo
     }
 }
