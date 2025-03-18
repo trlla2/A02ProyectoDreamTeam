@@ -23,16 +23,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject tank1;
     [SerializeField] private GameObject tank2;
 
-    [SerializeField] private int player1Points = 0;
-    [SerializeField] private int player2Points = 0;
+    [SerializeField] private static int player1Points = 0;
+    [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
+
+    [SerializeField] private const int totalStages = 10;
+    private static int leftStages = totalStages;
+
+    private bool nextStage = false;
 
     [Header("Load Scene Stuff")]
     [SerializeField] private List<string> biomesMaps;
-
-    //[Header("Tank stuff")]
-    //[SerializeField] private bool isAliveTank1 = false;
-    //[SerializeField] private bool isAliveTank2 = false;
 
     private static bool endGame = false;
 
@@ -45,18 +46,17 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-  
-        if (endGame && Input.GetKeyDown("x")) { 
+        if (endGame && nextStage) { 
             endGame = false;
 
             // Random between all biomes maps
             int nextMap = Random.Range(0, biomesMaps.Count - 1);
 
+            leftStages--; // left stages too end the game
+            Debug.Log("NxtMap: " + nextMap);
+            Debug.Log("LeftStages: " + leftStages);
             SceneManager.LoadScene(biomesMaps[nextMap]);
         }
-
-       
-
     }
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
@@ -89,8 +89,8 @@ public class GameManager : MonoBehaviour
         //spawn tanks
 
         // set tanks Inputs
-        temp1.GetComponent<TankMovement>().SetPlayer1();
-        temp2.GetComponent<TankMovement>().SetPlayer2();
+        temp1.GetComponent<Tank_Behaviour>().SetPlayer1();
+        temp2.GetComponent<Tank_Behaviour>().SetPlayer2();
 
 
         //------------------------------------START GAME
@@ -121,4 +121,19 @@ public class GameManager : MonoBehaviour
 
         endGame = true; // set gameend true
     } 
+
+    public void GoNextStage()
+    {
+        nextStage = true; // Go to the next stage
+    }
+
+    public int GetPlayer1Points()
+    {
+        return player1Points;
+    }
+
+    public int GetPlayer2Points()
+    {
+        return player2Points;
+    }
 }

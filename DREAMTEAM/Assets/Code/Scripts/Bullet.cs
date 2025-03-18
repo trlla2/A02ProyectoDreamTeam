@@ -21,26 +21,42 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.up * speed; //give direction to bullet when initiate
     }
 
-    private void FixedUpdate()
-    {
-        Debug.Log(rb.IsAwake());
-
-        //Debug.Log(rb.velocity);
-    }
-
     private void OnCollisionEnter2D (Collision2D targetHit)
     {
-        Debug.Log ("Impacto");
-        if (bounceTime <= 0f)
+
+        Debug.Log(targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer());
+        
+        if(targetHit.gameObject.GetComponent<Tank_Behaviour>()) // if is tank player
         {
-            Destroy(gameObject); //if bounce times is 0, destroy the bullet
+            if(targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 1) // if is player 1
+            {
+                GameManager.Instance.GetTank1IsDead();// add points to game manager
+
+                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead(); // Destroy tank
+            }
+            else if (targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 2) // if is player 2
+            {
+                GameManager.Instance.GetTank2IsDead();// add points to game manager
+
+                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead(); // Destroy tank
+
+            }
+
+            Destroy(this.gameObject);// Destroy this game manager
         }
         else
         {
-            var contact = targetHit.GetContact(0); //seeks for contact
-            Vector2 newDirection = Vector2.Reflect(contact.normal, rb.velocity.normalized); //calculate the direction of the bullet that it has to bounce
-            rb.velocity = newDirection * speed;
-            bounceTime--; //minus bounce time until it destroys
+            if (bounceTime <= 0f)
+            {
+                Destroy(gameObject); //if bounce times is 0, destroy the bullet
+            }
+            else
+            {
+                var contact = targetHit.GetContact(0); //seeks for contact
+                Vector2 newDirection = Vector2.Reflect(contact.normal, rb.velocity.normalized); //calculate the direction of the bullet that it has to bounce
+                rb.velocity = newDirection.normalized * speed;
+                bounceTime--; //minus bounce time until it destroys
+            }
         }
     }
 }
