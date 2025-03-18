@@ -24,7 +24,7 @@ public class TankMovement : MonoBehaviour
             horizontalInput = Input.GetAxisRaw("HorizontalAD");
             verticalInput = Input.GetAxisRaw("VerticalWS");
 
-        } else if(GetComponent<Tank_Behaviour>().GetPlayer() == 1) // Player 2 controls
+        } else if(GetComponent<Tank_Behaviour>().GetPlayer() == 2) // Player 2 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalKeys");
             verticalInput = Input.GetAxisRaw("VerticalKeys");

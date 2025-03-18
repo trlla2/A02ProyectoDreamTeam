@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Bullet : MonoBehaviour
 {
@@ -24,8 +25,6 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D (Collision2D targetHit)
     {
 
-        Debug.Log(targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer());
-        
         if(targetHit.gameObject.GetComponent<Tank_Behaviour>()) // if is tank player
         {
             if(targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 1) // if is player 1
@@ -52,8 +51,9 @@ public class Bullet : MonoBehaviour
             }
             else
             {
+
                 var contact = targetHit.GetContact(0); //seeks for contact
-                Vector2 newDirection = Vector2.Reflect(contact.normal, rb.velocity.normalized); //calculate the direction of the bullet that it has to bounce
+                Vector2 newDirection = Vector2.Reflect(transform.up, contact.normal); //calculate the direction of the bullet that it has to bounce
                 rb.velocity = newDirection.normalized * speed;
                 bounceTime--; //minus bounce time until it destroys
             }
