@@ -46,7 +46,6 @@ public class MarchingSquares : MonoBehaviour
     //We'll use this hashset to trak wich vertices we have already procesed, using hashsets makes it easier and faster to check contained members inside it
     HashSet<int> processedVertices = new HashSet<int>();
 
-    public MapTextureGenerator textureGenerator;
 
     struct Triangle
     {
@@ -60,7 +59,7 @@ public class MarchingSquares : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         UpdateGrid();
     }
@@ -75,7 +74,6 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
-        textureGenerator.Initial();
     }
 
     private void GenerateHeightMap(int seed)
@@ -292,8 +290,8 @@ public class MarchingSquares : MonoBehaviour
                 float originalY = vertex.y / gridResolution;
 
                 // Check if vertex is within border area
-                if (originalX < BorderSize || originalX > gridSizeX - BorderSize ||
-                    originalY < BorderSize || originalY > gridSizeY - BorderSize)
+                if (originalX < BorderSize || originalX > gridSizeX + 1 - BorderSize || 
+                    originalY < BorderSize || originalY > gridSizeY + 1 - BorderSize) // +1 bc if not it dosent work :/
                 {
                     isValidOutline = false;
                     break;
