@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: New Triple Shot
   m_EditorClassIdentifier: 
   powerUpDuration: 25
-  bulletPrefab: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
+  bulletPrefab: {fileID: 0}

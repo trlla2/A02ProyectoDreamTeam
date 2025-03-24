@@ -22,26 +22,27 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-        if (isInfiniteBounceActive)
+        // Verificar si hay alg�n power-up activo y aplicarlo
+        if (currentPowerUp is TripleShot tripleShotPowerUp)
         {
-            bulletScript.bounceTime = 9999f;  // Aplica rebote infinito a la bala
+            tripleShotPowerUp.TripleShotFire();  // Llama a Fire() de TripleShot
         }
         else
         {
-            bulletScript.bounceTime = 3f; // Valor predeterminado para rebote normal
-        }
 
-        // Verificar si hay alg�n power-up activo y aplicarlo
-        if (currentPowerUp != null)
-        {
-            if (currentPowerUp is TripleShot tripleShotPowerUp)
+            GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
+            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+            if (isInfiniteBounceActive)
             {
-                tripleShotPowerUp.Fire();  // Llama a Fire() de TripleShot
+                bulletScript.bounceTime = 9999f;  // Aplica rebote infinito a la bala
+            }
+            else
+            {
+                bulletScript.bounceTime = 3f; // Valor predeterminado para rebote normal
             }
         }
+        
     }
 
     public void SetPowerUp(PowerUpEffect powerUp)
