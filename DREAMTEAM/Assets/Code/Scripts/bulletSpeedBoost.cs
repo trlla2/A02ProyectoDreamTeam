@@ -11,6 +11,6 @@ public class bulletSpeedBoost : PowerUpEffect
     {
         Weapon weapon = target.GetComponent<Weapon>();
 
-        weapon.ActivateBulletSpeedBoost(powerUpDuration); 
+        //weapon.ActivateBulletSpeedBoost(powerUpDuration); 
     }
 }
