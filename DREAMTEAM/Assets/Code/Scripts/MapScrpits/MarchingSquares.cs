@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Jobs;
+using UnityEngine.UI;
 
 /* This code was made possible thanks to various recources on the internet that give great explanations of the concept
 *  The video Coding marching squares by The codig train (https://www.youtube.com/watch?v=0ZONMNUKTfU&t=1049s&ab_channel=TheCodingTrain) is a fantástic video to
@@ -27,6 +29,8 @@ public class MarchingSquares : MonoBehaviour
 
     [Header("Debug Settings")]
     [SerializeField] private bool drawGizmos = true;
+
+    public GameManager GameManager;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -61,6 +65,7 @@ public class MarchingSquares : MonoBehaviour
 
     private void Awake()
     {
+        Seed = Random.Range(-1000, 1000);
         UpdateGrid();
     }
 
@@ -74,6 +79,50 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
+        if (Application.isPlaying)
+        {
+            SpawnTanks();
+        }
+    }
+
+    private void SpawnTanks()
+    {
+        List<Vector2Int> validPositions = new List<Vector2Int>();
+
+        for (int x = BorderSize; x < heightMap.GetLength(0) - BorderSize; x++)
+        {
+            for (int y = BorderSize; y < heightMap.GetLength(1) - BorderSize; y++)
+            {
+                if (heightMap[x, y] < heightThreshold)
+                {
+                    validPositions.Add(new Vector2Int(x, y));
+                }
+            }
+        }
+
+        int firstIndex = Random.Range(0, validPositions.Count);
+
+        Vector2Int tank1GridPos = validPositions[firstIndex];
+        Vector2Int tank2GridPos;
+
+        validPositions.RemoveAt(firstIndex);
+
+        int attempts = 0;
+        const int maxAttempts = 100;
+        float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
+
+        do
+        {
+            int secondIndex = Random.Range(0, validPositions.Count);
+            tank2GridPos = validPositions[secondIndex];
+            attempts++;
+        }
+        while (attempts < maxAttempts && Vector2.Distance(tank1GridPos, tank2GridPos) < minDistance);
+
+        Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize, gridSizeX-BorderSize), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
+        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize, gridSizeX - BorderSize), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
+        Debug.Log(tank2Pos);
+        GameManager.GetSpawnLocation(tank1Pos, tank2Pos);
     }
 
     private void GenerateHeightMap(int seed)

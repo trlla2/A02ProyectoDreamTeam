@@ -37,12 +37,10 @@ public class GameManager : MonoBehaviour
 
     private static bool endGame = false;
 
-    public float rotationOffset = -90f;
+    [HideInInspector]
+    public bool Spawned = false;
 
-    private void Awake()
-    {
-        GetSpawnLocation(new Vector3(0,0,0), new Vector3(0,0,0)); //DEBUG
-    }
+    public float rotationOffset = -90f;
 
     private void Update()
     {
@@ -61,18 +59,10 @@ public class GameManager : MonoBehaviour
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
+        if (Spawned) return;
 
-        GameObject temp1 = Instantiate(tank1);
-        GameObject temp2 = Instantiate(tank2);
-       
-        
-        //fore position to debug
-        tank1Pos = new Vector3(Random.Range(-9, 9), Random.Range(-5, 5), 0);
-        tank2Pos = new Vector3(Random.Range(-9, 9), Random.Range(-5, 5), 0);
-
-        //Set position
-        temp1.transform.position = tank1Pos;
-        temp2.transform.position = tank2Pos;
+        GameObject temp1 = Instantiate(tank1, tank1Pos, Quaternion.identity);
+        GameObject temp2 = Instantiate(tank2, tank2Pos, Quaternion.identity);
 
         //Rotation temp2
         Vector2 direction = temp1.transform.position - temp2.transform.position;
@@ -94,6 +84,7 @@ public class GameManager : MonoBehaviour
 
 
         //------------------------------------START GAME
+        Spawned = true;
     }
 
     public void GetTank1IsDead()

@@ -20,6 +20,9 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         rb.velocity = transform.up * speed; //give direction to bullet when initiate
+        //Clamp z values
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     private void OnCollisionEnter2D (Collision2D targetHit)
@@ -52,11 +55,27 @@ public class Bullet : MonoBehaviour
             else
             {
 
-                var contact = targetHit.GetContact(0); //seeks for contact
-                Vector2 newDirection = Vector2.Reflect(transform.up, contact.normal); //calculate the direction of the bullet that it has to bounce
+                RaycastHit2D hit = Physics2D.Linecast(transform.position, new Vector3(transform.position.x + rb.velocity.normalized.x, transform.position.y + rb.velocity.normalized.y, 0));               
+                hitNormal = hit.normal;
+                tmpPosition = transform.position;
+                Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, hit.normal); //calculate the direction of the bullet that it has to bounce
+                //rb.transform.Rotate(newDirection);
                 rb.velocity = newDirection.normalized * speed;
                 bounceTime--; //minus bounce time until it destroys
             }
         }
     }
+
+    private Vector3 hitNormal = Vector3.zero;
+    private Vector3 tmpPosition = Vector3.zero;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (hitNormal != Vector3.zero)
+        {
+            Gizmos.DrawLine(tmpPosition, tmpPosition + hitNormal.normalized);
+        }
+    }
 }
+
