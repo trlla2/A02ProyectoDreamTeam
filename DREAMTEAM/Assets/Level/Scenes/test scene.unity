@@ -612,7 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d7cf7950a25974cac451760ce758d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpEffect: {fileID: 0}
+  powerUpEffect: {fileID: 11400000, guid: b19d630440333ff46a35e53af6369447, type: 2}
 --- !u!212 &1417425881
 SpriteRenderer:
   m_ObjectHideFlags: 0

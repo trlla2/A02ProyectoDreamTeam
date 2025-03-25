@@ -22,10 +22,14 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-        // Verificar si hay alg�n power-up activo y aplicarlo
         if (currentPowerUp is TripleShot tripleShotPowerUp)
         {
-            tripleShotPowerUp.TripleShotFire();  // Llama a Fire() de TripleShot
+            tripleShotPowerUp.TripleShotFire();
+        }
+        else if (isBulletSpeedBoostActive)
+        {
+            Debug.Log("BulletSpeedBoostActive");
+            BulletSpeedBoost();
         }
         else
         {
@@ -35,30 +39,55 @@ public class Weapon : MonoBehaviour
 
             if (isInfiniteBounceActive)
             {
-                bulletScript.bounceTime = 9999f;  // Aplica rebote infinito a la bala
+                bulletScript.bounceTime = 9999f;  
             }
             else
             {
-                bulletScript.bounceTime = 3f; // Valor predeterminado para rebote normal
+                bulletScript.bounceTime = 3f;
             }
         }
         
+    }
+
+    void BulletSpeedBoost()
+    {
+        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
+
+        // Obtener el componente Bullet de la instancia y modificar bullet speed
+        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+        if (bulletScript != null)
+        {
+            bulletScript.bulletSpeed = 50f; //powerup for player to speed up bullet
+        }
     }
 
     public void SetPowerUp(PowerUpEffect powerUp)
     {
         currentPowerUp = powerUp;
 
-        // Verificar si el power-up es de rebote infinito y activar el estado correspondiente
         if (currentPowerUp is InfiniteBounce)
         {
-            isInfiniteBounceActive = true; // Activar rebote infinito
-            StartCoroutine(DisableInfiniteBounceAfterTime(25f)); // Establecer el tiempo de duraci�n del power-up
+            isInfiniteBounceActive = true;
+            StartCoroutine(DisableAfterTime(25f)); 
         }
     }
-    private IEnumerator DisableInfiniteBounceAfterTime(float duration)
+
+    public void ActivateBulletSpeedBoost(float duration)
+    {
+        isBulletSpeedBoostActive = true;
+        //StartCoroutine(DisableTripleShotAfterTime(duration));
+    }
+    private IEnumerator DisableAfterTime(float duration)
     {
         yield return new WaitForSeconds(duration);
-        isInfiniteBounceActive = false; // Desactivar rebote infinito despu�s del tiempo
+        if (isBulletSpeedBoostActive)
+        {
+            isBulletSpeedBoostActive = false;
+        }
+        else if (isInfiniteBounceActive)
+        {
+            isInfiniteBounceActive = false;
+        }
     }
 }
