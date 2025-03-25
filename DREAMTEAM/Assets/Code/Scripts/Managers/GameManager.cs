@@ -51,11 +51,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<PowerUpEffect> powerUpEffects;
     [SerializeField] private float spawnPowerUpTime = 5;
     private float spawnPowerUpTimer = 0;
+    private List<Vector2Int> validPositions = new List<Vector2Int>();
 
 
-   
 
-    
+
 
     private void Awake()
     {
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SpawnPowerUp(new Vector2(0,0)); // Spawn powerUP
+            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP
             spawnPowerUpTimer = 0; // Reset timer
         }
     }
@@ -191,5 +191,10 @@ public class GameManager : MonoBehaviour
         int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
 
         temp1.GetComponent <GetPowerUp>().SetPowerUpEffect(powerUpEffects[randomPowerUp]); // Set powerUp effect
+    }
+
+    public void SetValidPositions(List<Vector2Int> validPositions)
+    {
+        this.validPositions = validPositions;
     }
 }
