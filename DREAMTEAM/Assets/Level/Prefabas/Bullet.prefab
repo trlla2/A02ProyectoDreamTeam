@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8406421401096853865
 SpriteRenderer:
@@ -146,8 +146,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.99999994, y: 1.9999999}
+  m_Offset: {x: 0, y: -0.0023854275}
+  m_Size: {x: 0.99999994, y: 0.99999994}
   m_Direction: 0
 --- !u!114 &-8191407074390738023
 MonoBehaviour:
@@ -161,6 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac37c1b5d26cda44ad5663c01c5d1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  bulletSpeed: 10
   rb: {fileID: 5707684760034339038}
   bounceTime: 3
