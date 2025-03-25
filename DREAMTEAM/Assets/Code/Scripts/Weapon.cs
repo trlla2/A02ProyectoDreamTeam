@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2") && tb.GetPlayer() == 2)
         {
-            shoot();
+            Shoot();
         }
     }
 
