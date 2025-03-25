@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.up * bulletSpeed; //give direction to bullet when initiate
+        SetVelocity();
         //Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
 
             Destroy(this.gameObject);// Destroy this game manager
         }
-        else
+        else if(!targetHit.collider.CompareTag("Bullet"))
         {
             if (bounceTime <= 0f)
             {
@@ -76,6 +76,10 @@ public class Bullet : MonoBehaviour
         {
             Gizmos.DrawLine(tmpPosition, tmpPosition + hitNormal.normalized);
         }
+    }
+    public void SetVelocity()
+    {
+        rb.velocity = transform.up * bulletSpeed;
     }
 }
 
