@@ -23,18 +23,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [Header("Game Stuff")]
-    [SerializeField] private GameObject tank1;
-    [SerializeField] private GameObject tank2;
-
-    [SerializeField] private static int player1Points = 0;
-    [SerializeField] private static int player2Points = 0;
-    [SerializeField] private int pointsForDeath = 100;
-
-   
-
-    [Header("Load Scene Stuff")]
-
+    [Header("Scene management")]
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
     [SerializeField] private static float timeForNextStage = 3f;
@@ -48,6 +37,25 @@ public class GameManager : MonoBehaviour
     public bool Spawned = false;
 
     public float rotationOffset = -90f;
+
+    [Header("Game Stuff")]
+    [SerializeField] private GameObject tank1;
+    [SerializeField] private GameObject tank2;
+
+    [SerializeField] private static int player1Points = 0;
+    [SerializeField] private static int player2Points = 0;
+    [SerializeField] private int pointsForDeath = 100;
+
+    [Header("PowerUp Stuff")]
+    [SerializeField] private GameObject powerUpBase;
+    [SerializeField] private List<PowerUpEffect> powerUpEffects;
+    [SerializeField] private float spawnPowerUpTime = 5;
+    private float spawnPowerUpTimer = 0;
+
+
+   
+
+    
 
     private void Awake()
     {
@@ -90,11 +98,21 @@ public class GameManager : MonoBehaviour
             else
             {
                 leftStages = totalStages;
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("MainMenu"); // Go to menu
             }
         }
-    }
 
+        if(spawnPowerUpTimer < spawnPowerUpTime)
+        {
+            spawnPowerUpTimer += Time.deltaTime;
+        }
+        else
+        {
+            SpawnPowerUp(new Vector2(0,0)); // Spawn powerUP
+            spawnPowerUpTimer = 0; // Reset timer
+        }
+    }
+  
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
         if (Spawned) return;
@@ -164,5 +182,14 @@ public class GameManager : MonoBehaviour
     public int GetPlayer2Points()
     {
         return player2Points;
+    }
+
+    private void SpawnPowerUp(Vector2 spawnPoint)
+    {
+        GameObject temp1 = Instantiate(powerUpBase, spawnPoint, Quaternion.identity); //instantiate powerup
+
+        int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
+
+        temp1.GetComponent <GetPowerUp>().SetPowerUpEffect(powerUpEffects[randomPowerUp]); // Set powerUp effect
     }
 }
