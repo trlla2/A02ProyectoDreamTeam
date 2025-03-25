@@ -159,25 +159,6 @@ Transform:
   m_Father: {fileID: 139503351}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &792741453 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  m_PrefabInstance: {fileID: 1029917329}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &792741454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792741453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b35be847dd87e364c9d8e897f6bcaa3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 414957895}
-  bulletSprite: {fileID: 8852201283561185813, guid: 97aa3bdd6aa305e41b8cce8ba34a0db0, type: 3}
 --- !u!1 &957189466
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,10 +520,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2185736222167704204, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       insertIndex: -1
       addedObject: {fileID: 414957895}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 792741454}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
 --- !u!1 &1636952067
 GameObject:

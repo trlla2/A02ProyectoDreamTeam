@@ -7,7 +7,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class Bullet : MonoBehaviour
 {
     //initialize variables for prefab bullet
-    [SerializeField] public float speed = 10f;
+    [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public float bounceTime = 3f;
 
