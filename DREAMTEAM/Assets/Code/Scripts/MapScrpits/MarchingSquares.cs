@@ -30,8 +30,6 @@ public class MarchingSquares : MonoBehaviour
     [Header("Debug Settings")]
     [SerializeField] private bool drawGizmos = true;
 
-    public GameManager GameManager;
-
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
 
@@ -40,6 +38,10 @@ public class MarchingSquares : MonoBehaviour
     //Using lists allows us to have dynamic grid sizes
     private List<Vector3> vertices = new List<Vector3>();
     private List<int> triangles = new List<int>();
+
+    //Spawn Positions
+    List<Vector2Int> validPositions = new List<Vector2Int>();
+
 
     //This dictionary will return a list of triangles cointined for a single point (Thats why we have a V3 key)
     private Dictionary<Vector3, List<Triangle>> vertexToTriangles = new Dictionary<Vector3, List<Triangle>>();
@@ -79,16 +81,14 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
+        GetSpawnablePositions();
         if (Application.isPlaying)
         {
             SpawnTanks();
         }
     }
-
-    private void SpawnTanks()
+    private void GetSpawnablePositions()
     {
-        List<Vector2Int> validPositions = new List<Vector2Int>();
-
         for (int x = BorderSize; x < heightMap.GetLength(0) - BorderSize; x++)
         {
             for (int y = BorderSize; y < heightMap.GetLength(1) - BorderSize; y++)
@@ -99,7 +99,9 @@ public class MarchingSquares : MonoBehaviour
                 }
             }
         }
-
+    }
+    private void SpawnTanks()
+    {
         int firstIndex = Random.Range(0, validPositions.Count);
 
         Vector2Int tank1GridPos = validPositions[firstIndex];
@@ -122,7 +124,7 @@ public class MarchingSquares : MonoBehaviour
         Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize, gridSizeX-BorderSize), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
         Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize, gridSizeX - BorderSize), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
         Debug.Log(tank2Pos);
-        GameManager.GetSpawnLocation(tank1Pos, tank2Pos);
+        GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
 
     private void GenerateHeightMap(int seed)
