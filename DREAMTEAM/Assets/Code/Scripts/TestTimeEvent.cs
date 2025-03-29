@@ -4,13 +4,28 @@ using UnityEngine;
 
 public class TestTimeEvent : MonoBehaviour
 {
-    private void Start()
+
+public class RandomSpeedEvent : MonoBehaviour
+{
+    [SerializeField] private float eventDuration = 3f;
+    [SerializeField] private float slowSpeed = 0.5f; // 50% speed
+    [SerializeField] private float fastSpeed = 1.5f; // 150% speed
+
+    void Start()
     {
-        TimeEvent.Create(TestTimeAction, 3f);
+        // Create event with random speed modification
+        TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
     }
 
-    private void TestTimeAction()
+    private void OnEventComplete()
     {
-        Debug.Log("Test");
+        Debug.Log("Speed event ended - returned to normal speed");
     }
+
+    // Call this to trigger a new random speed event
+    public void TriggerNewEvent()
+    {
+        TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
+    }
+  }
 }
