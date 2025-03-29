@@ -290,7 +290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   RotationSpeed: 5
-  player: 2
 --- !u!1 &134036672 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
@@ -310,7 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   RotationSpeed: 5
-  player: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
