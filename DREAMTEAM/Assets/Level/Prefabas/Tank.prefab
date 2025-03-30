@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7643288856731535034}
   - component: {fileID: 6276484827342064769}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,3 +534,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
+  topRenderer: {fileID: 1204318596622699534}
+  barrelRenderer: {fileID: 6276484827342064769}
+  tank1_body: {fileID: 21300000, guid: 827fddd0d08402945a800098e13068ac, type: 3}
+  tank2_body: {fileID: 21300000, guid: 18629a507acf4104490848080495aea4, type: 3}
+  tank1_barrel: {fileID: 21300000, guid: 4fe53244106cd5f4abf5c85cd70aa07f, type: 3}
+  tank2_barrel: {fileID: 21300000, guid: ea5c957587e700744a78571e5485b81c, type: 3}
+  tank1_material: {fileID: 2100000, guid: 4974e0cd9dd431241873ef398be0ece5, type: 2}
+  tank2_material: {fileID: 2100000, guid: 33ee2ee02d838334987da16a1698812d, type: 2}
+  tank1_top_material: {fileID: 2100000, guid: 2b94f61d8d309d04ba164a7f753b140a, type: 2}
+  tank2_top_material: {fileID: 2100000, guid: 3ed1387300f11e4479372bfc83363cb9, type: 2}
+  tank1_barrel_material: {fileID: 2100000, guid: 4974e0cd9dd431241873ef398be0ece5, type: 2}
+  tank2_barrel_material: {fileID: 2100000, guid: 33ee2ee02d838334987da16a1698812d, type: 2}

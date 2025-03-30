@@ -8,10 +8,13 @@ public class TankMovement : MonoBehaviour
     private float RotationSpeed;
 
     private Rigidbody2D rb;
+    
 
     float rotation = 0;
     float horizontalInput;
     float verticalInput;
+
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,12 +22,11 @@ public class TankMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(GetComponent<Tank_Behaviour>().GetPlayer() == 1) // Player 1 controls
+        if(GetComponent<Tank_Behaviour>().GetPlayer() == 1)
         {
             horizontalInput = Input.GetAxisRaw("HorizontalAD");
             verticalInput = Input.GetAxisRaw("VerticalWS");
-
-        } else if(GetComponent<Tank_Behaviour>().GetPlayer() == 2) // Player 2 controls
+        } else if(GetComponent<Tank_Behaviour>().GetPlayer() == 2)
         {
             horizontalInput = Input.GetAxisRaw("HorizontalKeys");
             verticalInput = Input.GetAxisRaw("VerticalKeys");
