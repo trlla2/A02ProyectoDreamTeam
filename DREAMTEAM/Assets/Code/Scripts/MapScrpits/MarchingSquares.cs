@@ -6,7 +6,7 @@ using UnityEngine.Jobs;
 using UnityEngine.UI;
 
 /* This code was made possible thanks to various recources on the internet that give great explanations of the concept
-*  The video Coding marching squares by The codig train (https://www.youtube.com/watch?v=0ZONMNUKTfU&t=1049s&ab_channel=TheCodingTrain) is a fantástic video to
+*  The video Coding marching squares by The codig train (https://www.youtube.com/watch?v=0ZONMNUKTfU&t=1049s&ab_channel=TheCodingTrain) is a fantï¿½stic video to
 *  understand the functioning of the algorithm. Sebastian Lague also has incredible videos about marching squares and the 3d version of the algorithm marching cubes
 *  
 *  The main struggle i had was implementing this algorithm to fit into Unitys' mesh creation sistem, as the algorithm uses lines
@@ -32,7 +32,7 @@ public class MarchingSquares : MonoBehaviour
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
-
+    [SerializeField] private WaveFunctionCollapse WFC;
     public float[,] heightMap; //float array where we'll store perlin noise values
 
     //Using lists allows us to have dynamic grid sizes
@@ -81,6 +81,7 @@ public class MarchingSquares : MonoBehaviour
         MarchSquares();
         CreateMesh();
         UpdatePolygonCollider();
+        WFC.Initialize();
         GetSpawnablePositions();
         if (Application.isPlaying)
         {

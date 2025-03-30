@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd4b9f9a9da127449d7187903f3d0c3, type: 3}
+  m_Name: DIRT
+  m_EditorClassIdentifier: 
+  tile: {fileID: 11400000, guid: c616df2f3f8e0f746a1c616a2303e98b, type: 2}
+  upNeighbours:
+  - {fileID: 11400000, guid: 327f0d937233adc99abdffdbb0192535, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 6e6ea921b47b2dd809b77d530b689ad6, type: 2}
+  downNeighbours:
+  - {fileID: 11400000, guid: 327f0d937233adc99abdffdbb0192535, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 83b75ba8cef4a3b4e879436c606e397a, type: 2}
+  leftNeighbours:
+  - {fileID: 11400000, guid: 327f0d937233adc99abdffdbb0192535, type: 2}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: bf7116503c6f939e8bc33d1eb835bd62, type: 2}
+  rightNeighbours:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 327f0d937233adc99abdffdbb0192535, type: 2}
+  - {fileID: 11400000, guid: 2da1aaa398a5453f3a533732dea980a0, type: 2}

@@ -183,6 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 617549057}
   - component: {fileID: 617549056}
+  - component: {fileID: 617549058}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -218,6 +219,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &617549058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617549055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05bc3579892b4c04698e94d4f1cd77be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1796503698}
+  tileObjects:
+  - {fileID: 11400000, guid: f52ba4c1c6bcb2496bad3bedd099a70a, type: 2}
+  - {fileID: 11400000, guid: 97e4c0ac0941a8854850a8be26274ddd, type: 2}
+  - {fileID: 11400000, guid: 6e6ea921b47b2dd809b77d530b689ad6, type: 2}
+  - {fileID: 11400000, guid: c1813b4dfabcb54be8c7eb1faec35c6f, type: 2}
+  - {fileID: 11400000, guid: 59af89c6f7057a8fcb9cef0cb48a7e23, type: 2}
+  - {fileID: 11400000, guid: 2da1aaa398a5453f3a533732dea980a0, type: 2}
+  - {fileID: 11400000, guid: bf7116503c6f939e8bc33d1eb835bd62, type: 2}
+  - {fileID: 11400000, guid: 83b75ba8cef4a3b4e879436c606e397a, type: 2}
+  - {fileID: 11400000, guid: b5091c07f2ae276e89e8065cef2ed4f8, type: 2}
+  - {fileID: 11400000, guid: a0d9bf6632fe319ed9d6fe07ae542f05, type: 2}
+  backupTile: {fileID: 11400000, guid: 97e4c0ac0941a8854850a8be26274ddd, type: 2}
+  LowTile: {fileID: 11400000, guid: f52ba4c1c6bcb2496bad3bedd099a70a, type: 2}
+  marchingSquares: {fileID: 975575566}
+  showEntropy: 1
+  entropyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &915526888
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +490,7 @@ MonoBehaviour:
   BorderSize: 10
   Seed: 64
   drawGizmos: 1
-  GameManager: {fileID: 122688151}
+  WFC: {fileID: 617549058}
 --- !u!60 &975575567
 PolygonCollider2D:
   m_ObjectHideFlags: 0

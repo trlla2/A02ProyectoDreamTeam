@@ -13,8 +13,9 @@ public class WaveFunctionCollapse : MonoBehaviour
     public Tilemap tilemap;
     public MapTile[] tileObjects; //All maptile objects well use in the generation
     public MapTile backupTile; //We'll use this if no other option is availabe
+    public MapTile LowTile;
 
-    private MarchingSquares marchingSquares;
+    [SerializeField] private MarchingSquares marchingSquares;
     private int gridSizeX;
     private int gridSizeY;
 
@@ -22,11 +23,23 @@ public class WaveFunctionCollapse : MonoBehaviour
     private int iteration;//counter to keep track of collapsed cells
     WaitForEndOfFrame wait;
 
+    [Header("Debug")]
+    public bool showEntropy = true;
+    public Color entropyColor = Color.red;
+
+
+    //predefined array well use to loop thru all propagating directions
+    Vector2Int[] directions = 
+    {
+        Vector2Int.up,
+        Vector2Int.down,
+        Vector2Int.left,
+        Vector2Int.right
+    };
 
     //Create the grid using our map size
     private void Awake()
     {
-        marchingSquares = GetComponent<MarchingSquares>();
         gridComponents = new List<Cell>();
 
         // Get grid size from Marching Squares
@@ -49,7 +62,6 @@ public class WaveFunctionCollapse : MonoBehaviour
                 gridComponents.Add(newCell);
             }
         }
-
         StartCoroutine(RunWFC());
     }
 
@@ -67,49 +79,45 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     IEnumerator CheckEntropy()
     {
-        //1. Filter uncollapsed cells
-        List<Cell> tempGrid = gridComponents;
-        for (int y = 0; y < gridComponents.Count; y++)
-        {
-            if(tempGrid[y].Collapsed)
-            {
-                tempGrid.RemoveAt(y);
-            }
-        }
+        // Get uncollapsed cells
+        List<Cell> tempGrid = gridComponents.Where(c => !c.Collapsed).ToList();
+        
         if (tempGrid.Count == 0) yield break;
 
-        //2. Sort by options count (entropy)
-        Cell temp;
-        //Bubble sort
-        for (int write = 0; write < tempGrid.Count; write++)
-        {
-            for (int sort = 0; sort < tempGrid.Count - 1; sort++)
-            {
-                if (tempGrid[sort].Options.Length > tempGrid[sort + 1].Options.Length)//Sort the cells based on their possible options to colapse
-                {
-                    temp = tempGrid[sort + 1];
-                    tempGrid[sort + 1] = tempGrid[sort];
-                    tempGrid[sort] = temp;
-                }
-            }
-        }
+        // Sort by entropy
+        tempGrid = tempGrid
+            .OrderBy(c => c.Options.Length)
+            .ThenBy(c => Random.value)
+            .ToList();
 
-        //3. Find minimum entropy (available options) value
         int minEntropy = tempGrid[0].Options.Length;
 
-        //4. Filter to only cells with minimum entropy
-        for(int i = 0; i < tempGrid.Count; i++)
+        // Handle contradictions
+        if (minEntropy == 0)
         {
-            if (tempGrid[i].Options.Length != minEntropy)
-            {
-                tempGrid.RemoveAt(i);
-            }
+            Debug.LogError("Contradiction! No valid options left");
+            yield return HandleContradiction();
+            yield break;
         }
+
+        // Filter to min entropy
+        tempGrid = tempGrid
+            .Where(c => c.Options.Length == minEntropy)
+            .ToList();
 
         yield return wait;
         
-        // 5. Collapse random cell from filtered list
-        //CollapseCell(tempGrid);
+        CollapseCell(tempGrid);
+    }
+
+    IEnumerator HandleContradiction()
+    {
+        foreach (Cell cell in gridComponents.Where(c => c.Options.Length == 0))
+        {
+            cell.Collapse(new MapTile[] { backupTile });
+            tilemap.SetTile(new Vector3Int(cell.GridPosition.x, cell.GridPosition.y, 0), backupTile.tile);
+            yield return PropagateConstraints(cell);
+        }
     }
 
     //This function makes the initial collapses of the cells with the lowest heigth value
@@ -140,13 +148,122 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             Vector3Int tilePosition = new Vector3Int(cell.GridPosition.x,cell.GridPosition.y,0);
 
-            // Check for valid options 
-            MapTile selectedTile = (cell.Options.Length > 0)? cell.Options[Random.Range(0, cell.Options.Length)] : backupTile;
-
-            cell.Collapse(new MapTile[] { selectedTile });
-            tilemap.SetTile(tilePosition, selectedTile.tile);
+            cell.Collapse(new MapTile[] { LowTile });
+            StartCoroutine(PropagateConstraints(cell)); 
+            tilemap.SetTile(tilePosition, LowTile.tile);
         }
 
-       // UpdateGeneration();
+    }
+    void CollapseCell(List<Cell> cells)
+    {
+        // Randomly select a cell
+        int randomIndex = Random.Range(0, cells.Count);
+        Cell cellToCollapse = cells[randomIndex];
+        
+        // Collapse to a random option
+        MapTile selectedTile = (cellToCollapse.Options.Length > 0) ?  cellToCollapse.Options[Random.Range(0, cellToCollapse.Options.Length)] : backupTile;
+        
+        // Update the cell and tilemap
+        cellToCollapse.Collapse(new MapTile[] { selectedTile });
+        Vector3Int tilePosition = new Vector3Int(cellToCollapse.GridPosition.x, cellToCollapse.GridPosition.y, 0);
+        tilemap.SetTile(tilePosition, selectedTile.tile);
+        
+        // Propagate constraints to neighbors
+        StartCoroutine(PropagateConstraints(cellToCollapse));
+    }
+
+    //Iterate through all neighours and update their possible colapsing options
+    IEnumerator PropagateConstraints(Cell cell)
+    {
+        List<Cell> neighbors = GetNeighbors(cell);
+        
+        foreach (Cell neighbor in neighbors)
+        {
+            bool changed = FilterNeighborOptions(neighbor, cell);
+            
+            if (changed)
+            {
+                // If we reduced options to 1, collapse this cell immediately
+                if (neighbor.Options.Length == 1)
+                {
+                    MapTile selectedTile = neighbor.Options[0];
+                    neighbor.Collapse(new MapTile[] { selectedTile });
+                    Vector3Int tilePosition = new Vector3Int(neighbor.GridPosition.x, neighbor.GridPosition.y, 0);
+                    tilemap.SetTile(tilePosition, selectedTile.tile);
+                    
+                    // Continue propagation from this newly collapsed cell
+                    yield return PropagateConstraints(neighbor);
+                }
+                else
+                {
+                    // Just update options and continue propagation
+                    yield return PropagateConstraints(neighbor);
+                }
+            }
+        }
+    }
+
+    List<Cell> GetNeighbors(Cell cell)
+    {
+        List<Cell> neighbors = new List<Cell>();
+        //loop thru all 4 directions
+        foreach (Vector2Int dir in directions)
+        {
+            Vector2Int neighborPos = cell.GridPosition + dir;
+            Cell neighbor = gridComponents.Find(c => c.GridPosition == neighborPos);//find the neigbour in our Cell grid array
+
+            if (neighbor != null && !neighbor.Collapsed)
+            {
+                neighbors.Add(neighbor);
+            }
+        }
+        
+        return neighbors;
+    }   
+    //Change the possible colapsing options given a tile and its negibour, returns true if the resulting option list changed from the original
+    bool FilterNeighborOptions(Cell neighbor, Cell sourceCell)
+    {
+        MapTile[] originalOptions = neighbor.Options;
+        List<MapTile> newOptions = new List<MapTile>();
+        
+        Vector2Int direction = sourceCell.GridPosition - neighbor.GridPosition;//get the direction
+        
+        foreach (MapTile option in neighbor.Options) //for every option we originaly had in the neigbour cell obj
+        {
+            bool isValid = false;
+            
+            foreach (MapTile sourceOption in sourceCell.Options) //and for every option we can have after collapse
+            {
+                if (direction == Vector2Int.up && option.upNeighbours.Contains(sourceOption)) isValid = true;
+                else if (direction == Vector2Int.down && option.downNeighbours.Contains(sourceOption)) isValid = true;
+                else if (direction == Vector2Int.left && option.leftNeighbours.Contains(sourceOption)) isValid = true;
+                else if (direction == Vector2Int.right && option.rightNeighbours.Contains(sourceOption)) isValid = true;
+                
+                if (isValid) break;
+            }
+            
+            if (isValid) newOptions.Add(option); //add all possible valid options to the new array
+        }
+        
+        if (newOptions.Count != originalOptions.Length)
+        {
+            // update the cells options
+            neighbor.RecreateCell(newOptions.ToArray());
+            return true;
+        }
+        
+        return false;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!showEntropy || gridComponents == null) return;
+        
+        foreach (Cell cell in gridComponents)
+        {
+            float alpha = cell.Collapsed ? 0 : cell.Options.Length / (float)tileObjects.Length;
+            Gizmos.color = new Color(entropyColor.r, entropyColor.g, entropyColor.b, alpha);
+            Gizmos.DrawCube(new Vector3(cell.GridPosition.x, cell.GridPosition.y, 0), Vector3.one * 0.9f);
+        }
     }
 }

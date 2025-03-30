@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd4b9f9a9da127449d7187903f3d0c3, type: 3}
+  m_Name: G-D-Rigth
+  m_EditorClassIdentifier: 
+  tile: {fileID: 11400000, guid: c3627afabd17545478d80608630ade04, type: 2}
+  upNeighbours:
+  - {fileID: 11400000, guid: a0d9bf6632fe319ed9d6fe07ae542f05, type: 2}
+  - {fileID: 11400000}
+  downNeighbours:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 59af89c6f7057a8fcb9cef0cb48a7e23, type: 2}
+  leftNeighbours:
+  - {fileID: 11400000, guid: f52ba4c1c6bcb2496bad3bedd099a70a, type: 2}
+  rightNeighbours:
+  - {fileID: 11400000, guid: 97e4c0ac0941a8854850a8be26274ddd, type: 2}
