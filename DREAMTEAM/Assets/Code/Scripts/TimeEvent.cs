@@ -49,6 +49,7 @@ public class TimeEvent
             timer -= Time.deltaTime;
             if (timer < 0)
             {
+                Debug.Log("Invoke action");
                 action?.Invoke();
                 TimeEvent.speedModifier = 1f;
                 DestroyEvent();
