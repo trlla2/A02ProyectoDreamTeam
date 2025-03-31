@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Jobs;
-using UnityEngine.UI;
 
 /* This code was made possible thanks to various recources on the internet that give great explanations of the concept
 *  The video Coding marching squares by The codig train (https://www.youtube.com/watch?v=0ZONMNUKTfU&t=1049s&ab_channel=TheCodingTrain) is a fant�stic video to

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd4b9f9a9da127449d7187903f3d0c3, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  tile: {fileID: 11400000, guid: bb3ffdb5125103a4a98eedfe678a4071, type: 2}
+  tile: {fileID: 11400000, guid: 65255bd9f20ca494ca45196892ebbe77, type: 2}
   upNeighbours:
   - {fileID: 11400000, guid: 97e4c0ac0941a8854850a8be26274ddd, type: 2}
   - {fileID: 11400000}

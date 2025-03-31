@@ -4,9 +4,11 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 //This code is an implementation of the popular wave function colapse algorithm, there are a hughe amoun of tutorials and explanations of this algorithim but i found 
 //The coding trains video the easyiest in-depth explanation to understand(https://www.youtube.com/watch?v=rI_y2GAlQFM). For the specific implementation to unity i found Game dev Garnet
 //tutorial really sraigth forward (https://www.youtube.com/watch?v=iJ_GnGD5BZA)
+
 public class WaveFunctionCollapse : MonoBehaviour
 {
     [Header("Tilemap Settings")]
@@ -21,7 +23,10 @@ public class WaveFunctionCollapse : MonoBehaviour
 
     private List<Cell> gridComponents;//local Cell grid well use
     private int iteration;//counter to keep track of collapsed cells
-    WaitForEndOfFrame wait;
+
+    private List<GenerationBlock> blocks;
+    private int blockSize = 10; 
+    private int blockOverlap = 2;
 
     [Header("Debug")]
     public bool showEntropy = true;
@@ -46,7 +51,6 @@ public class WaveFunctionCollapse : MonoBehaviour
         gridSizeX = marchingSquares.gridSizeX;
         gridSizeY = marchingSquares.gridSizeY;
 
-        wait = new WaitForEndOfFrame();
     }
 
     public void Initialize()
@@ -62,26 +66,196 @@ public class WaveFunctionCollapse : MonoBehaviour
                 gridComponents.Add(newCell);
             }
         }
-        StartCoroutine(RunWFC());
+        CreateBlocks();
+        StartCoroutine(ProcessBlocks());
+    }
+    void CreateBlocks()
+    {
+        blocks = new List<GenerationBlock>();
+
+        for (int y = 0; y < gridSizeY; y += blockSize - blockOverlap)
+        {
+            for (int x = 0; x < gridSizeX; x += blockSize - blockOverlap)
+            {
+                blocks.Add(new GenerationBlock(
+                    new Vector2Int(x, y),
+                    blockSize,
+                    blockOverlap,
+                    gridComponents,
+                    gridSizeX,
+                    gridSizeY
+                ));
+            }
+        }
+    }
+    IEnumerator ProcessBlocks()
+    {
+        foreach (var block in blocks)
+        {
+            int retries = 0;
+            bool success = false;
+
+            while (!success && retries < 3)
+            {
+                yield return ProcessSingleBlock(block);
+                success = ValidateBlock(block);
+
+                if (!success)
+                {
+                    ResetBlock(block);
+                    retries++;
+                }
+            }
+
+            if (!success) ApplyFallbackToBlock(block);
+        }
+    }
+    IEnumerator ProcessSingleBlock(GenerationBlock block)
+    {
+        // Free internal cells
+        foreach (var cell in block.cells)
+        {
+            if (IsBorderCell(cell.GridPosition, block))
+                cell.RecreateCell(GetBorderConstraints(cell.GridPosition, block));
+            else
+                cell.RecreateCell(tileObjects);
+        }
+
+        // Run WFC for this block
+        int localIteration = 0;
+        while (localIteration < block.size * block.size)
+        {
+            yield return CheckEntropy(block);
+            localIteration++;
+        }
+    }
+    MapTile[] GetBorderConstraints(Vector2Int pos, GenerationBlock block)
+    {
+        List<MapTile> constraints = new List<MapTile>();
+        int blockRightEdge = block.origin.x + block.size - 1;
+        int blockBottomEdge = block.origin.y + block.size - 1;
+
+        // Left neighbor check
+        if (pos.x == block.origin.x && pos.x > 0)
+        {
+            var neighbor = blocks.FirstOrDefault(b =>
+                b.origin.x + b.size - blockOverlap == pos.x &&
+                pos.y >= b.origin.y &&
+                pos.y < b.origin.y + b.size);
+
+            if (neighbor != null)
+            {
+                int neighborX = neighbor.size - 1; // Rightmost column of neighbor
+                int neighborY = pos.y - neighbor.origin.y;
+                if (neighborY >= 0 && neighborY < neighbor.size)
+                {
+                    constraints.AddRange(neighbor.cells[neighborX, neighborY].Options);
+                }
+            }
+        }
+
+        // Right neighbor check
+        if (pos.x == blockRightEdge && pos.x < gridSizeX - 1)
+        {
+            var neighbor = blocks.FirstOrDefault(b =>
+                b.origin.x == pos.x + 1 - blockOverlap &&
+                pos.y >= b.origin.y &&
+                pos.y < b.origin.y + b.size);
+
+            if (neighbor != null)
+            {
+                int neighborX = 0; // Leftmost column of neighbor
+                int neighborY = pos.y - neighbor.origin.y;
+                if (neighborY >= 0 && neighborY < neighbor.size)
+                {
+                    constraints.AddRange(neighbor.cells[neighborX, neighborY].Options);
+                }
+            }
+        }
+
+        // Bottom neighbor check
+        if (pos.y == block.origin.y && pos.y > 0)
+        {
+            var neighbor = blocks.FirstOrDefault(b =>
+                b.origin.y + b.size - blockOverlap == pos.y &&
+                pos.x >= b.origin.x &&
+                pos.x < b.origin.x + b.size);
+
+            if (neighbor != null)
+            {
+                int neighborX = pos.x - neighbor.origin.x;
+                int neighborY = neighbor.size - 1; // Bottom row of neighbor
+                if (neighborX >= 0 && neighborX < neighbor.size)
+                {
+                    constraints.AddRange(neighbor.cells[neighborX, neighborY].Options);
+                }
+            }
+        }
+
+        // Top neighbor check
+        if (pos.y == blockBottomEdge && pos.y < gridSizeY - 1)
+        {
+            var neighbor = blocks.FirstOrDefault(b =>
+                b.origin.y == pos.y + 1 - blockOverlap &&
+                pos.x >= b.origin.x &&
+                pos.x < b.origin.x + b.size);
+
+            if (neighbor != null)
+            {
+                int neighborX = pos.x - neighbor.origin.x;
+                int neighborY = 0; // Top row of neighbor
+                if (neighborX >= 0 && neighborX < neighbor.size)
+                {
+                    constraints.AddRange(neighbor.cells[neighborX, neighborY].Options);
+                }
+            }
+        }
+
+        return constraints.Distinct().Count() > 0 ?
+            constraints.Distinct().ToArray() :
+            new[] { backupTile };
+    }
+    bool ValidateBlock(GenerationBlock block)
+    {
+        return block.cells.Cast<Cell>()
+            .All(c => c.Collapsed || IsBorderCell(c.GridPosition, block));
+    }
+    bool IsBorderCell(Vector2Int pos, GenerationBlock block)
+    {
+        return pos.x == block.origin.x ||
+               pos.y == block.origin.y ||
+               pos.x == block.origin.x + block.size - 1 ||
+               pos.y == block.origin.y + block.size - 1;
     }
 
-    IEnumerator RunWFC() 
+    void ResetBlock(GenerationBlock block)
     {
-        // Initial height-based collapses
-        CollapseLowestHeightCells(5);
-
-        while (iteration < gridSizeX * gridSizeY)
+        foreach (var cell in block.cells)
         {
-            yield return CheckEntropy();
-            iteration++;
+            if (!IsBorderCell(cell.GridPosition, block))
+                cell.RecreateCell(tileObjects);
+        }
+    }
+    void ApplyFallbackToBlock(GenerationBlock block)
+    {
+        foreach (var cell in block.cells)
+        {
+            if (!cell.Collapsed)
+            {
+                cell.Collapse(new[] { backupTile });
+                tilemap.SetTile(new Vector3Int(cell.GridPosition.x, cell.GridPosition.y, 0), backupTile.tile);
+            }
         }
     }
 
-    IEnumerator CheckEntropy()
+    IEnumerator CheckEntropy(GenerationBlock block)
     {
         // Get uncollapsed cells
-        List<Cell> tempGrid = gridComponents.Where(c => !c.Collapsed).ToList();
-        
+        List<Cell> tempGrid = block.cells
+        .Cast<Cell>()
+        .Where(c => !c.Collapsed && !IsBorderCell(c.GridPosition, block))
+        .ToList();
+
         if (tempGrid.Count == 0) yield break;
 
         // Sort by entropy
@@ -104,8 +278,6 @@ public class WaveFunctionCollapse : MonoBehaviour
         tempGrid = tempGrid
             .Where(c => c.Options.Length == minEntropy)
             .ToList();
-
-        yield return wait;
         
         CollapseCell(tempGrid);
     }
@@ -114,6 +286,7 @@ public class WaveFunctionCollapse : MonoBehaviour
     {
         foreach (Cell cell in gridComponents.Where(c => c.Options.Length == 0))
         {
+            if (cell.Collapsed) break;
             cell.Collapse(new MapTile[] { backupTile });
             tilemap.SetTile(new Vector3Int(cell.GridPosition.x, cell.GridPosition.y, 0), backupTile.tile);
             yield return PropagateConstraints(cell);
@@ -263,7 +436,37 @@ public class WaveFunctionCollapse : MonoBehaviour
         {
             float alpha = cell.Collapsed ? 0 : cell.Options.Length / (float)tileObjects.Length;
             Gizmos.color = new Color(entropyColor.r, entropyColor.g, entropyColor.b, alpha);
-            Gizmos.DrawCube(new Vector3(cell.GridPosition.x, cell.GridPosition.y, 0), Vector3.one * 0.9f);
+            Gizmos.DrawCube(new Vector3(cell.GridPosition.x * marchingSquares.gridResolution, cell.GridPosition.y * marchingSquares.gridResolution, 0), Vector3.one * marchingSquares.gridResolution);
+        }
+    }
+}
+
+public class GenerationBlock
+{
+    public Vector2Int origin;
+    public int size;
+    public int overlap;
+    public Cell[,] cells;
+    public bool isGenerated;
+
+    public GenerationBlock(Vector2Int origin, int size, int overlap, List<Cell> grid, int gridSizeX, int gridSizeY)
+    {
+        this.origin = origin;
+        this.size = size;
+        this.overlap = overlap;
+        cells = new Cell[size, size];
+
+        // Populate cells from main grid
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                Vector2Int pos = new Vector2Int(
+                    Mathf.Clamp(origin.x + x, 0, gridSizeX - 1),
+                    Mathf.Clamp(origin.y + y, 0, gridSizeY - 1)
+                );
+                cells[x, y] = grid.Find(c => c.GridPosition == pos);
+            }
         }
     }
 }
