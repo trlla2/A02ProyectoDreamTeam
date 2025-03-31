@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1caa9f37a9ad41c45a84959e099ac834, type: 3}
-  m_Name: New Bullet Speed Boost
+  m_Name: BulletSpeedBoost
   m_EditorClassIdentifier: 
+  powerUpSprite: {fileID: 21300000, guid: 4725d2c13a5f24b43a0624d6efabcd99, type: 3}
   powerUpDuration: 25

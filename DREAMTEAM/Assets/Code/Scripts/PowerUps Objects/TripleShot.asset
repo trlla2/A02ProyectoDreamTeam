@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05985fa55ec8b94428ec0151d2d8823d, type: 3}
   m_Name: TripleShot
   m_EditorClassIdentifier: 
+  powerUpSprite: {fileID: 21300000, guid: f62c33df0aafbd541b2d3029a6efc31b, type: 3}
   powerUpDuration: 25
   bulletPrefab: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
