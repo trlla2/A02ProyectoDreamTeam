@@ -6,6 +6,8 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField]
     private int player;
 
+    [SerializeField] private GameObject explosionParticles;
+
     private SpriteRenderer spriteRenderer;
     [SerializeField] private SpriteRenderer topRenderer;
     [SerializeField] private SpriteRenderer barrelRenderer;
@@ -60,4 +62,10 @@ public class Tank_Behaviour : MonoBehaviour
     public void SetPlayer2() { player = 2; } // Set player 2
 
     public int GetPlayer() { return player; } // return player
+
+    private void OnDestroy()
+    {
+        GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);
+        Destroy(temp, temp.GetComponent<ParticleSystem>().duration);
+    }
 }
