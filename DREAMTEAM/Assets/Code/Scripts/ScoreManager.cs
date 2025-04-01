@@ -13,6 +13,12 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private GameObject gameOverTitlte;
     [SerializeField] private GameObject pauseMenu;
 
+    private void Awake()
+    {
+        gameOverTitlte.SetActive(false);
+        pauseMenu.SetActive(false);
+    }
+
     void Update()
     {
         score1.text = "player 1 score: " + GameManager.Instance.GetPlayer1Points().ToString();
@@ -21,6 +27,11 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
+
+        if (GameManager.Instance.GetEndGame())
+        {
+            gameOverTitlte.SetActive(true);
         }
     }
 }

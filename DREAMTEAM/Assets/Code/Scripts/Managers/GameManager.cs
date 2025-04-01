@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -146,7 +147,10 @@ public class GameManager : MonoBehaviour
         // show for UI game ended             
         endGame = true; // set gameend true
     }
-
+    public bool GetEndGame()
+    {
+        return endGame;
+    }
     public void GoNextStage()
     {
         nextStage = true; // Go to the next stage
