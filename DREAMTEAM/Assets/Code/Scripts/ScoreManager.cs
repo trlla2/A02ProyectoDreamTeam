@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
     [Header("Setup")]
 
