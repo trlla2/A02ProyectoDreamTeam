@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
-
+    [SerializeField] private static float timeForNextStage = 3f;
+    private static float timerNextStage = 0;
     [SerializeField] private List<string> biomesMaps;
 
     private bool endGame = false;
@@ -62,8 +63,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (endGame)
+        {// timer chungo para cambiar de escena
+            timerNextStage += Time.deltaTime;
+            if(timerNextStage >= timeForNextStage)
+            {
+                nextStage = true;
+            }
+        }
 
-        if (endGame && nextStage) { 
+        if (nextStage) { 
             endGame = false;
             nextStage = false;
             Debug.Log("leftStages: " + leftStages);
@@ -136,7 +145,6 @@ public class GameManager : MonoBehaviour
     {
         // show for UI game ended             
         endGame = true; // set gameend true
-        nextStage = true; // ---------------------------------------- DEBUG BORRAR 
     }
 
     public void GoNextStage()
