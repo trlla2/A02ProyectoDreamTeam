@@ -54,6 +54,9 @@ public class Tank_Behaviour : MonoBehaviour
     public void Dead() // death function
     {
         // stuff before dying
+        GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);
+        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+
 
         Destroy(this.gameObject);
     }
@@ -61,11 +64,5 @@ public class Tank_Behaviour : MonoBehaviour
     public void SetPlayer1() { player = 1; } // Set player 1
     public void SetPlayer2() { player = 2; } // Set player 2
 
-    public int GetPlayer() { return player; } // return player
-
-    private void OnDestroy()
-    {
-        GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);
-        Destroy(temp, temp.GetComponent<ParticleSystem>().duration);
-    }
+    public int GetPlayer() { return player; } // return player 
 }
