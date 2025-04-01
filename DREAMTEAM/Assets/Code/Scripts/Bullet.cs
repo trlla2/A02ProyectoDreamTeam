@@ -7,7 +7,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class Bullet : MonoBehaviour
 {
     //initialize variables for prefab bullet
-    [SerializeField] public float speed = 10f;
+    [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public float bounceTime = 3f;
 
@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        rb.velocity = transform.up * speed; //give direction to bullet when initiate
+        rb.velocity = transform.up * bulletSpeed; //give direction to bullet when initiate
         //Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
                 tmpPosition = transform.position;
                 Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, hit.normal); //calculate the direction of the bullet that it has to bounce
                 //rb.transform.Rotate(newDirection);
-                rb.velocity = newDirection.normalized * speed;
+                rb.velocity = newDirection.normalized * bulletSpeed;
                 bounceTime--; //minus bounce time until it destroys
             }
         }

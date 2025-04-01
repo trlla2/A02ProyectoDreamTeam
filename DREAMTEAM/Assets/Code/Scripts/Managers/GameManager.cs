@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour 
 {
-    // Manager stuff
+
+ // Manager stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -15,10 +16,12 @@ public class GameManager : MonoBehaviour
             if (instance == null)
             {
                 instance = new GameManager();
+
             }
             return instance;
         }
     }
+
     [Header("Game Stuff")]
     [SerializeField] private GameObject tank1;
     [SerializeField] private GameObject tank2;
@@ -27,33 +30,58 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
 
+   
+
+    [Header("Load Scene Stuff")]
+
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
 
-    private bool nextStage = false;
-
-    [Header("Load Scene Stuff")]
     [SerializeField] private List<string> biomesMaps;
 
-    private static bool endGame = false;
+    private bool endGame = false;
+    private bool nextStage = false;
 
     [HideInInspector]
     public bool Spawned = false;
 
     public float rotationOffset = -90f;
 
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
+
     private void Update()
     {
+
         if (endGame && nextStage) { 
             endGame = false;
+            nextStage = false;
+            Debug.Log("leftStages: " + leftStages);
+            if (leftStages > 0)
+            {
+                // Random between all biomes maps
+                int nextMap = Random.Range(0, biomesMaps.Count - 1);
 
-            // Random between all biomes maps
-            int nextMap = Random.Range(0, biomesMaps.Count - 1);
-
-            leftStages--; // left stages too end the game
-            Debug.Log("NxtMap: " + nextMap);
-            Debug.Log("LeftStages: " + leftStages);
-            SceneManager.LoadScene(biomesMaps[nextMap]);
+                leftStages--; // left stages too end the game
+                Debug.Log("NxtMap: " + nextMap);
+                Debug.Log("LeftStages: " + leftStages);
+                SceneManager.LoadScene(biomesMaps[nextMap]);
+            }
+            else
+            {
+                leftStages = totalStages;
+                SceneManager.LoadScene("MainMenu");
+            }
         }
     }
 
@@ -106,12 +134,10 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
-        // show for UI game ended
-
-        Debug.Log("Pres x to continue");
-
+        // show for UI game ended             
         endGame = true; // set gameend true
-    } 
+        nextStage = true; // ---------------------------------------- DEBUG BORRAR 
+    }
 
     public void GoNextStage()
     {
