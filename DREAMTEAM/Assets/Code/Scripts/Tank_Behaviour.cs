@@ -23,7 +23,7 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private Material tank1_barrel_material;
     [SerializeField] private Material tank2_barrel_material;
 
-    private void Awake()
+    void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
