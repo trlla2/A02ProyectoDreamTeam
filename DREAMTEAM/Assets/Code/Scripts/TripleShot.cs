@@ -6,14 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PowerUps/TripleShot")]
 public class TripleShot : PowerUpEffect
 {
-    [SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
+    //[SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
     [SerializeField] private GameObject bulletPrefab;
     private Transform firePoint;
     private Transform firePointL;
     private Transform firePointR;
-    private bool isTripleShotActive = false;
-    
-
+    //private bool isTripleShotActive = false;
 
     public override void Apply(GameObject target)
     {
@@ -28,7 +26,7 @@ public class TripleShot : PowerUpEffect
             weapon.SetPowerUp(this);  // Asigna este Power-Up al arma
         }
 
-        weapon.StartCoroutine(ActivateTripleShot(powerUpDuration));
+        //StartCoroutine(ActivateTripleShot(powerUpDuration));
     }
 
     public void TripleShotFire()
@@ -55,28 +53,14 @@ public class TripleShot : PowerUpEffect
 
             Bullet b = Instantiate(bulletPrefab, firePos.position, firePos.rotation).GetComponent<Bullet>();
             b.SetVelocity();
-            //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
     }
-    public void SetTripleShot(bool state)
-    {
-        isTripleShotActive = state;
-    }
-    private IEnumerator ActivateTripleShot(float duration)
-    {
-        //weapon.SetTripleShot(true);
-        SetTripleShot(true);
-        yield return new WaitForSeconds(duration);
-        //weapon.SetTripleShot(false);
-        SetTripleShot(false);
-    }
-
-    
-
-    //public void ActivateTripleShot(float duration)
+    //private IEnumerator ActivateTripleShot(float duration)
     //{
     //    isTripleShotActive = true;
-    //    //StartCoroutine(DisableTripleShotAfterTime(duration));
+    //    yield return new WaitForSeconds(duration);
+        
+    //    isTripleShotActive = false;
     //}
 
 }

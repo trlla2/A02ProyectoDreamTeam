@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
 
     private bool isInfiniteBounceActive = false;
     private bool isBulletSpeedBoostActive = false;
+    private bool isTripleShotActive = false;
+    private float powerTime = 5f;
 
     private Tank_Behaviour tb;
 
@@ -36,14 +38,14 @@ public class Weapon : MonoBehaviour
 
     void Shoot()
     {
-        if (currentPowerUp is TripleShot tripleShotPowerUp)
+        if (isTripleShotActive && currentPowerUp is TripleShot tripleShotPowerUp)
         {
             tripleShotPowerUp.TripleShotFire();
         }
-        else if (isBulletSpeedBoostActive)
+        else if (isBulletSpeedBoostActive && currentPowerUp is bulletSpeedBoost bulletSpeedBoost)
         {
             Debug.Log("BulletSpeedBoostActive");
-            BulletSpeedBoost();
+            bulletSpeedBoost.BulletSpeedBoost();
         }
         else
         {
@@ -63,34 +65,30 @@ public class Weapon : MonoBehaviour
         
     }
 
-    void BulletSpeedBoost()
-    {
-        GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-
-        // Obtener el componente Bullet de la instancia y modificar bullet speed
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-        if (bulletScript != null)
-        {
-            bulletScript.bulletSpeed = 50f; //powerup for player to speed up bullet
-        }
-    }
-
     public void SetPowerUp(PowerUpEffect powerUp)
     {
         currentPowerUp = powerUp;
 
         if (currentPowerUp is InfiniteBounce)
         {
+            Debug.Log("Active InfiniteBounce");
             isInfiniteBounceActive = true;
-            StartCoroutine(DisableAfterTime(25f)); 
         }
-    }
+        else if (currentPowerUp is TripleShot) 
+        {
+            Debug.Log("Active TripleShot");
+            isTripleShotActive = true;
+            
 
-    public void ActivateBulletSpeedBoost(float duration)
-    {
-        isBulletSpeedBoostActive = true;
-        //StartCoroutine(DisableTripleShotAfterTime(duration));
+        }
+        else if (currentPowerUp is bulletSpeedBoost)
+        {
+            Debug.Log("Active InfiniteBounce");
+            isBulletSpeedBoostActive = true;
+        }
+
+        StartCoroutine(DisableAfterTime(powerTime));
+        Debug.Log("Disabled PowerUp");
     }
     private IEnumerator DisableAfterTime(float duration)
     {
@@ -102,6 +100,10 @@ public class Weapon : MonoBehaviour
         else if (isInfiniteBounceActive)
         {
             isInfiniteBounceActive = false;
+        }
+        else if (isTripleShotActive)
+        {
+            isTripleShotActive = false;
         }
     }
 }

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: BulletSpeedBoost
   m_EditorClassIdentifier: 
   powerUpSprite: {fileID: 21300000, guid: 4725d2c13a5f24b43a0624d6efabcd99, type: 3}
-  powerUpDuration: 25
+  firePoint: {fileID: 0}
+  bulletPrefab: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
