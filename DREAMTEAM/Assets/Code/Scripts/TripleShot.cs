@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PowerUps/TripleShot")]
 public class TripleShot : PowerUpEffect
 {
-    //[SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
+    //[SerializeField] private float powerUpDuration = 25f;  // Duraciï¿½n del efecto
     [SerializeField] private GameObject bulletPrefab;
     private Transform firePoint;
     private Transform firePointL;
@@ -52,7 +52,8 @@ public class TripleShot : PowerUpEffect
             }
 
             Bullet b = Instantiate(bulletPrefab, firePos.position, firePos.rotation).GetComponent<Bullet>();
-            b.SetVelocity();
+            b.SetVelocity(Vector3.up);
+            //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
     }
     //private IEnumerator ActivateTripleShot(float duration)

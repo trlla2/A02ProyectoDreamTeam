@@ -130,8 +130,9 @@ public class MarchingSquares : MonoBehaviour
 
         Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize, gridSizeX-BorderSize), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
         Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize, gridSizeX - BorderSize), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
-        Debug.Log(tank2Pos);
-        GameManager.Instance.GetSpawnLocation(tank1Pos * gridResolution, tank2Pos * gridResolution);
+        tank1Pos = new Vector3(tank1Pos.x * gridResolution, tank1Pos.y * gridResolution);
+        tank2Pos = new Vector3(tank2Pos.x * gridResolution, tank2Pos.y * gridResolution);
+        GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
 
     private void GenerateHeightMap(int seed)

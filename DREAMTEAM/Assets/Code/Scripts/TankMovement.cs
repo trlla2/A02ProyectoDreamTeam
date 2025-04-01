@@ -1,20 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody))]
 public class TankMovement : MonoBehaviour
 {
     [Header("Setup")]
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
 
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     private float rotation = 0;
     private float horizontalInput;
     private float verticalInput;
+    private float initialSpeed;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         initialSpeed = speed;
     }
 
