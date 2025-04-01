@@ -1,81 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Bullet : MonoBehaviour
 {
-    //initialize variables for prefab bullet
     [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public float bounceTime = 3f;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-
-    }
-
     void Start()
     {
-        rb.velocity = transform.up * bulletSpeed; //give direction to bullet when initiate
-        //Clamp z values
+        SetVelocity();
+        // Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
-    private void OnCollisionEnter2D (Collision2D targetHit)
+    private void OnCollisionEnter2D(Collision2D targetHit)
     {
-
-        if(targetHit.gameObject.GetComponent<Tank_Behaviour>()) // if is tank player
+        if (targetHit.gameObject.GetComponent<Tank_Behaviour>())
         {
-            if(targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 1) // if is player 1
+            if (targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 1)
             {
-                GameManager.Instance.GetTank1IsDead();// add points to game manager
-
-                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead(); // Destroy tank
+                GameManager.Instance.GetTank1IsDead();
+                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead();
             }
-            else if (targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 2) // if is player 2
+            else if (targetHit.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 2)
             {
-                GameManager.Instance.GetTank2IsDead();// add points to game manager
-
-                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead(); // Destroy tank
-
+                GameManager.Instance.GetTank2IsDead();
+                targetHit.gameObject.GetComponent<Tank_Behaviour>().Dead();
             }
-
-            Destroy(this.gameObject);// Destroy this game manager
+            Destroy(this.gameObject);
         }
-        else
+        else if (!targetHit.collider.CompareTag("Bullet"))
         {
             if (bounceTime <= 0f)
             {
-                Destroy(gameObject); //if bounce times is 0, destroy the bullet
+                Destroy(gameObject);
             }
             else
             {
-
-                RaycastHit2D hit = Physics2D.Linecast(transform.position, new Vector3(transform.position.x + rb.velocity.normalized.x, transform.position.y + rb.velocity.normalized.y, 0));               
-                hitNormal = hit.normal;
-                tmpPosition = transform.position;
-                Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, hit.normal); //calculate the direction of the bullet that it has to bounce
-                //rb.transform.Rotate(newDirection);
-                rb.velocity = newDirection.normalized * bulletSpeed;
-                bounceTime--; //minus bounce time until it destroys
+                RaycastHit2D hit = Physics2D.Linecast(transform.position,
+                    new Vector3(transform.position.x + rb.velocity.normalized.x,
+                               transform.position.y + rb.velocity.normalized.y, 0));
+                Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, hit.normal);
+                rb.velocity = newDirection.normalized * bulletSpeed * TimeEvent.speedModifier;
+                bounceTime--;
             }
         }
     }
 
-    private Vector3 hitNormal = Vector3.zero;
-    private Vector3 tmpPosition = Vector3.zero;
-
-    private void OnDrawGizmos()
+    public void SetVelocity()
     {
-        Gizmos.color = Color.red;
-        if (hitNormal != Vector3.zero)
-        {
-            Gizmos.DrawLine(tmpPosition, tmpPosition + hitNormal.normalized);
-        }
+        rb.velocity = transform.up * bulletSpeed * TimeEvent.speedModifier;
     }
 }
-

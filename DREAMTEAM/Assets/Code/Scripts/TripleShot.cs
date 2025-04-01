@@ -9,17 +9,22 @@ public class TripleShot : PowerUpEffect
     [SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
     [SerializeField] private GameObject bulletPrefab;
     private Transform firePoint;
+    private Transform firePointL;
+    private Transform firePointR;
     private bool isTripleShotActive = false;
-
+    
 
 
     public override void Apply(GameObject target)
     {
         Weapon weapon = target.GetComponent<Weapon>();
 
+
         if (weapon != null)
         {
             firePoint = weapon.firePoint;  // Obtiene el punto de disparo del arma
+            firePointL = weapon.firePointL;
+            firePointR = weapon.firePointR;
             weapon.SetPowerUp(this);  // Asigna este Power-Up al arma
         }
 
@@ -28,13 +33,28 @@ public class TripleShot : PowerUpEffect
 
     public void TripleShotFire()
     {
+        var firePos = firePoint;
+
         //if (firePoint == null) return;
         Debug.Log("TripleShot");
-        float spreadAngle = 15f;
-        for (int i = 0; i < 3; i++)
+        //float spreadAngle = 45f;
+        for (int i = 0; i <= 2; i++)
         {
-            Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, spreadAngle * (i - 1));
-            Instantiate(bulletPrefab, firePoint.position, bulletRotation);
+            if (i == 0)
+            {
+                firePos = firePointL;
+            }
+            else if (i == 1)
+            {
+                firePos = firePoint;
+            }
+            else if (i == 2)
+            {
+                firePos = firePointR;
+            }
+
+            Bullet b = Instantiate(bulletPrefab, firePos.position, firePos.rotation).GetComponent<Bullet>();
+            b.SetVelocity();
             //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public Transform firePoint;
+    public Transform firePointL;
+    public Transform firePointR;
     public GameObject bulletSprite;
 
     private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ff974bdd7ebe840ad77035ab00993b, type: 3}
   m_Name: InfiniteBounce
   m_EditorClassIdentifier: 
+  powerUpSprite: {fileID: 21300000, guid: c466d13e187ae6544ba8aff6a8a40f60, type: 3}
   powerUpDuration: 25
