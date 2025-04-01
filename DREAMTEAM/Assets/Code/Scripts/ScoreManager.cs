@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
     [Header("Setup")]
 
@@ -12,6 +12,12 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score2;
     [SerializeField] private GameObject gameOverTitlte;
     [SerializeField] private GameObject pauseMenu;
+
+    private void Awake()
+    {
+        gameOverTitlte.SetActive(false);
+        pauseMenu.SetActive(false);
+    }
 
     void Update()
     {
@@ -21,6 +27,11 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
+
+        if (GameManager.Instance.GetEndGame())
+        {
+            gameOverTitlte.SetActive(true);
         }
     }
 }

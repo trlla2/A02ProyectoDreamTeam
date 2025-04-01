@@ -15,6 +15,7 @@ public class TankMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        initialSpeed = speed;
     }
 
     void FixedUpdate()
