@@ -11,20 +11,16 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField]private TextMeshProUGUI score1;
     [SerializeField] private TextMeshProUGUI score2;
     [SerializeField] private GameObject gameOverTitlte;
+    [SerializeField] private GameObject pauseMenu;
 
     void Update()
     {
         score1.text = "player 1 score: " + GameManager.Instance.GetPlayer1Points().ToString();
         score2.text = "player 2 score: " + GameManager.Instance.GetPlayer2Points().ToString();
-    }
 
-    private int GetScore1()
-    {
-        return 0;
-    }
-
-    private int GetScore2()
-    {
-        return 0;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
+        }
     }
 }

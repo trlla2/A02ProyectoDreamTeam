@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5042802023587350231}
+  - component: {fileID: 93236708201650099}
   m_Layer: 0
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -37,6 +38,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &93236708201650099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058927421918514136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac06af81cb491c14c8091559880aa855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1673999217697069927
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +270,6 @@ GameObject:
   - component: {fileID: 859700022276823045}
   - component: {fileID: 4910685618039748111}
   - component: {fileID: 4887416471783394221}
-  - component: {fileID: 426742067178813049}
   - component: {fileID: 8766434433926675031}
   m_Layer: 0
   m_Name: Canvas
@@ -355,18 +367,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &426742067178813049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2298318882541639152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac06af81cb491c14c8091559880aa855, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8766434433926675031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +382,7 @@ MonoBehaviour:
   score1: {fileID: 6829777015013812074}
   score2: {fileID: 2062515958563783445}
   gameOverTitlte: {fileID: 1715579238910292897}
+  pauseMenu: {fileID: 1058927421918514136}
 --- !u!1 &4226282182829152916
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1013,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 426742067178813049}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenu_Behaviour, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
@@ -1146,7 +1147,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 426742067178813049}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenu_Behaviour, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
