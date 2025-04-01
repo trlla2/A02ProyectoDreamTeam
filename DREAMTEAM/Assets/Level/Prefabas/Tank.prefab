@@ -534,6 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 1
+  explosionParticles: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
   topRenderer: {fileID: 1204318596622699534}
   barrelRenderer: {fileID: 6276484827342064769}
   tank1_body: {fileID: 21300000, guid: 827fddd0d08402945a800098e13068ac, type: 3}

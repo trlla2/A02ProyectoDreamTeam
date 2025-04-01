@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class TankMovement : MonoBehaviour
 {
+    [Header("Setup")]
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
 
