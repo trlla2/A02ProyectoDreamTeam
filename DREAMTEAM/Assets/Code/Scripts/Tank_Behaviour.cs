@@ -54,10 +54,12 @@ public class Tank_Behaviour : MonoBehaviour
     public void Dead() // death function
     {
         // stuff before dying
-        GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);
+        Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
+
+        GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);// Explotion
         Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
 
-
+        
         Destroy(this.gameObject);
     }
 
