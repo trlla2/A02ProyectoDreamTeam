@@ -6,6 +6,9 @@ public class TankMovement : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
+    [SerializeField] private AudioSource movementSfx;
+    [SerializeField, Range(0, 3)] private float maxRandomPitchSfx = 1.2f;
+    [SerializeField, Range(0, 3)] private float minRandomPitchSfx = 0.98f;
 
     private Rigidbody rb;
     private float rotation = 0;
@@ -17,6 +20,9 @@ public class TankMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         initialSpeed = speed;
+
+        movementSfx.mute = true; // mute SFX loop
+
     }
 
     void FixedUpdate()
@@ -25,11 +31,31 @@ public class TankMovement : MonoBehaviour
         {
             horizontalInput = Input.GetAxisRaw("HorizontalAD");
             verticalInput = Input.GetAxisRaw("VerticalWS");
+
+            if(Input.GetAxisRaw("HorizontalAD") != 0 || Input.GetAxisRaw("VerticalWS") != 0) // if ure moving
+            {
+                movementSfx.mute = false; // Unmute SFX loop
+                movementSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); // Random PitchSound
+            }
+            else
+            {
+                movementSfx.mute = true; // mute SFX loop
+            }
         }
         else if (GetComponent<Tank_Behaviour>().GetPlayer() == 2) // Player 2 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalKeys");
             verticalInput = Input.GetAxisRaw("VerticalKeys");
+
+            if (Input.GetAxisRaw("HorizontalKeys") != 0 || Input.GetAxisRaw("VerticalKeys") != 0) // if ure moving
+            {
+                movementSfx.mute = false; // Unmute SFX loop
+                movementSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); // Random PitchSound
+            }
+            else
+            {
+                movementSfx.mute = true; // mute SFX loop
+            }
         }
 
         // Apply global speed modifier
