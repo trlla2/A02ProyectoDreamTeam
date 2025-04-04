@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Setup")]
     public Transform firePoint;
     public Transform firePointL;
     public Transform firePointR;
     public GameObject bulletSprite;
+
+    [Header("Events")]
+    public UnityEvent OnShoot;
+    public UnityEvent OnSetPowerUp;
+    
 
     private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
 
@@ -63,6 +70,7 @@ public class Weapon : MonoBehaviour
             }
         }
         
+        OnShoot.Invoke(); // invoke event
     }
 
     public void SetPowerUp(PowerUpEffect powerUp)
@@ -89,6 +97,8 @@ public class Weapon : MonoBehaviour
 
         StartCoroutine(DisableAfterTime(powerTime));
         Debug.Log("Disabled PowerUp");
+
+        OnSetPowerUp.Invoke();// invoke event
     }
     private IEnumerator DisableAfterTime(float duration)
     {
