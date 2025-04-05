@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP --------------------- Debug
+            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP 
             spawnPowerUpTimer = 0; // Reset timer
         }
 
