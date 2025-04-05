@@ -11,8 +11,8 @@ public class TestTimeEvent : MonoBehaviour
     void Start()
     {
             // Create event with random speed modification
-            Debug.Log("start");
-            TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
+            //Debug.Log("start");
+            //TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
     }
 
     private void OnEventComplete()
@@ -21,9 +21,9 @@ public class TestTimeEvent : MonoBehaviour
     }
 
     // Call this to trigger a new random speed event
-    public void TriggerNewEvent()
+    public void TriggerNewEvent(float duration)
     {
             Debug.Log("Time Event triggered");
-            TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
+            TimeEvent.Create(OnEventComplete, duration, slowSpeed, fastSpeed);
     }
 }

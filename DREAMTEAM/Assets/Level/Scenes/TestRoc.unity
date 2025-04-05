@@ -289,13 +289,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1607c87ae493e34c88161fe30ea1356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  pointsForDeath: 100
   biomesMaps:
   - TestRoc
   Spawned: 0
   rotationOffset: -90
+  tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  pointsForDeath: 100
+  powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+  powerUpEffects:
+  - {fileID: 11400000, guid: b19d630440333ff46a35e53af6369447, type: 2}
+  - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
+  - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
+  spawnPowerUpTime: 5
+  timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
+  timeToStartTimeEvent: 30
+  timeEventDuration: 10
 --- !u!4 &2054068688
 Transform:
   m_ObjectHideFlags: 0
@@ -311,64 +320,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4759128946976519129
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6922576513530192246, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
-      propertyPath: m_Name
-      value: Explosion Particles
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}

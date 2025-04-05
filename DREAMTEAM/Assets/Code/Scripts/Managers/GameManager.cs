@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
-using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -53,7 +51,11 @@ public class GameManager : MonoBehaviour
     private float spawnPowerUpTimer = 0;
     private List<Vector2Int> validPositions = new List<Vector2Int>();
 
-
+    [Header("Time Event Stuff")]
+    [SerializeField] private GameObject timeEvent;
+    [SerializeField] private float timeToStartTimeEvent = 30f;
+    private float timerToStartTimeEvent = 0f;
+    [SerializeField] private float timeEventDuration = 10f;
 
 
 
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
     }
 
     private void Update()
@@ -102,14 +105,25 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(spawnPowerUpTimer < spawnPowerUpTime)
+        if(spawnPowerUpTimer < spawnPowerUpTime) // Spawn PowerUps
         {
             spawnPowerUpTimer += Time.deltaTime;
         }
         else
         {
-            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP
+            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP --------------------- Debug
             spawnPowerUpTimer = 0; // Reset timer
+        }
+
+
+        if(timerToStartTimeEvent > timeToStartTimeEvent) // Time events
+        {
+            timeEvent.GetComponent<TestTimeEvent>().TriggerNewEvent(timeEventDuration); // Start TimeEvent
+            timerToStartTimeEvent = 0; // Reset timer
+        }
+        else
+        {
+            timerToStartTimeEvent += Time.deltaTime;
         }
     }
   
@@ -190,7 +204,7 @@ public class GameManager : MonoBehaviour
 
         int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
 
-        temp1.GetComponent <GetPowerUp>().SetPowerUpEffect(powerUpEffects[randomPowerUp]); // Set powerUp effect
+        temp1.GetComponent <GetPowerUp>().SetPowerUp(powerUpEffects[randomPowerUp]); // Set powerUp effect
     }
 
     public void SetValidPositions(List<Vector2Int> validPositions)

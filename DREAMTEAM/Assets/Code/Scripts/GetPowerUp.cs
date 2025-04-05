@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GetPowerUp : MonoBehaviour
 {
-    [SerializeField] private PowerUpEffect powerUpEffect;  // Referencia al efecto de PowerUp
+    [SerializeField] public PowerUpEffect powerUpEffect;  // Referencia al efecto de PowerUp
 
     private SpriteRenderer spriteRenderer;
     private void Awake()
@@ -29,5 +29,10 @@ public class GetPowerUp : MonoBehaviour
             powerUpEffect.Apply(collision.gameObject);  // Aplica el efecto al objeto con Weapon
             Destroy(gameObject);  // Destruye el Power-Up despu�s de activarlo
         }
+    }
+
+    public void SetPowerUp(PowerUpEffect powerUp)
+    {
+        powerUpEffect = powerUp;
     }
 }
