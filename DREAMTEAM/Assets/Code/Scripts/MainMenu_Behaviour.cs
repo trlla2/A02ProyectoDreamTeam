@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,8 +18,8 @@ public class MainMenu_Behaviour : MonoBehaviour
     private GameObject credits;
 
     [Header("AudioMixer")]
-    //[SerializeField]
-    //private AudioMixer audioMixer; ------------------------------- Dependency AudioMixer
+    [SerializeField]
+    private AudioMixer audioMixer; 
     [SerializeField]
     private Slider mainSlider;
     [SerializeField]
@@ -30,73 +27,53 @@ public class MainMenu_Behaviour : MonoBehaviour
     [SerializeField]
     private Slider musicSlider;
 
-    //[Header("sfx")] ---------------------------------------------- Depenendcy SFX
-    //[SerializeField]
-    //private AudioSource clickSFX;
-
     private void Start()
     {
-        //SetVolume(); ------------------------------- Dependency AudioMixer
-        //SetVolumeMusic();
-        //SetVolumeSFX();
+        SetVolume();
+        SetVolumeMusic();
+        SetVolumeSFX();
 
-        UnityEngine.Cursor.visible = true;// show cursor
-        UnityEngine.Cursor.lockState = CursorLockMode.None;// unlock cursor
+        Cursor.visible = true;// show cursor
+        Cursor.lockState = CursorLockMode.None;// unlock cursor
     }
 
     public void OnBack()
     {
-        OnClickButton(); // Click Button Behaviour
-
         mainMenu.SetActive(true); // Show Main Menu, Hide all other panels
         settings.SetActive(false);
         credits.SetActive(false);
     }
     public void OnSettings()
     {
-        OnClickButton();// Click Button Behaviour
-
-
         settings.SetActive(true); // Show Settings, Hide all other panels
         mainMenu.SetActive(false);
         credits.SetActive(false);
     }
     public void OnCredits()
     {
-        OnClickButton();// Click Button Behaviour
-
         credits.SetActive(true); // Show Credits, Hide all other panels
         mainMenu.SetActive(false);
         settings.SetActive(false);
     }
     public void OnPlay()
     {
-        OnClickButton();// Click Button Behaviour
-
         SceneManager.LoadScene(playSceneName);
     }
     public void OnExit()
     {
-        OnClickButton();// Click Button Behaviour
-
         Application.Quit();
     }
 
-    //public void SetVolume() ------------------------------- Dependency AudioMixer
-    //{
-    //    audioMixer.SetFloat("Volume", Mathf.Log10(soundSlider.value) * 20);
-    //}
-    //public void SetVolumeSFX()
-    //{
-    //    audioMixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
-    //}
-    //public void SetVolumeMusic()
-    //{
-    //    audioMixer.SetFloat("Music", Mathf.Log10(musicSlider.value) * 20);
-    //}
-
-    private void OnClickButton()
+    public void SetVolume()
+    { 
+        audioMixer.SetFloat("VolumeMaster", Mathf.Log10(mainSlider.value)* 20);
+    }
+    public void SetVolumeSFX()
     {
-        //clickSFX.Play(); ---------------------------------------------- Depenendcy SFX
+        audioMixer.SetFloat("VolumeSFX", Mathf.Log10(sfxSlider.value) * 20);
+    }
+    public void SetVolumeMusic()
+    {
+        audioMixer.SetFloat("VolumeMusic", Mathf.Log10(musicSlider.value) * 20);
     }
 }

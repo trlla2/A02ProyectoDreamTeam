@@ -2255,6 +2255,7 @@ MonoBehaviour:
   mainMenu: {fileID: 416535733}
   settings: {fileID: 1397914602}
   credits: {fileID: 1889101444}
+  audioMixer: {fileID: 24100000, guid: d324f66914e7b844a9b9d70f9062b4aa, type: 2}
   mainSlider: {fileID: 1881358717}
   sfxSlider: {fileID: 1850798009}
   musicSlider: {fileID: 1155278678}
@@ -2943,13 +2944,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 124334512}
   m_HandleRect: {fileID: 1264834283}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 973307519}
+        m_TargetAssemblyTypeName: MainMenu_Behaviour, Assembly-CSharp
+        m_MethodName: SetVolumeMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1264834282
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,13 +4118,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 495105696}
   m_HandleRect: {fileID: 874036944}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 973307519}
+        m_TargetAssemblyTypeName: MainMenu_Behaviour, Assembly-CSharp
+        m_MethodName: SetVolumeSFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1881358715
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,13 +4221,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 1894616226}
   m_HandleRect: {fileID: 480248612}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.000001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 973307519}
+        m_TargetAssemblyTypeName: MainMenu_Behaviour, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1889101444
 GameObject:
   m_ObjectHideFlags: 0
