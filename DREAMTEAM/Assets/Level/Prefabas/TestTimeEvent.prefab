@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8d46c22414f51499a3fdad84c9e9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventDuration: 20
   slowSpeed: 0.5
-  fastSpeed: 1.5
+  fastSpeed: 1.2

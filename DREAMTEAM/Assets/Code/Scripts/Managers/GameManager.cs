@@ -104,6 +104,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 leftStages = totalStages;
+                player1Points = 0;
+                player2Points = 0;
                 SceneManager.LoadScene("MainMenu"); // Go to menu
             }
         }
@@ -152,7 +154,13 @@ public class GameManager : MonoBehaviour
     {
         // show for UI game ended             
         endGame = true; // set gameend true
+
+        //Reset variables
+        timerNextStage = 0;
+        timerToStartTimeEvent = 0;
         Spawned = false;
+        timeEventWarnig = false;
+        spawnPowerUpTimer = 0;
     }
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)

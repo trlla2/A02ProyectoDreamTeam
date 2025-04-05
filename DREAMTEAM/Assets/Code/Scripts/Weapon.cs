@@ -10,6 +10,10 @@ public class Weapon : MonoBehaviour
     public Transform firePointL;
     public Transform firePointR;
     public GameObject bulletSprite;
+    [SerializeField] private AudioSource shootSfx;
+    [SerializeField] private AudioSource powerUpSfx;
+    [Range(0, 3)] private float maxRandomPitchSfx = 1.2f;
+    [Range(0, 3)] private float minRandomPitchSfx = 0.98f;
 
     [Header("Events")]
     public UnityEvent OnShoot;
@@ -87,7 +91,8 @@ public class Weapon : MonoBehaviour
                 bulletScript.bounceTime = 3;
             }
         }
-        
+
+        shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
         OnShoot.Invoke(); // invoke event
     }
 
@@ -116,6 +121,8 @@ public class Weapon : MonoBehaviour
         StartCoroutine(DisableAfterTime(powerTime));
         Debug.Log("Disabled PowerUp");
 
+
+        powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
         OnSetPowerUp.Invoke();// invoke event
     }
     private IEnumerator DisableAfterTime(float duration)

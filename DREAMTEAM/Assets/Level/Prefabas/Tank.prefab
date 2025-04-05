@@ -406,6 +406,8 @@ MonoBehaviour:
   firePointL: {fileID: 5961629637264390809}
   firePointR: {fileID: 6489319973734419080}
   bulletSprite: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
+  shootSfx: {fileID: 2226332820350150289}
+  powerUpSfx: {fileID: 8823656621840144956}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
