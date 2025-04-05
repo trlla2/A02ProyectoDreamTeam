@@ -69,7 +69,7 @@ public class MarchingSquares : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         Seed = Random.Range(-1000, 1000);
         UpdateGrid();
@@ -89,10 +89,7 @@ public class MarchingSquares : MonoBehaviour
         CreateWallMesh();
         textureGenerator.Initial();
         GetSpawnablePositions();
-        if (Application.isPlaying)
-        {
-            SpawnTanks();
-        }
+        SpawnTanks();
     }
     private void GetSpawnablePositions()
     {
@@ -107,7 +104,7 @@ public class MarchingSquares : MonoBehaviour
             }
         }
 
-        GameManager.Instance.SetValidPositions(validPositions); // send valid positions to the GameManager
+        GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
     private void SpawnTanks()
     {

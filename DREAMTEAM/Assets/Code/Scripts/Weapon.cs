@@ -25,6 +25,11 @@ public class Weapon : MonoBehaviour
 
     private Tank_Behaviour tb;
 
+    private bool P1CanSoot = true;
+    private bool P2CanSoot = true;
+
+    [SerializeField]
+    private WaitForSeconds wait = new WaitForSeconds(0.7f);
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
@@ -33,16 +38,29 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && tb.GetPlayer() == 1)
+        if (Input.GetButtonDown("Fire1") && tb.GetPlayer() == 1 && P1CanSoot)
         {
             Shoot();
+            StartCoroutine(FireRateP1());
         }
-        if (Input.GetButtonDown("Fire2") && tb.GetPlayer() == 2)
+        if (Input.GetButtonDown("Fire2") && tb.GetPlayer() == 2 && P2CanSoot)
         {
             Shoot();
+            StartCoroutine(FireRateP2());
         }
     }
-
+    IEnumerator FireRateP1()
+    {
+        P1CanSoot = false;
+        yield return wait;
+        P1CanSoot = true;
+    }
+    IEnumerator FireRateP2()
+    {
+        P2CanSoot = false;
+        yield return wait;
+        P2CanSoot = true;
+    }
     void Shoot()
     {
         if (isTripleShotActive && currentPowerUp is TripleShot tripleShotPowerUp)
@@ -62,11 +80,11 @@ public class Weapon : MonoBehaviour
 
             if (isInfiniteBounceActive)
             {
-                bulletScript.bounceTime = 9999f;  
+                bulletScript.bounceTime = 9999;  
             }
             else
             {
-                bulletScript.bounceTime = 3f;
+                bulletScript.bounceTime = 3;
             }
         }
         

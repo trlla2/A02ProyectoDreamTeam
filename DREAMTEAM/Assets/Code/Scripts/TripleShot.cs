@@ -52,7 +52,7 @@ public class TripleShot : PowerUpEffect
             }
 
             Bullet b = Instantiate(bulletPrefab, firePos.position, firePos.rotation).GetComponent<Bullet>();
-            b.SetVelocity(Vector3.up);
+            b.SetVelocity();
             //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
     }

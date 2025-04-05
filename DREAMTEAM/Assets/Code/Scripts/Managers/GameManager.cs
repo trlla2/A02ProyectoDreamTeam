@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player1Points = 0;
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
+    private float GridRes = 0.0f;
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPowerUp(Vector2 spawnPoint)
     {
+        spawnPoint *= GridRes;
         GameObject temp1 = Instantiate(powerUpBase, spawnPoint, Quaternion.identity); //instantiate powerup
 
         int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
@@ -150,6 +152,7 @@ public class GameManager : MonoBehaviour
     {
         // show for UI game ended             
         endGame = true; // set gameend true
+        Spawned = false;
     }
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
@@ -220,9 +223,10 @@ public class GameManager : MonoBehaviour
     }
 
     
-    public void SetValidPositions(List<Vector2Int> validPositions)
+    public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
     {
         this.validPositions = validPositions;
+        this.GridRes = gridRes;
     }
 
 }
