@@ -18,8 +18,8 @@ public class MarchingSquares : MonoBehaviour
     [Range(5, 500)] public int gridSizeY = 15;
     [SerializeField][Range(0.01f, 0.4f)] private float noiseScale = 0.1f;
     [Range(0.05f, 2f)] public float gridResolution = 1f;
-    [SerializeField][Range(0f, 1f)] private float heightThreshold = 0.5f;
-    [SerializeField][Range(0f, 30)] private int BorderSize = 1;
+    [Range(0f, 1f)] public float heightThreshold = 0.5f;
+    [Range(0f, 30)] public int BorderSize = 1;
 
     [SerializeField] private int Seed = 0;
     [SerializeField] private MapTextureGenerator textureGenerator;
@@ -29,6 +29,9 @@ public class MarchingSquares : MonoBehaviour
     [Header("Wall Settings")]
     [SerializeField] private MeshFilter walls;
     [SerializeField] private float wallHeight = 5f;
+
+    [Header("Region Detection")]
+    [SerializeField] private RegionDetector regionDetector;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -93,16 +96,20 @@ public class MarchingSquares : MonoBehaviour
     }
     private void GetSpawnablePositions()
     {
-        for (int x = BorderSize; x < heightMap.GetLength(0) - BorderSize; x++)
+        regionDetector.Initialize();
+        regionDetector.FindAllRegions();
+
+        List<Vector2Int> BiggestRegion = new List<Vector2Int> { };
+
+        foreach(List<Vector2Int> region in regionDetector.Regions)
         {
-            for (int y = BorderSize; y < heightMap.GetLength(1) - BorderSize; y++)
+            if(region.Count > BiggestRegion.Count)
             {
-                if (heightMap[x, y] < heightThreshold)
-                {
-                    validPositions.Add(new Vector2Int(x, y));
-                }
+                BiggestRegion = region;
             }
         }
+
+        validPositions = BiggestRegion;
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }

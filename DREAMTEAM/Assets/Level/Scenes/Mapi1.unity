@@ -377,6 +377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 975575563}
   - component: {fileID: 975575566}
+  - component: {fileID: 975575568}
   - component: {fileID: 975575565}
   - component: {fileID: 975575564}
   - component: {fileID: 975575567}
@@ -476,6 +477,7 @@ MonoBehaviour:
   drawGizmos: 1
   walls: {fileID: 1144752421}
   wallHeight: 5
+  regionDetector: {fileID: 975575568}
   validPositions: []
 --- !u!60 &975575567
 PolygonCollider2D:
@@ -1198,6 +1200,19 @@ PolygonCollider2D:
     - - {x: 8, y: 4.8}
     - - {x: 8, y: 4.96}
   m_UseDelaunayMesh: 0
+--- !u!114 &975575568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975575561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34e07755f7094b4982b77abd0fbd5c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marchingSquares: {fileID: 975575566}
 --- !u!1 &1144752420
 GameObject:
   m_ObjectHideFlags: 0
