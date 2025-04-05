@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("Setup")]
     [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody rb;
     [SerializeField] public int bounceTime = 3;
-
     [SerializeField] private float rayDistance = 0.5f;
+    [SerializeField] private AudioSource bounceSfx;
 
     Vector3 currentDir;
     int bounces = 0;
@@ -25,6 +26,7 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = currentDir.normalized * bulletSpeed *TimeEvent.speedModifier;
+        
         if (Physics.Raycast(transform.position, currentDir, out RaycastHit hit, rayDistance))
         {
             if (hit.collider != null && !hit.collider.isTrigger)
@@ -45,6 +47,7 @@ public class Bullet : MonoBehaviour
                 }
                 else if (!hit.collider.CompareTag("Bullet"))
                 {
+                    bounceSfx.Play();
                     if (bounces >= bounceTime)
                     {
                         DestroyImmediate(this.gameObject);
