@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8256450352112923949
+--- !u!1 &317890030636344312
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7693920211087602197}
-  - component: {fileID: 5232443708540039012}
+  - component: {fileID: 7132599602115529710}
+  - component: {fileID: 2601924703721086895}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -17,28 +17,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7693920211087602197
+--- !u!4 &7132599602115529710
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8256450352112923949}
+  m_GameObject: {fileID: 317890030636344312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21, y: 21, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5232443708540039012
+--- !u!114 &2601924703721086895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8256450352112923949}
+  m_GameObject: {fileID: 317890030636344312}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1607c87ae493e34c88161fe30ea1356, type: 3}
@@ -53,7 +53,11 @@ MonoBehaviour:
   pointsForDeath: 100
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
   powerUpEffects:
-  - {fileID: 11400000, guid: 665358525cc26fe4aa541851263bed85, type: 2}
   - {fileID: 11400000, guid: b19d630440333ff46a35e53af6369447, type: 2}
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
+  - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
   spawnPowerUpTime: 5
+  timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
+  timeToStartTimeEvent: 30
+  timeEventDuration: 10
+  timeForTimeEventWarning: 3

@@ -3,8 +3,9 @@ using TMPro;
 
 public class EventWarning : MonoBehaviour
 {
-
-    [SerializeField] private GameObject warningText; 
+    [Header ("Setup")]
+    [SerializeField] private GameObject warningText;
+    [SerializeField] private AudioSource warningSfx;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class EventWarning : MonoBehaviour
         if (timeEventWarning)
         {
            warningText.SetActive(true);
+           warningSfx.Play();
         }
         else { 
            warningText.SetActive(false); 

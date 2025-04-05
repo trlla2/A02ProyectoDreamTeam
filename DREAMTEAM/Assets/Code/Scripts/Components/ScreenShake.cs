@@ -29,7 +29,6 @@ public class ScreenShake : MonoBehaviour
     }
     private IEnumerator CameraShake()
     {
-        Debug.Log("a");
         float timer = 0;
 
         while (timer < durationScreenShake)

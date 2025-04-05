@@ -57,7 +57,7 @@ public class Tank_Behaviour : MonoBehaviour
         Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
 
         GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);// Explotion
-        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+        Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
 
         
         Destroy(this.gameObject);
