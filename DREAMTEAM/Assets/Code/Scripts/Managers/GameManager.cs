@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
-using UnityEditor.ProjectWindowCallback;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,18 +21,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [Header("Game Stuff")]
-    [SerializeField] private GameObject tank1;
-    [SerializeField] private GameObject tank2;
-
-    [SerializeField] private static int player1Points = 0;
-    [SerializeField] private static int player2Points = 0;
-    [SerializeField] private int pointsForDeath = 100;
-
-   
-
-    [Header("Load Scene Stuff")]
-
+    [Header("Scene management")]
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
     [SerializeField] private static float timeForNextStage = 3f;
@@ -49,6 +36,31 @@ public class GameManager : MonoBehaviour
 
     public float rotationOffset = -90f;
 
+    [Header("Game Stuff")]
+    [SerializeField] private GameObject tank1;
+    [SerializeField] private GameObject tank2;
+
+    [SerializeField] private static int player1Points = 0;
+    [SerializeField] private static int player2Points = 0;
+    [SerializeField] private int pointsForDeath = 100;
+
+    [Header("PowerUp Stuff")]
+    [SerializeField] private GameObject powerUpBase;
+    [SerializeField] private List<PowerUpEffect> powerUpEffects;
+    [SerializeField] private float spawnPowerUpTime = 5;
+    private float spawnPowerUpTimer = 0;
+    private List<Vector2Int> validPositions = new List<Vector2Int>();
+
+    [Header("Time Event Stuff")]
+    [SerializeField] private GameObject timeEvent;
+    [SerializeField] private float timeToStartTimeEvent = 30f;
+    private float timerToStartTimeEvent = 0f;
+    [SerializeField] private float timeEventDuration = 10f;
+    [SerializeField] private float timeForTimeEventWarning = 3f;
+    private bool timeEventWarnig = false;
+    public delegate void TimeEventWarning(bool timeEventWarnig);
+    public event TimeEventWarning OnTimeEventWarning;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -60,6 +72,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
     }
 
     private void Update()
@@ -90,9 +103,53 @@ public class GameManager : MonoBehaviour
             else
             {
                 leftStages = totalStages;
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("MainMenu"); // Go to menu
             }
         }
+
+        if(spawnPowerUpTimer < spawnPowerUpTime) // Spawn PowerUps
+        {
+            spawnPowerUpTimer += Time.deltaTime;
+        }
+        else
+        {
+            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP 
+            spawnPowerUpTimer = 0; // Reset timer
+        }
+
+
+        if(timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
+        {
+            timeEvent.GetComponent<TestTimeEvent>().TriggerNewEvent(timeEventDuration); // Start TimeEvent
+            timerToStartTimeEvent = 0; // Reset timer
+            timeEventWarnig = false;
+            OnTimeEventWarning.Invoke(timeEventWarnig); // call event
+        }
+        else if(timerToStartTimeEvent >= timeToStartTimeEvent - timeForTimeEventWarning && !timeEventWarnig) // Start Warning (One Time Execute)
+        {
+            timeEventWarnig = true;
+            OnTimeEventWarning.Invoke(timeEventWarnig); // call event
+            timerToStartTimeEvent += Time.deltaTime; 
+        }
+        else
+        {
+            timerToStartTimeEvent += Time.deltaTime;
+        }
+    }
+
+    private void SpawnPowerUp(Vector2 spawnPoint)
+    {
+        GameObject temp1 = Instantiate(powerUpBase, spawnPoint, Quaternion.identity); //instantiate powerup
+
+        int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
+
+        temp1.GetComponent<GetPowerUp>().SetPowerUp(powerUpEffects[randomPowerUp]); // Set powerUp effect
+    }
+
+    private void EndGame()
+    {
+        // show for UI game ended             
+        endGame = true; // set gameend true
     }
 
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
@@ -142,11 +199,7 @@ public class GameManager : MonoBehaviour
         EndGame(); // end game function
     }
 
-    private void EndGame()
-    {
-        // show for UI game ended             
-        endGame = true; // set gameend true
-    }
+    
     public bool GetEndGame()
     {
         return endGame;
@@ -165,4 +218,11 @@ public class GameManager : MonoBehaviour
     {
         return player2Points;
     }
+
+    
+    public void SetValidPositions(List<Vector2Int> validPositions)
+    {
+        this.validPositions = validPositions;
+    }
+
 }

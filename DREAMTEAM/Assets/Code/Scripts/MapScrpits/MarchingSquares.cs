@@ -39,7 +39,7 @@ public class MarchingSquares : MonoBehaviour
     private List<int> triangles = new List<int>();
 
     //Spawn Positions
-    List<Vector2Int> validPositions = new List<Vector2Int>();
+    public List<Vector2Int> validPositions = new List<Vector2Int>();
 
     private List<List<int>> validOutlines = new List<List<int>>();
 
@@ -106,6 +106,8 @@ public class MarchingSquares : MonoBehaviour
                 }
             }
         }
+
+        GameManager.Instance.SetValidPositions(validPositions); // send valid positions to the GameManager
     }
     private void SpawnTanks()
     {
