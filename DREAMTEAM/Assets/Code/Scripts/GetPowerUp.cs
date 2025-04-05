@@ -19,14 +19,14 @@ public class GetPowerUp : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter(Collider trigger)
     {
-        Weapon weapon = collision.gameObject.GetComponent<Weapon>(); // Verifica si el objeto tiene un Weapon
+        Weapon weapon = trigger.gameObject.GetComponent<Weapon>(); // Verifica si el objeto tiene un Weapon
 
         if (weapon != null)
         {
             Debug.Log("Collision");
-            powerUpEffect.Apply(collision.gameObject);  // Aplica el efecto al objeto con Weapon
+            powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
             Destroy(gameObject);  // Destruye el Power-Up después de activarlo
         }
     }

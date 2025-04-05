@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
         // Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        Destroy(this.gameObject, 10f);
     }
     private void OnCollisionEnter(Collision targetHit)
     {
