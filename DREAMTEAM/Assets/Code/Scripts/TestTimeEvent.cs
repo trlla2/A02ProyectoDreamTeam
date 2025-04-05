@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class TestTimeEvent : MonoBehaviour
 {
-    [SerializeField] private float eventDuration = 20f;
     [SerializeField] private float slowSpeed = 0.5f; // 50% speed
     [SerializeField] private float fastSpeed = 1.5f; // 150% speed
 
-    void Start()
-    {
-            // Create event with random speed modification
-            //Debug.Log("start");
-            //TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
-    }
 
     private void OnEventComplete()
     {
