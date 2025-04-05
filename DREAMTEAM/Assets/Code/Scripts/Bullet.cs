@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         rb.velocity = currentDir.normalized * bulletSpeed *TimeEvent.speedModifier;
         if (Physics.Raycast(transform.position, currentDir, out RaycastHit hit, rayDistance))
         {
-            if (hit.collider != null)
+            if (hit.collider != null && !hit.collider.isTrigger)
             {
                 if (hit.collider.gameObject.GetComponent<Tank_Behaviour>())
                 {
