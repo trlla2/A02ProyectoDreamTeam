@@ -130,10 +130,10 @@ public class MarchingSquares : MonoBehaviour
         }
         while (attempts < maxAttempts && Vector2.Distance(tank1GridPos, tank2GridPos) < minDistance);
 
-        Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize, gridSizeX-BorderSize), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
-        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize, gridSizeX - BorderSize), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize, gridSizeY - BorderSize), 0);
-        tank1Pos = new Vector3(tank1Pos.x * gridResolution, tank1Pos.y * gridResolution);
-        tank2Pos = new Vector3(tank2Pos.x * gridResolution, tank2Pos.y * gridResolution);
+        Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX-BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y);
+        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
         GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
 
