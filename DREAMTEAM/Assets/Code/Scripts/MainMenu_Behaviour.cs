@@ -29,6 +29,11 @@ public class MainMenu_Behaviour : MonoBehaviour
 
     private void Start()
     {
+        if(GameManager.Instance != null)
+        {
+            Destroy(GameManager.Instance.gameObject); // Destroy Game Manager
+        }
+
         SetVolume();
         SetVolumeMusic();
         SetVolumeSFX();

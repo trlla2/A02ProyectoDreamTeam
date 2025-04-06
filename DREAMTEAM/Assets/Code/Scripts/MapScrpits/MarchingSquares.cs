@@ -74,7 +74,7 @@ public class MarchingSquares : MonoBehaviour
 
     private void Start()
     {
-        //Seed = Random.Range(-1000, 1000);
+        Seed = Random.Range(-1000, 1000);
         UpdateGrid();
     }
 
