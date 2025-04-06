@@ -54,7 +54,6 @@ public class Bullet : MonoBehaviour
                     }
                     else
                     {
-                        print("xd");
                         // Calculate reflection direction
                         Vector3 reflectionDirection = Vector3.Reflect(currentDir, hit.normal);
                         currentDir = reflectionDirection;
