@@ -62,6 +62,8 @@ public class MainMenu_Behaviour : MonoBehaviour
     }
     public void OnPlay()
     {
+        Cursor.visible = false;// unshow cursor
+        Cursor.lockState = CursorLockMode.Locked;// lock cursor
         SceneManager.LoadScene(playSceneName);
     }
     public void OnExit()

@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]private TextMeshProUGUI score1;
     [SerializeField] private TextMeshProUGUI score2;
+    [SerializeField] private TextMeshProUGUI leftStages;
     [SerializeField] private GameObject gameOverTitlte;
     [SerializeField] private GameObject pauseMenu;
 
@@ -19,10 +20,15 @@ public class ScoreManager : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
+    private void Start()
+    {
+        leftStages.text = "Left Stages: " + GameManager.Instance.GetLeftStages();
+    }
+
     void Update()
     {
-        score1.text = "player 1 score: " + GameManager.Instance.GetPlayer1Points().ToString();
-        score2.text = "player 2 score: " + GameManager.Instance.GetPlayer2Points().ToString();
+        score1.text = "Player 1: " + GameManager.Instance.GetPlayer1Points().ToString();
+        score2.text = "Player 2: " + GameManager.Instance.GetPlayer2Points().ToString();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

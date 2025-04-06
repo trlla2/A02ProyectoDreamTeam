@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,15 +11,15 @@ public class PauseMenu_Behaviour : MonoBehaviour
     private void OnEnable()
     {
         Time.timeScale = 0; // Pause Time Scale
-        UnityEngine.Cursor.visible = true;// show cursor
-        UnityEngine.Cursor.lockState = CursorLockMode.None;// unlock cursor
+        Cursor.visible = true;// show cursor
+        Cursor.lockState = CursorLockMode.None;// unlock cursor
     }
 
     private void OnDisable()
     {
         Time.timeScale = 1; // Set normal TimeScale
-        UnityEngine.Cursor.visible = false;// unshow cursor
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;// lock cursor
+        Cursor.visible = false;// unshow cursor
+        Cursor.lockState = CursorLockMode.Locked;// lock cursor
     }
 
     public void Resume()
@@ -50,7 +48,7 @@ public class PauseMenu_Behaviour : MonoBehaviour
     private void OnExitPauseMenu()
     {
         Time.timeScale = 1; // Set normal TimeScale
-        UnityEngine.Cursor.visible = false;// unshow cursor
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;// lock cursor
+        Cursor.visible = false;// unshow cursor
+        Cursor.lockState = CursorLockMode.Locked;// lock cursor
     }
 }

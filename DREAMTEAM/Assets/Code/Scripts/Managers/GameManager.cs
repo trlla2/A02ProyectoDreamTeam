@@ -106,6 +106,8 @@ public class GameManager : MonoBehaviour
                 leftStages = totalStages;
                 player1Points = 0;
                 player2Points = 0;
+                Cursor.visible = true;// show cursor
+                Cursor.lockState = CursorLockMode.None;// unlock cursor
                 SceneManager.LoadScene("MainMenu"); // Go to menu
             }
         }
@@ -231,6 +233,10 @@ public class GameManager : MonoBehaviour
         return player2Points;
     }
 
+    public int GetLeftStages()
+    {
+        return leftStages;
+    }
     
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
     {
