@@ -34,5 +34,7 @@ public class GetPowerUp : MonoBehaviour
     public void SetPowerUp(PowerUpEffect powerUp)
     {
         powerUpEffect = powerUp;
+        spriteRenderer.sprite = powerUpEffect.powerUpSprite; // Cambia el sprite seg�n el efecto
+
     }
 }

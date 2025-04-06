@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [CreateAssetMenu(menuName = "PowerUps/BulletSpeedBoost")]
 public class bulletSpeedBoost : PowerUpEffect
 {
-    //[SerializeField] private float powerUpDuration = 25f;  // Duración del efecto
-    //private bool isBulletSpeedBoostActive = false;
     private Transform firePoint;
     [SerializeField] private GameObject bulletPrefab;
-
+    [SerializeField] private float bulletSpeedBoosted = 5f;
     public override void Apply(GameObject target) //apply power up
     {
         Weapon weapon = target.GetComponent<Weapon>();
@@ -17,7 +16,6 @@ public class bulletSpeedBoost : PowerUpEffect
         firePoint = weapon.firePoint;
 
         weapon.SetPowerUp(this);
-        //StartCoroutine(ActivateBulletSpeedBoost(powerUpDuration));
     }
 
     public void BulletSpeedBoost()
@@ -29,14 +27,7 @@ public class bulletSpeedBoost : PowerUpEffect
 
         if (bulletScript != null)
         {
-            bulletScript.bulletSpeed = 50f; //powerup for player to speed up bullet
+            bulletScript.bulletSpeed = bulletSpeedBoosted; //powerup for player to speed up bullet
         }
     }
-
-    //private IEnumerator ActivateBulletSpeedBoost(float duration)
-    //{
-    //    isBulletSpeedBoostActive = true;
-    //    yield return new WaitForSeconds(duration);
-    //    isBulletSpeedBoostActive = false;
-    //}
 }

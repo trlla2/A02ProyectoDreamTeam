@@ -145,7 +145,8 @@ public class GameManager : MonoBehaviour
         spawnPoint *= GridRes;
         GameObject temp1 = Instantiate(powerUpBase, spawnPoint, Quaternion.identity); //instantiate powerup
 
-        int randomPowerUp = Random.Range(0, powerUpEffects.Count - 1); // random betewn all pwUp effects
+
+        int randomPowerUp = Random.Range(0, powerUpEffects.Count); // random betewn all pwUp effects
 
         temp1.GetComponent<GetPowerUp>().SetPowerUp(powerUpEffects[randomPowerUp]); // Set powerUp effect
     }
