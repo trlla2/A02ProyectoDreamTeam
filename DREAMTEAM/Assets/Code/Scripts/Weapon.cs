@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +13,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private AudioSource powerUpSfx;
     [Range(0, 3)] private float maxRandomPitchSfx = 1.2f;
     [Range(0, 3)] private float minRandomPitchSfx = 0.98f;
+    [SerializeField] private GameObject shootParticles;
+    [SerializeField] private Transform  fireParticlePoint;
 
     [Header("Events")]
     public UnityEvent OnShoot;
@@ -93,6 +94,8 @@ public class Weapon : MonoBehaviour
         }
 
         shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
+        GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation); // Spawn particles
+        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration); // destroy particles when ended
         OnShoot.Invoke(); // invoke event
     }
 

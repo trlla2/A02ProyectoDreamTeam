@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 9202233832368836035}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30.474}
+--- !u!1 &1867492587758867725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8483047764751824496}
+  m_Layer: 0
+  m_Name: FireParticlesPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8483047764751824496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867492587758867725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.297, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9202233832368836035}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090059295527095476
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +93,7 @@ Transform:
   - {fileID: 5961629637264390809}
   - {fileID: 2291374676087991774}
   - {fileID: 6489319973734419080}
+  - {fileID: 8483047764751824496}
   m_Father: {fileID: 2185736222167704204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -328,7 +360,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6528484826500116643}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.13597047, y: 0.196486, z: 0.14309667}
   m_ConstrainProportionsScale: 0
@@ -336,7 +368,7 @@ Transform:
   - {fileID: 7643288856731535034}
   - {fileID: 2185736222167704204}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4658163398166893794
 SpriteRenderer:
@@ -408,6 +440,8 @@ MonoBehaviour:
   bulletSprite: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
   shootSfx: {fileID: 2226332820350150289}
   powerUpSfx: {fileID: 8823656621840144956}
+  shootParticles: {fileID: 3680513417702071984, guid: 21e4bdaefe35eaf4ea928d80fdd6dd95, type: 3}
+  fireParticlePoint: {fileID: 8483047764751824496}
   OnShoot:
     m_PersistentCalls:
       m_Calls:
