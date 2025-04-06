@@ -1883,7 +1883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chaning Speeds!!
+  m_text: Changing Speeds!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b26ad5b6d9d869e43a20beb3b92f52b8, type: 2}
   m_sharedMaterial: {fileID: 1118656562558675117, guid: b26ad5b6d9d869e43a20beb3b92f52b8, type: 2}
