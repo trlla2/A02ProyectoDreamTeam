@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public Rigidbody rb;
     [SerializeField] public int bounceTime = 3;
     [SerializeField] private float rayDistance = 0.5f;
-    [SerializeField] private AudioSource bounceSfx;
+    [SerializeField] private GameObject bounceFx;
 
     Vector3 currentDir;
     int bounces = 0;
@@ -47,7 +47,8 @@ public class Bullet : MonoBehaviour
                 }
                 else if (!hit.collider.CompareTag("Bullet"))
                 {
-                    bounceSfx.Play();
+                    GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
+                    Destroy(temp,  temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
                     if (bounces >= bounceTime)
                     {
                         DestroyImmediate(this.gameObject);
