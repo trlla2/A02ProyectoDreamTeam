@@ -8,9 +8,9 @@ public class TripleShot : PowerUpEffect
 {
     //[SerializeField] private float powerUpDuration = 25f;  // Duraci�n del efecto
     [SerializeField] private GameObject bulletPrefab;
-    private Transform firePoint;
-    private Transform firePointL;
-    private Transform firePointR;
+    private GameObject firePoint;
+    private GameObject firePointL;
+    private GameObject firePointR;
     //private bool isTripleShotActive = false;
 
     public override void Apply(GameObject target)
@@ -50,9 +50,11 @@ public class TripleShot : PowerUpEffect
             {
                 firePos = firePointR;
             }
-
-            Bullet b = Instantiate(bulletPrefab, firePos.position, firePos.rotation).GetComponent<Bullet>();
-            b.SetVelocity();
+            if (firePos.GetComponent<FirePointActive>().CanShoot)
+            {
+                Bullet b = Instantiate(bulletPrefab, firePos.transform.position, firePos.transform.rotation).GetComponent<Bullet>();
+                b.SetVelocity();
+            }
             //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
     }

@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 975575565}
   - component: {fileID: 975575564}
   - component: {fileID: 975575567}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MapGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1371,7 +1371,7 @@ GameObject:
   - component: {fileID: 1144752421}
   - component: {fileID: 1144752422}
   - component: {fileID: 1144752424}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}

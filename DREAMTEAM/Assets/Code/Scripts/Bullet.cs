@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,10 +11,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject bounceFx;
 
     Vector3 currentDir;
+    Vector3 rigthBound;
+    Vector3 leftBound;
     int bounces = 0;
 
     void Start()
     {
+        rigthBound = new Vector3(transform.localScale.x, 0,0);
+        leftBound =  new Vector3(-transform.localScale.x, 0,0);
+
         SetVelocity();
         currentDir = transform.up;
         // Clamp z values
@@ -26,8 +32,11 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = currentDir.normalized * bulletSpeed *TimeEvent.speedModifier;
-        
-        if (Physics.Raycast(transform.position, currentDir, out RaycastHit hit, rayDistance))
+        transform.rotation = Quaternion.LookRotation(transform.forward, currentDir);
+        RaycastHit hit;
+
+
+        if (Physics.Raycast(transform.position, currentDir, out hit, rayDistance) || (Physics.Raycast(rigthBound + transform.position, currentDir, out hit, rayDistance)) || (Physics.Raycast(leftBound + transform.position, currentDir, out hit, rayDistance)))
         {
             if (hit.collider != null && !hit.collider.isTrigger)
             {
@@ -45,7 +54,7 @@ public class Bullet : MonoBehaviour
                     }
                     Destroy(this.gameObject);
                 }
-                else if (!hit.collider.CompareTag("Bullet"))
+                else
                 {
                     GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
                     Destroy(temp,  temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
@@ -68,6 +77,8 @@ public class Bullet : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + currentDir.normalized * rayDistance);
+        Gizmos.DrawLine(transform.position + rigthBound, transform.position + rigthBound + currentDir.normalized * rayDistance);
+        Gizmos.DrawLine(transform.position + leftBound, transform.position + leftBound + currentDir.normalized * rayDistance);
     }
     public void SetVelocity()
     {
