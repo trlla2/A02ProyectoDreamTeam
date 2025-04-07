@@ -5,10 +5,13 @@ using UnityEngine.Events;
 public class Weapon : MonoBehaviour
 {
     [Header("Setup")]
-    public Transform firePoint;
-    public Transform firePointL;
-    public Transform firePointR;
+    public GameObject firePoint;
+    public GameObject firePointL;
+    public GameObject firePointR;
     public GameObject bulletSprite;
+
+    FirePointActive firePointActive;
+
     [SerializeField] private AudioSource shootSfx;
     [SerializeField] private AudioSource powerUpSfx;
     [Range(0, 3)] private float maxRandomPitchSfx = 1.2f;
@@ -38,6 +41,8 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
+        firePointActive = firePoint.GetComponent<FirePointActive>();
+
     }
 
     // Update is called once per frame
@@ -68,35 +73,38 @@ public class Weapon : MonoBehaviour
     }
     void Shoot()
     {
-        if (isTripleShotActive && currentPowerUp is TripleShot tripleShotPowerUp)
+        if (firePointActive.CanShoot)
         {
-            tripleShotPowerUp.TripleShotFire();
-        }
-        else if (isBulletSpeedBoostActive && currentPowerUp is bulletSpeedBoost bulletSpeedBoost)
-        {
-            Debug.Log("BulletSpeedBoostActive");
-            bulletSpeedBoost.BulletSpeedBoost();
-        }
-        else
-        {
-
-            GameObject bulletInstance = Instantiate(bulletSprite, firePoint.position, firePoint.rotation);
-            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-            if (isInfiniteBounceActive)
+            if (isTripleShotActive && currentPowerUp is TripleShot tripleShotPowerUp)
             {
-                bulletScript.bounceTime = 9999;  
+                tripleShotPowerUp.TripleShotFire();
+            }
+            else if (isBulletSpeedBoostActive && currentPowerUp is bulletSpeedBoost bulletSpeedBoost)
+            {
+                Debug.Log("BulletSpeedBoostActive");
+                bulletSpeedBoost.BulletSpeedBoost();
             }
             else
             {
-                bulletScript.bounceTime = 3;
-            }
-        }
 
-        shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
-        GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation); // Spawn particles
-        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration); // destroy particles when ended
-        OnShoot.Invoke(); // invoke event
+                GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
+                Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+                if (isInfiniteBounceActive)
+                {
+                    bulletScript.bounceTime = 9999;
+                }
+                else
+                {
+                    bulletScript.bounceTime = 3;
+                }
+            }
+
+            shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
+            GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation); // Spawn particles
+            Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration); // destroy particles when ended
+            OnShoot.Invoke(); // invoke event
+        }
     }
 
     public void SetPowerUp(PowerUpEffect powerUp)

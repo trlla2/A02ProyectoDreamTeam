@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6489319973734419080}
+  - component: {fileID: 8708893065895123984}
+  - component: {fileID: 8049577174571880695}
   m_Layer: 0
   m_Name: FirePosR
   m_TagString: Untagged
@@ -24,13 +26,48 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654357995138373948}
   m_LocalRotation: {x: -0, y: -0, z: -0.26281223, w: 0.964847}
-  m_LocalPosition: {x: 0.5, y: 0.16071118, z: 1.9081793}
-  m_LocalScale: {x: 1.1144699, y: 0.9207858, z: 1}
+  m_LocalPosition: {x: 0.208, y: -0.063, z: 0}
+  m_LocalScale: {x: 0.099856496, y: 0.0825024, z: 0.0896}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9202233832368836035}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30.474}
+--- !u!65 &8708893065895123984
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654357995138373948}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8049577174571880695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654357995138373948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a263bbbd74af3f840b02273a4e91e82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanShoot: 1
+  WallLayer: 3
 --- !u!1 &1867492587758867725
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +143,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5961629637264390809}
+  - component: {fileID: 3344128770871408743}
+  - component: {fileID: 6141645647693289698}
   m_Layer: 0
   m_Name: FirePosL
   m_TagString: Untagged
@@ -121,13 +160,48 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4566728878441957040}
   m_LocalRotation: {x: -0, y: -0, z: 0.2628127, w: 0.9648469}
-  m_LocalPosition: {x: -0.5, y: 0.16071118, z: 1.9081707}
-  m_LocalScale: {x: 1.1144702, y: 0.9207854, z: 1}
+  m_LocalPosition: {x: -0.239, y: -0.058, z: 0}
+  m_LocalScale: {x: 0.09985653, y: 0.08250237, z: 0.0896}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9202233832368836035}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30.474}
+--- !u!65 &3344128770871408743
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566728878441957040}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6141645647693289698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566728878441957040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a263bbbd74af3f840b02273a4e91e82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanShoot: 1
+  WallLayer: 3
 --- !u!1 &4820161017052996248
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +380,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2291374676087991774}
+  - component: {fileID: 6074555372796185091}
+  - component: {fileID: 5933142564874158362}
   m_Layer: 0
   m_Name: FirePos
   m_TagString: Untagged
@@ -321,13 +397,48 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6478092270461842408}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.16071118, z: 1.9081793}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.003, y: 0.006, z: 0}
+  m_LocalScale: {x: 0.0896, y: 0.0896, z: 0.0896}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9202233832368836035}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6074555372796185091
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6478092270461842408}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.1671932, y: 5.1238437, z: 0.9999993}
+  m_Center: {x: 0, y: -4.8889537, z: 0}
+--- !u!114 &5933142564874158362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6478092270461842408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a263bbbd74af3f840b02273a4e91e82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanShoot: 1
+  WallLayer: 3
 --- !u!1 &6528484826500116643
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +479,7 @@ Transform:
   - {fileID: 7643288856731535034}
   - {fileID: 2185736222167704204}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4658163398166893794
 SpriteRenderer:
@@ -434,9 +545,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35be847dd87e364c9d8e897f6bcaa3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 2291374676087991774}
-  firePointL: {fileID: 5961629637264390809}
-  firePointR: {fileID: 6489319973734419080}
+  firePoint: {fileID: 6478092270461842408}
+  firePointL: {fileID: 4566728878441957040}
+  firePointR: {fileID: 1654357995138373948}
   bulletSprite: {fileID: 5385380969872164951, guid: 66fa7ae50259a1f44931e5d99935527b, type: 3}
   shootSfx: {fileID: 2226332820350150289}
   powerUpSfx: {fileID: 8823656621840144956}
