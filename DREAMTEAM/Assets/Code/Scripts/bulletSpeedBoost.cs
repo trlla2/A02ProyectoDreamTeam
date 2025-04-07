@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 [CreateAssetMenu(menuName = "PowerUps/BulletSpeedBoost")]
 public class bulletSpeedBoost : PowerUpEffect
 {
-    private Transform firePoint;
+    private GameObject firePoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeedBoosted = 5f;
     public override void Apply(GameObject target) //apply power up
@@ -20,14 +20,17 @@ public class bulletSpeedBoost : PowerUpEffect
 
     public void BulletSpeedBoost()
     {
-        GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-        // Obtener el componente Bullet de la instancia y modificar bullet speed
-        Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-
-        if (bulletScript != null)
+        if (firePoint.GetComponent<FirePointActive>().CanShoot)
         {
-            bulletScript.bulletSpeed = bulletSpeedBoosted; //powerup for player to speed up bullet
+            GameObject bulletInstance = Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
+
+            // Obtener el componente Bullet de la instancia y modificar bullet speed
+            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+            if (bulletScript != null)
+            {
+                bulletScript.bulletSpeed = bulletSpeedBoosted; //powerup for player to speed up bullet
+            }
         }
     }
 }
