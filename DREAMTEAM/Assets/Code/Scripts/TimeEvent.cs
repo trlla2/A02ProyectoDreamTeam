@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class TimeEvent
 {
@@ -14,6 +16,7 @@ public class TimeEvent
         GameObject gameObject = new GameObject("TimeEvent", typeof(GetMonoBehaviour));
         TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod);
         gameObject.GetComponent<GetMonoBehaviour>().onUpdate = timeEvent.Update;
+        gameObject.GetComponent<GetMonoBehaviour>().onDestroy = timeEvent.DestroyEvent;
 
         Debug.Log(randomChoice == 0 ? "Slowing down game!" : "Speeding up game!");
         return timeEvent;
@@ -22,9 +25,16 @@ public class TimeEvent
     private class GetMonoBehaviour : MonoBehaviour
     {
         public Action onUpdate;
+        public Action onDestroy;
         private void Update()
         {
             if (onUpdate != null) onUpdate();
+        }
+
+        private void OnDestroy()
+        {
+            if (onDestroy != null) onDestroy();
+
         }
     }
 
@@ -39,7 +49,7 @@ public class TimeEvent
         this.timer = timer;
         this.gameObject = gameObject;
         isDestroyed = false;
-        TimeEvent.speedModifier = speedMod; 
+        TimeEvent.speedModifier = speedMod;
     }
 
     public void Update()
@@ -62,4 +72,6 @@ public class TimeEvent
         isDestroyed = true;
         UnityEngine.Object.Destroy(gameObject);
     }
+
+
 }
