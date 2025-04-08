@@ -59,9 +59,6 @@ public class TimeEvent
             timer -= Time.deltaTime;
             if (timer < 0)
             {
-                Debug.Log("Invoke action");
-                action?.Invoke();
-                TimeEvent.speedModifier = 1f;
                 DestroyEvent();
             }
         }
@@ -69,6 +66,9 @@ public class TimeEvent
 
     private void DestroyEvent()
     {
+        Debug.Log("Invoke action");
+        action?.Invoke();
+        TimeEvent.speedModifier = 1f;
         isDestroyed = true;
         UnityEngine.Object.Destroy(gameObject);
     }

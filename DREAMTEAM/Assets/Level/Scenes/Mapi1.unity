@@ -168,7 +168,7 @@ MonoBehaviour:
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
   timeToStartTimeEvent: 30
   timeEventDuration: 10
-  timeForTimeEventWarning: 3
+  timeForTimeEventWarning: 5
 --- !u!4 &520137841
 Transform:
   m_ObjectHideFlags: 0
