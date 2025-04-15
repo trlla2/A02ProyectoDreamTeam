@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Vector3 tank1SpawnPos = Vector3.zero;
     [SerializeField] private Vector3 tank2SpawnPos = Vector3.zero;
 
+
+    //Adabtative Music Stuff
+    private int musicLevel = 0;
+    public delegate void musicLevelEvent(int timeEventWarnig);
+    public event musicLevelEvent OnMusicLevelChanging;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -205,6 +210,7 @@ public class GameManager : MonoBehaviour
         timeEventWarnig = false;
         spawnPowerUpTimer = 0;
         numPowerUps = 0;
+        musicLevel = 0;
     }
 
     private IEnumerator HitPause()
@@ -291,6 +297,24 @@ public class GameManager : MonoBehaviour
     {
         this.validPositions = validPositions;
         this.GridRes = gridRes;
+    }
+
+    public void AddMusicLevel()
+    {
+        if (musicLevel <= 9)
+        { // MaxMusicLevelCases
+            musicLevel++;
+            OnMusicLevelChanging.Invoke(musicLevel);
+        }
+    }
+    
+    public void ReduceMusicLevel()
+    {
+        if(musicLevel != 0)
+        {
+            musicLevel--;
+            OnMusicLevelChanging.Invoke(musicLevel);
+        }
     }
 
 }
