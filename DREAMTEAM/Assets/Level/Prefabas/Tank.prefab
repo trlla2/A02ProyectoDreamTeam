@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  rotationSpeed: 2
+  rotationSpeed: 1.75
   movementSfx: {fileID: 6378730187570512939}
   maxRandomPitchSfx: 1.2
   minRandomPitchSfx: 0.98
