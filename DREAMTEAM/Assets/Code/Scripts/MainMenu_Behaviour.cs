@@ -40,25 +40,27 @@ public class MainMenu_Behaviour : MonoBehaviour
 
         Cursor.visible = true;// show cursor
         Cursor.lockState = CursorLockMode.None;// unlock cursor
+
+        mainMenu.GetComponent<TranslatorUI>().ToTarget(); // start animation
     }
 
-    public void OnBack()
+    public void OnBack()// Show Main Menu, Hide all other panels
     {
-        mainMenu.SetActive(true); // Show Main Menu, Hide all other panels
-        settings.SetActive(false);
-        credits.SetActive(false);
+        mainMenu.GetComponent<TranslatorUI>().ToTarget();
+        settings.GetComponent<TranslatorUI>().ToOrigin();
+        credits.GetComponent<TranslatorUI>().ToOrigin();
     }
-    public void OnSettings()
+    public void OnSettings() // Show Settings, Hide all other panels
     {
-        settings.SetActive(true); // Show Settings, Hide all other panels
-        mainMenu.SetActive(false);
-        credits.SetActive(false);
+        mainMenu.GetComponent<TranslatorUI>().ToOrigin();
+        settings.GetComponent<TranslatorUI>().ToTarget();
+        credits.GetComponent<TranslatorUI>().ToOrigin();
     }
-    public void OnCredits()
+    public void OnCredits() // Show Credits, Hide all other panels
     {
-        credits.SetActive(true); // Show Credits, Hide all other panels
-        mainMenu.SetActive(false);
-        settings.SetActive(false);
+        mainMenu.GetComponent<TranslatorUI>().ToOrigin();
+        settings.GetComponent<TranslatorUI>().ToOrigin();
+        credits.GetComponent<TranslatorUI>().ToTarget();
     }
     public void OnPlay()
     {
