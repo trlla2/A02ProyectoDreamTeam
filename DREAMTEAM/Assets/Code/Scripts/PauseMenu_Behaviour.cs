@@ -4,15 +4,17 @@ using UnityEngine.SceneManagement;
 public class PauseMenu_Behaviour : MonoBehaviour
 {
 
-    //[Header("sfx")] ---------------------------------------------- Depenendcy SFX
-    //[SerializeField]
-    //private AudioSource clickSFX;
+    [Header("SETUP")]
+    [SerializeField]
+    
+    private TranslatorUI translatorUI;
 
     private void OnEnable()
     {
         Time.timeScale = 0; // Pause Time Scale
         Cursor.visible = true;// show cursor
         Cursor.lockState = CursorLockMode.None;// unlock cursor
+        translatorUI.ToTarget();
     }
 
     private void OnDisable()
@@ -20,6 +22,8 @@ public class PauseMenu_Behaviour : MonoBehaviour
         Time.timeScale = 1; // Set normal TimeScale
         Cursor.visible = false;// unshow cursor
         Cursor.lockState = CursorLockMode.Locked;// lock cursor
+        
+
     }
 
     public void Resume()
