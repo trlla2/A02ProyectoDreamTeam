@@ -13,6 +13,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score2;
     [SerializeField] private TextMeshProUGUI leftStages;
     [SerializeField] private TextMeshProUGUI gameOverTitlte;
+    [SerializeField] private GameObject gameOver;
+    private bool endGame;
     [SerializeField] private GameObject pauseMenu;
 
     private void Awake()
@@ -25,6 +27,8 @@ public class ScoreManager : MonoBehaviour
         leftStages.text = "Left Stages: " + GameManager.Instance.GetLeftStages();
         gameOverTitlte.text = "";
 
+
+        GameManager.Instance.OnEndGame += SetNextStage;
     }
 
     void Update()
@@ -37,11 +41,24 @@ public class ScoreManager : MonoBehaviour
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
 
-        if (GameManager.Instance.GetEndGame())
+        if (endGame)
         {
             int tmp = (int)GameManager.Instance.GetTimeForNextStage();
 
             gameOverTitlte.text = "Next stage in: " + tmp.ToString();
         }
+    }
+
+    private void SetNextStage (bool timeEventWarnig)
+    {
+        Debug.Log("a");
+        endGame = true;
+        gameOver.GetComponent<TranslatorUI>().ToTarget();
+    }
+
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnEndGame -= SetNextStage;
     }
 }

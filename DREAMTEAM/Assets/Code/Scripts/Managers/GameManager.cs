@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<string> biomesMaps;
 
     private bool endGame = false;
+    public delegate void GetEndGame(bool endGame);
+    public event GetEndGame OnEndGame;
     private bool nextStage = false;
 
     [HideInInspector]
@@ -101,6 +103,7 @@ public class GameManager : MonoBehaviour
             if(timerNextStage <= 0)
             {
                 nextStage = true;
+                OnEndGame.Invoke(nextStage);
             }
         }
 
@@ -230,11 +233,6 @@ public class GameManager : MonoBehaviour
         EndGame(); // end game function
     }
 
-    
-    public bool GetEndGame()
-    {
-        return endGame;
-    }
     public void GoNextStage()
     {
         nextStage = true; // Go to the next stage
