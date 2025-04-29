@@ -54,13 +54,17 @@ public class Bullet : MonoBehaviour
                     }
                     Destroy(this.gameObject);
                 }
+                else if(hit.collider.gameObject.GetComponent<Interactable>())
+                {
+                    hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
+                }
                 else
                 {
                     GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
-                    Destroy(temp,  temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
                     if (bounces >= bounceTime)
                     {
-                        DestroyImmediate(this.gameObject);
+                        DestroyImmediate(gameObject);
                     }
                     else
                     {

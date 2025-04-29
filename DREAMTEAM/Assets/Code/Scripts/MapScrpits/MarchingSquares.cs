@@ -90,8 +90,8 @@ public class MarchingSquares : MonoBehaviour
         CreateMesh();
         UpdatePolygonCollider();
         CreateWallMesh();
-        textureGenerator.Initial();
         GetSpawnablePositions();
+        textureGenerator.Initial();
         SpawnTanks();
     }
     private void GetSpawnablePositions()
