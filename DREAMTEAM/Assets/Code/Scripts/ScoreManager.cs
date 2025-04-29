@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Mathematics;
 
 
 public class ScoreManager : MonoBehaviour
@@ -11,18 +12,19 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI score1;
     [SerializeField] private TextMeshProUGUI score2;
     [SerializeField] private TextMeshProUGUI leftStages;
-    [SerializeField] private GameObject gameOverTitlte;
+    [SerializeField] private TextMeshProUGUI gameOverTitlte;
     [SerializeField] private GameObject pauseMenu;
 
     private void Awake()
     {
-        gameOverTitlte.SetActive(false);
         pauseMenu.SetActive(false);
     }
 
     private void Start()
     {
         leftStages.text = "Left Stages: " + GameManager.Instance.GetLeftStages();
+        gameOverTitlte.text = "";
+
     }
 
     void Update()
@@ -37,7 +39,9 @@ public class ScoreManager : MonoBehaviour
 
         if (GameManager.Instance.GetEndGame())
         {
-            gameOverTitlte.SetActive(true);
+            int tmp = (int)GameManager.Instance.GetTimeForNextStage();
+
+            gameOverTitlte.text = "Next stage in: " + tmp.ToString();
         }
     }
 }

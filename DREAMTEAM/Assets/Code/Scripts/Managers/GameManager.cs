@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
     [SerializeField] private static float timeForNextStage = 3f;
-    private static float timerNextStage = 0;
+    private static float timerNextStage;
     [SerializeField] private List<string> biomesMaps;
 
     private bool endGame = false;
@@ -88,14 +88,17 @@ public class GameManager : MonoBehaviour
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
         }
+
+
+        timerNextStage = timeForNextStage; 
     }
 
     private void Update()
     {
         if (endGame)
-        {// timer chungo para cambiar de escena
-            timerNextStage += Time.deltaTime;
-            if(timerNextStage >= timeForNextStage)
+        {
+            timerNextStage -= Time.deltaTime;
+            if(timerNextStage <= 0)
             {
                 nextStage = true;
             }
@@ -175,7 +178,7 @@ public class GameManager : MonoBehaviour
         endGame = true; // set gameend true
 
         //Reset variables
-        timerNextStage = 0;
+        timerNextStage = timeForNextStage;
         timerToStartTimeEvent = 0;
         Spawned = false;
         timeEventWarnig = false;
@@ -192,13 +195,11 @@ public class GameManager : MonoBehaviour
         //Rotation temp2
         Vector2 direction = temp1.transform.position - temp2.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
         temp2.transform.rotation = Quaternion.Euler(0f,0f, rotationOffset + (angle));
 
         //Rotation temp1
         Vector2 direction2 = temp2.transform.position - temp1.transform.position;
         float angle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
-        Debug.Log(angle2);
         temp1.transform.rotation = Quaternion.Euler(0f, 0f, rotationOffset + (angle2));
 
         //spawn tanks
@@ -254,6 +255,10 @@ public class GameManager : MonoBehaviour
         return leftStages;
     }
     
+    public float GetTimeForNextStage()
+    {
+        return timerNextStage;
+    }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
     {
         this.validPositions = validPositions;
