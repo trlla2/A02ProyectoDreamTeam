@@ -169,6 +169,9 @@ MonoBehaviour:
   timeToStartTimeEvent: 30
   timeEventDuration: 10
   timeForTimeEventWarning: 5
+  spawnTanksOnStart: 0
+  tank1SpawnPos: {x: 0, y: 0, z: 0}
+  tank2SpawnPos: {x: 0, y: 0, z: 0}
 --- !u!4 &520137841
 Transform:
   m_ObjectHideFlags: 0
@@ -1879,9 +1882,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 719678959762123418, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1058927421918514136, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3476280536392494914, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
+      propertyPath: m_text
+      value: NEXT STAGE IN 3 2 1...
       objectReference: {fileID: 0}
     - target: {fileID: 4226282182829152916, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
       propertyPath: m_Name

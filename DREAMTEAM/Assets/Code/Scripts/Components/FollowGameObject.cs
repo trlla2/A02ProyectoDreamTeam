@@ -25,7 +25,7 @@ public class PlayerNumberUI : MonoBehaviour
         if (followGameObject != null)
         {
             transform.position = followGameObject.transform.position + offset;
-            transform.rotation = Quaternion.Euler(0f, 0f, 180);
+            transform.rotation = Quaternion.Euler(0f, 0f, 180); // rotation offset
         }
     }
 
