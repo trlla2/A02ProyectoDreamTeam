@@ -62,6 +62,12 @@ public class GameManager : MonoBehaviour
     public delegate void TimeEventWarning(bool timeEventWarnig);
     public event TimeEventWarning OnTimeEventWarning;
 
+
+    [Header("DEBUG")]
+    [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
+    [SerializeField] private Vector3 tank1SpawnPos = Vector3.zero;
+    [SerializeField] private Vector3 tank2SpawnPos = Vector3.zero;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -74,6 +80,14 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+    }
+
+    private void Start()
+    {
+        if (spawnTanksOnStart) // Debug spawn
+        {
+            GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
+        }
     }
 
     private void Update()
@@ -140,6 +154,8 @@ public class GameManager : MonoBehaviour
         {
             timerToStartTimeEvent += Time.deltaTime;
         }
+
+        
     }
 
     private void SpawnPowerUp(Vector2 spawnPoint)

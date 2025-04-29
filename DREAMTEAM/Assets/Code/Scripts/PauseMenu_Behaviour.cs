@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +15,18 @@ public class PauseMenu_Behaviour : MonoBehaviour
         Time.timeScale = 0; // Pause Time Scale
         Cursor.visible = true;// show cursor
         Cursor.lockState = CursorLockMode.None;// unlock cursor
-        translatorUI.ToTarget();
+        //OnNextFrameEnable();
+    }
+
+    private async void OnNextFrameEnable()
+    {
+        await Task.Yield(); // wait unitl next turn
+        translatorUI.ToTarget();// start animation
+    }
+
+    private void Start()
+    {
+        //translatorUI.ToTarget();// start animation
     }
 
     private void OnDisable()

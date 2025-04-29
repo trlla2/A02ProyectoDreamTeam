@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+
 
 public class Tank_Behaviour : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class Tank_Behaviour : MonoBehaviour
 
     [SerializeField] private GameObject explosionParticles;
 
+    [SerializeField] private GameObject playerNumberGameObj;
+
+    [Header("Player sprites")]
     private SpriteRenderer spriteRenderer;
     [SerializeField] private SpriteRenderer topRenderer;
     [SerializeField] private SpriteRenderer barrelRenderer;
@@ -23,9 +28,16 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private Material tank1_barrel_material;
     [SerializeField] private Material tank2_barrel_material;
 
-    void Start()
+    
+    
+    
+    
+
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+
 
         if (GetPlayer() == 1)
         {
@@ -48,6 +60,10 @@ public class Tank_Behaviour : MonoBehaviour
             barrelRenderer.sprite = tank2_barrel;
             barrelRenderer.material = tank2_barrel_material;
         }
+
+        // UI that show the number of the player
+        GameObject temp = Instantiate(playerNumberGameObj, this.transform.position, Quaternion.identity);
+        temp.GetComponent<PlayerNumberUI>().SetPlayer(this.gameObject);
     }
 
 
