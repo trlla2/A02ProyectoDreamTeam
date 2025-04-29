@@ -58,6 +58,18 @@ public class Weapon : MonoBehaviour
             Shoot();
             StartCoroutine(FireRateP2());
         }
+
+        Vector2 fireDirection = firePoint.transform.up; // Dirección hacia donde apunta
+        RaycastHit2D hit = Physics2D.Raycast(firePoint.transform.position, fireDirection, 10f); // Distancia larga para prueba
+
+        Debug.DrawRay(firePoint.transform.position, fireDirection * 10f, Color.red);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Apuntando a: " + hit.collider.name);
+            // Aquí podrías guardar la posición de impacto o hacer otras cosas
+        }
+
     }
     IEnumerator FireRateP1()
     {
