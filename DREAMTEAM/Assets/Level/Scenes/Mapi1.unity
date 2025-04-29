@@ -256,6 +256,16 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
     - {fileID: 11400000, guid: 46e8d7e26193f1447a2b4d18310e32d0, type: 2}
   marchingSquares: {fileID: 975575566}
+  regionDetector: {fileID: 975575568}
+  OutOfBounds:
+  - {fileID: 11400000, guid: 70d336cd84f89b34db0adf9c9637617b, type: 2}
+  - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
+  - {fileID: 11400000, guid: 80d8ae52af64ded4a8fff9d53e608910, type: 2}
+  - {fileID: 11400000, guid: a53766b6b47121842b5e586807004425, type: 2}
+  - {fileID: 11400000, guid: 255257ad60ee6b54e90bc991288517ae, type: 2}
+  - {fileID: 11400000, guid: fd398d9e9b9231649b3bb0047f080428, type: 2}
+  - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
+  Default: {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
   gridResolution: 0.16
 --- !u!1 &924276294
 GameObject:
