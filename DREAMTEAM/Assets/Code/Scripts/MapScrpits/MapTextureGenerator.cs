@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,6 +19,11 @@ public class MapTextureGenerator : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private MarchingSquares marchingSquares;
+    [SerializeField] private RegionDetector regionDetector;
+
+    [Header("Deitals")]
+    [SerializeField] private Tile[] OutOfBounds;
+    [SerializeField] private Tile Default;
 
     private int gridSizeX;
     private int gridSizeY;
@@ -39,6 +46,16 @@ public class MapTextureGenerator : MonoBehaviour
     {
         float[,] HeightMap = marchingSquares.heightMap;
 
+        List<Vector2Int> BiggestRegion = new List<Vector2Int> { };
+
+        foreach (List<Vector2Int> region in regionDetector.Regions)
+        {
+            if (region.Count > BiggestRegion.Count)
+            {
+                BiggestRegion = region;
+            }
+        }
+
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -46,8 +63,27 @@ public class MapTextureGenerator : MonoBehaviour
                 Vector3Int tilePosition = new Vector3Int(x, y, 0);
 
                 float heightValue = HeightMap[x, y];
-                AssignTile(heightValue, tilePosition);
+                if (BiggestRegion.Contains((Vector2Int)tilePosition))
+                {
+                    AssignTile(heightValue, tilePosition);
+                }
+                else
+                {
+                    AssignRandomOutTile(heightValue, tilePosition);
+                }
             }
+        }
+    }
+
+    void AssignRandomOutTile(float height, Vector3Int position)
+    {
+        if (height <= marchingSquares.heightThreshold)
+        {
+            backgroundTilemap.SetTile(position, OutOfBounds[Random.Range(0, OutOfBounds.Length)]);
+        }
+        else 
+        {
+            backgroundTilemap.SetTile(position, Default);
         }
     }
 
