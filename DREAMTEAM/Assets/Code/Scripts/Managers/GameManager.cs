@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour
             if(timerNextStage <= 0)
             {
                 nextStage = true;
-                OnEndGame.Invoke(nextStage);
             }
         }
 
@@ -179,6 +178,7 @@ public class GameManager : MonoBehaviour
     {
         // show for UI game ended             
         endGame = true; // set gameend true
+        OnEndGame.Invoke(endGame);
 
         //Reset variables
         timerNextStage = timeForNextStage;

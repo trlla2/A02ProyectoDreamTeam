@@ -1907,6 +1907,10 @@ PrefabInstance:
       propertyPath: displacement.x
       value: -3000
       objectReference: {fileID: 0}
+    - target: {fileID: 7423734943606047945, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
+      propertyPath: animationDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7900019567523256555, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
       propertyPath: gameOver
       value: 

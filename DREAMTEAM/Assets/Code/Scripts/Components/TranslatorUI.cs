@@ -64,6 +64,7 @@ public class TranslatorUI : MonoBehaviour
             currentTime += Time.deltaTime;
 
             SetPositionForCurrentTime();
+            Debug.Log("Animation time: "+currentTime);
 
 
             yield return new WaitForEndOfFrame();

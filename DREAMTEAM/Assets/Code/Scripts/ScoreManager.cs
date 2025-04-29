@@ -51,7 +51,6 @@ public class ScoreManager : MonoBehaviour
 
     private void SetNextStage (bool timeEventWarnig)
     {
-        Debug.Log("a");
         endGame = true;
         gameOver.GetComponent<TranslatorUI>().ToTarget();
     }
