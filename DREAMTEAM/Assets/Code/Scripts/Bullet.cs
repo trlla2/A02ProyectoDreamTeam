@@ -40,19 +40,20 @@ public class Bullet : MonoBehaviour
         {
             if (hit.collider != null && !hit.collider.isTrigger)
             {
-                if (hit.collider.gameObject.GetComponent<Tank_Behaviour>())
+                Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
+                if (behaviour != null)
                 {
-                    if (hit.collider.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 1)
+                    if (behaviour.GetPlayer() == 1)
                     {
                         GameManager.Instance.GetTank1IsDead();
-                        hit.collider.gameObject.GetComponent<Tank_Behaviour>().Dead();
+                        behaviour.Dead();
                     }
-                    else if (hit.collider.gameObject.GetComponent<Tank_Behaviour>().GetPlayer() == 2)
+                    else if (behaviour.GetPlayer() == 2)
                     {
                         GameManager.Instance.GetTank2IsDead();
-                        hit.collider.gameObject.GetComponent<Tank_Behaviour>().Dead();
+                        behaviour.Dead();
                     }
-                    Destroy(this.gameObject);
+                    Destroy(gameObject);
                 }
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
