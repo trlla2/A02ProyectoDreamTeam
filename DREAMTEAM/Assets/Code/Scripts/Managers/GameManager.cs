@@ -49,9 +49,9 @@ public class GameManager : MonoBehaviour
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
+    [SerializeField] private float spawnPowerUpTime = 2.5f;
+    [SerializeField, Min(0)] private int numMaxPowerUps = 5;
     [SerializeField] private List<PowerUpEffect> powerUpEffects;
-    [SerializeField] private float spawnPowerUpTime = 5;
-    [SerializeField, Min(0)] private const int numMaxPowerUps = 5;
     private int numPowerUps = 0;
     private float spawnPowerUpTimer = 0;
     private List<Vector2Int> validPositions = new List<Vector2Int>();
@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("leftStages: " + leftStages);
             if (leftStages > 0)
             {
+                ResetVaiables();
                 // Random between all biomes maps
                 int nextMap = Random.Range(0, biomesMaps.Count - 1);
 
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Debug.Log(numPowerUps <= numMaxPowerUps ? "Spawn powerup" : "Cant spawn a pwUp");
             if(numPowerUps <= numMaxPowerUps)
             {
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
@@ -187,14 +189,19 @@ public class GameManager : MonoBehaviour
         endGame = true; // set gameend true
         OnEndGame.Invoke(endGame);
 
+        
+    }
+
+    private void ResetVaiables()
+    {
         //Reset variables
         timerNextStage = timeForNextStage;
         timerToStartTimeEvent = 0;
         Spawned = false;
         timeEventWarnig = false;
         spawnPowerUpTimer = 0;
+        numPowerUps = 0;
     }
-
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
         if (Spawned) return;
@@ -263,6 +270,11 @@ public class GameManager : MonoBehaviour
     public float GetTimeForNextStage()
     {
         return timerNextStage;
+    }
+
+    public void DecreaseNumPowerUps()
+    {
+        numPowerUps--;
     }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
     {

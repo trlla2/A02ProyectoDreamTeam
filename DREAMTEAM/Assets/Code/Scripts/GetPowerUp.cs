@@ -34,6 +34,7 @@ public class GetPowerUp : MonoBehaviour
         {
             Debug.Log("Collision");
             powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
+            GameManager.Instance.DecreaseNumPowerUps(); 
             Destroy(gameObject);  // Destruye el Power-Up despu�s de activarlo
         }
     }

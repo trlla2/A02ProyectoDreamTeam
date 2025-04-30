@@ -164,7 +164,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b19d630440333ff46a35e53af6369447, type: 2}
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
   - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
-  spawnPowerUpTime: 5
+  spawnPowerUpTime: 2
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
   timeToStartTimeEvent: 30
   timeEventDuration: 10
