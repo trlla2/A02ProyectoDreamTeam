@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviour
 {
 
- // Manager stuff
+    // Manager stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject powerUpBase;
     [SerializeField] private List<PowerUpEffect> powerUpEffects;
     [SerializeField] private float spawnPowerUpTime = 5;
+    [SerializeField, Min(0)] private const int numMaxPowerUps = 5;
+    private int numPowerUps = 0;
     private float spawnPowerUpTimer = 0;
     private List<Vector2Int> validPositions = new List<Vector2Int>();
 
@@ -137,8 +139,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP 
-            spawnPowerUpTimer = 0; // Reset timer
+            if(numPowerUps <= numMaxPowerUps)
+            {
+                SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
+                spawnPowerUpTimer = 0; // Reset timer
+                numPowerUps++;
+            }
+            
         }
 
 
