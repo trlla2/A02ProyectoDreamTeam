@@ -6,6 +6,7 @@ using UnityEngine;
 public class GetPowerUp : MonoBehaviour
 {
     [SerializeField] public PowerUpEffect powerUpEffect;  // Referencia al efecto de PowerUp
+    [SerializeField] private GameObject SpawnParticles;
 
     private SpriteRenderer spriteRenderer;
     private void Awake()
@@ -17,6 +18,12 @@ public class GetPowerUp : MonoBehaviour
             spriteRenderer.sprite = powerUpEffect.powerUpSprite; // Cambia el sprite seg�n el efecto
         }
 
+    }
+
+    private void Start()
+    {
+        GameObject temp = Instantiate(SpawnParticles, transform.position, transform.rotation); // spawn particles and sfx
+        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
     }
 
     private void OnTriggerEnter(Collider trigger)
