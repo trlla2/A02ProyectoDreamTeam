@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu_Behaviour : MonoBehaviour
@@ -66,7 +65,8 @@ public class MainMenu_Behaviour : MonoBehaviour
     {
         Cursor.visible = false;// unshow cursor
         Cursor.lockState = CursorLockMode.Locked;// lock cursor
-        SceneManager.LoadScene(playSceneName);
+        TransitionManager.Instance.LoadScene(playSceneName);
+
     }
     public void OnExit()
     {

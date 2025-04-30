@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 
 public class GameManager : MonoBehaviour 
@@ -99,7 +99,8 @@ public class GameManager : MonoBehaviour
                 leftStages--; // left stages too end the game
                 Debug.Log("NxtMap: " + nextMap);
                 Debug.Log("LeftStages: " + leftStages);
-                SceneManager.LoadScene(biomesMaps[nextMap]);
+
+                TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
             }
             else
             {
@@ -108,7 +109,8 @@ public class GameManager : MonoBehaviour
                 player2Points = 0;
                 Cursor.visible = true;// show cursor
                 Cursor.lockState = CursorLockMode.None;// unlock cursor
-                SceneManager.LoadScene("MainMenu"); // Go to menu
+                TransitionManager.Instance.LoadScene("MainMenu");// Go to menu
+
             }
         }
 
