@@ -196,7 +196,6 @@ public class GameManager : MonoBehaviour
     {
         //Reset variables
         timerNextStage = timeForNextStage;
-        timerToStartTimeEvent = 0;
         Spawned = false;
         timeEventWarnig = false;
         spawnPowerUpTimer = 0;
