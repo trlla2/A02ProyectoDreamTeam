@@ -167,7 +167,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
   - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
-  timeToStartTimeEvent: 5
+  timeToStartTimeEvent: 10
   timeEventDuration: 5
   timeForTimeEventWarning: 2
   spawnTanksOnStart: 0

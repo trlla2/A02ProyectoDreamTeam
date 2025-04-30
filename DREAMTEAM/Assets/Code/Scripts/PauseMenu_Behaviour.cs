@@ -5,23 +5,12 @@ using UnityEngine.SceneManagement;
 public class PauseMenu_Behaviour : MonoBehaviour
 {
 
-    [Header("SETUP")]
-    [SerializeField]
-    
-    private TranslatorUI translatorUI;
 
     private void OnEnable()
     {
         Time.timeScale = 0; // Pause Time Scale
         Cursor.visible = true;// show cursor
         Cursor.lockState = CursorLockMode.None;// unlock cursor
-        //OnNextFrameEnable();
-    }
-
-    private async void OnNextFrameEnable()
-    {
-        await Task.Yield(); // wait unitl next turn
-        translatorUI.ToTarget();// start animation
     }
 
     private void Start()
