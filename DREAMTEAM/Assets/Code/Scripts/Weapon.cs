@@ -31,6 +31,11 @@ public class Weapon : MonoBehaviour
     private bool isTripleShotActive = false;
     private float powerTime = 5f;
 
+    //Hitscan laser
+    private bool isHitscanLaserActive = false;
+    private HitscanLaser hitscanLaserPowerUp;
+    //
+
     private bool isBurstFireActive = false;
     private int burstCount;
     private float burstDelay;
@@ -94,6 +99,19 @@ public class Weapon : MonoBehaviour
                 if (burstCoroutine != null) StopCoroutine(burstCoroutine);
                 burstCoroutine = StartCoroutine(BurstFireRoutine(firePoint.transform.position, firePoint.transform.rotation));
             }
+            else if (isHitscanLaserActive && hitscanLaserPowerUp != null)
+            {
+                Vector3 origin = firePoint.transform.position;
+                Vector3 direction = firePoint.transform.up;
+                hitscanLaserPowerUp.FireLaser(origin, direction);
+
+                //shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
+                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
+                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+                OnShoot.Invoke();
+
+                return;
+            }
             else
             {
                 GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
@@ -136,6 +154,12 @@ public class Weapon : MonoBehaviour
             burstCount = burstFire.BulletsPerBurst;
             burstDelay = burstFire.DelayBetweenShots;
         }
+        else if (currentPowerUp is HitscanLaser hitscan) //hitscan laser
+        {
+            Debug.Log("Active HitscanLaser");
+            isHitscanLaserActive = true;
+            hitscanLaserPowerUp = hitscan;
+        }
 
         StartCoroutine(DisableAfterTime(powerTime));
         Debug.Log("Disabled PowerUp");
@@ -163,6 +187,10 @@ public class Weapon : MonoBehaviour
         {
             isBurstFireActive = false;
             if (burstCoroutine != null) StopCoroutine(burstCoroutine);
+        }
+        else if (isHitscanLaserActive)
+        {
+            isHitscanLaserActive = false;
         }
     }
     private IEnumerator BurstFireRoutine(Vector3 position, Quaternion rotation)
