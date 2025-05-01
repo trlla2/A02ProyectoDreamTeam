@@ -3,9 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class TankMovement : MonoBehaviour
 {
-    [Header("Setup")]
-    [SerializeField] private float speed;
-    [SerializeField] private float rotationSpeed;
+    [Header("Movement Settings")]
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float rotationSpeed = 100f;
+
+    [Header("SFX Settings")]
     [SerializeField] private AudioSource movementSfx;
     [SerializeField, Range(0, 3)] private float maxRandomPitchSfx = 1.2f;
     [SerializeField, Range(0, 3)] private float minRandomPitchSfx = 0.98f;
@@ -15,76 +17,65 @@ public class TankMovement : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private float initialSpeed;
-    private bool invertControls = false; // <- NUEVO
+    private bool invertControls = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         initialSpeed = speed;
-
-        movementSfx.mute = true; // mute SFX loop
-
+        movementSfx.mute = true;
     }
 
     void FixedUpdate()
     {
-        if (GetComponent<Tank_Behaviour>().GetPlayer() == 1) // Player 1 controls
+        HandlePlayerInput();
+        ApplyMovement();
+    }
+
+    private void HandlePlayerInput()
+    {
+        int player = GetComponent<Tank_Behaviour>().GetPlayer();
+
+        if (player == 1) // Player 1 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalAD");
             verticalInput = Input.GetAxisRaw("VerticalWS");
-
-            if(Input.GetAxisRaw("HorizontalAD") != 0 || Input.GetAxisRaw("VerticalWS") != 0) // if ure moving
-            {
-                movementSfx.mute = false; // Unmute SFX loop
-                movementSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); // Random PitchSound
-            }
-            else
-            {
-                movementSfx.mute = true; // mute SFX loop
-            }
         }
-        else if (GetComponent<Tank_Behaviour>().GetPlayer() == 2) // Player 2 controls
+        else if (player == 2) // Player 2 controls
         {
             horizontalInput = Input.GetAxisRaw("HorizontalKeys");
             verticalInput = Input.GetAxisRaw("VerticalKeys");
-
-            if (Input.GetAxisRaw("HorizontalKeys") != 0 || Input.GetAxisRaw("VerticalKeys") != 0) // if ure moving
-            {
-                movementSfx.mute = false; // Unmute SFX loop
-                movementSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); // Random PitchSound
-            }
-            else
-            {
-                movementSfx.mute = true; // mute SFX loop
-            }
         }
 
-        // Invertir controles si está activado
+        // Apply control inversion
         if (invertControls)
         {
             horizontalInput *= -1;
             verticalInput *= -1;
         }
 
-        // Apply global speed modifier
+        // Handle SFX
+        movementSfx.mute = (horizontalInput == 0 && verticalInput == 0);
+        if (!movementSfx.mute)
+        {
+            movementSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
+        }
+    }
+
+    private void ApplyMovement()
+    {
         float currentSpeed = speed * TimeEvent.speedModifier;
         float currentRotationSpeed = rotationSpeed * TimeEvent.speedModifier;
 
-        // Calculate movement
-        float verticalVel = verticalInput * Time.deltaTime * currentSpeed * 100.0f;
-        rotation += horizontalInput * Time.deltaTime * currentRotationSpeed * 100.0f;
+        float verticalVel = verticalInput * Time.deltaTime * currentSpeed * 100f;
+        rotation += horizontalInput * Time.deltaTime * currentRotationSpeed * 100f;
 
-        // Apply movement
         rb.velocity = transform.up * verticalVel;
         rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
     }
 
+    public float GetInitialSpeed() => initialSpeed;
 
-    // Métodos públicos llamados desde TimeEventControls
-    public float GetInitialSpeed()
-    {
-        return initialSpeed;
-    }
     public void ModifyControls(bool invert, float newSpeed, float duration)
     {
         invertControls = invert;
