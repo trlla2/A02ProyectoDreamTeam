@@ -15,6 +15,7 @@ public class TankMovement : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private float initialSpeed;
+    private bool invertControls = false; // <- NUEVO
 
     void Start()
     {
@@ -58,6 +59,13 @@ public class TankMovement : MonoBehaviour
             }
         }
 
+        // Invertir controles si está activado
+        if (invertControls)
+        {
+            horizontalInput *= -1;
+            verticalInput *= -1;
+        }
+
         // Apply global speed modifier
         float currentSpeed = speed * TimeEvent.speedModifier;
         float currentRotationSpeed = rotationSpeed * TimeEvent.speedModifier;
@@ -69,5 +77,26 @@ public class TankMovement : MonoBehaviour
         // Apply movement
         rb.velocity = transform.up * verticalVel;
         rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
+    }
+
+
+    // Métodos públicos llamados desde TimeEventControls
+    public float GetInitialSpeed()
+    {
+        return initialSpeed;
+    }
+    public void ModifyControls(bool invert, float newSpeed, float duration)
+    {
+        invertControls = invert;
+        speed = newSpeed;
+        StopAllCoroutines();
+        StartCoroutine(RestoreControlsAfter(duration));
+    }
+
+    private System.Collections.IEnumerator RestoreControlsAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        invertControls = false;
+        speed = initialSpeed;
     }
 }
