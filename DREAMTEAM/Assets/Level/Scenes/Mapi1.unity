@@ -1480,6 +1480,67 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1253844337}
+--- !u!1001 &1193465619
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.4561615
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.9610379
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.2037454
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317813707974232523, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3349693387204184369, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
+      propertyPath: m_Name
+      value: Adavtative music
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 941ea59af02a8b649b3910a7955968d2, type: 3}
 --- !u!43 &1253844337
 Mesh:
   m_ObjectHideFlags: 0

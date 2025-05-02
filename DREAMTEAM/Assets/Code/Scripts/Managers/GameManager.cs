@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     //Adabtative Music Stuff
     private int musicLevel = 0;
-    public delegate void musicLevelEvent(int timeEventWarnig);
+    public delegate void musicLevelEvent(int musicLevel);
     public event musicLevelEvent OnMusicLevelChanging;
     private void Awake()
     {
@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
                 spawnPowerUpTimer = 0; // Reset timer
                 numPowerUps++;
+                AddMusicLevel();
             }
             
         }
@@ -299,15 +300,15 @@ public class GameManager : MonoBehaviour
         this.GridRes = gridRes;
     }
 
-    public void AddMusicLevel()
+    private void AddMusicLevel()
     {
-        if (musicLevel <= 9)
+        if (musicLevel <= 6) 
         { // MaxMusicLevelCases
             musicLevel++;
             OnMusicLevelChanging.Invoke(musicLevel);
         }
     }
-    
+
     public void ReduceMusicLevel()
     {
         if(musicLevel != 0)

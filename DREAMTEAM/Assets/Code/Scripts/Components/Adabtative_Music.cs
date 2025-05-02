@@ -9,9 +9,12 @@ public class Adabtative_Music : MonoBehaviour
     [SerializeField] private AudioSource agut;
     [SerializeField] private AudioSource kick;
 
+
     private void Start()
     {
         GameManager.Instance.OnMusicLevelChanging += ChangeMusicLevel; // Subscribe to the event
+
+        ChangeMusicLevel(0); //reset AS
     }
 
     private void ChangeMusicLevel(int musicLevel)
@@ -61,7 +64,7 @@ public class Adabtative_Music : MonoBehaviour
             case 5:
                 base_Theme.mute = false;
                 trumpets.mute = false;
-                marimba.mute = true;
+                marimba.mute = false;
                 tuba.mute = true;
                 agut.mute = false;
                 kick.mute = false;
@@ -69,25 +72,9 @@ public class Adabtative_Music : MonoBehaviour
             case 6:
                 base_Theme.mute = false;
                 trumpets.mute = false;
-                marimba.mute = false;
-                tuba.mute = true;
-                agut.mute = false;
-                kick.mute = false;
-                break;
-            case 7:
-                base_Theme.mute = false;
-                trumpets.mute = false;
                 marimba.mute = true;
                 tuba.mute = false;
                 agut.mute = true;
-                kick.mute = false;
-                break;
-            case 8:
-                base_Theme.mute = false;
-                trumpets.mute = false;
-                marimba.mute = true;
-                tuba.mute = false;
-                agut.mute = false;
                 kick.mute = false;
                 break;
             default:
