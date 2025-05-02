@@ -1,12 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 
-public class GameManager : MonoBehaviour 
+public class GameManager : MonoBehaviour
 {
 
- // Manager stuff
+    // Manager stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -25,10 +26,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
     [SerializeField] private static float timeForNextStage = 3f;
-    private static float timerNextStage = 0;
+    private static float timerNextStage;
     [SerializeField] private List<string> biomesMaps;
 
     private bool endGame = false;
+    public delegate void GetEndGame(bool endGame);
+    public event GetEndGame OnEndGame;
     private bool nextStage = false;
 
     [HideInInspector]
@@ -47,8 +50,10 @@ public class GameManager : MonoBehaviour
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
+    [SerializeField] private float spawnPowerUpTime = 2.5f;
+    [SerializeField, Min(0)] private int numMaxPowerUps = 5;
     [SerializeField] private List<PowerUpEffect> powerUpEffects;
-    [SerializeField] private float spawnPowerUpTime = 5;
+    private int numPowerUps = 0;
     private float spawnPowerUpTimer = 0;
     private List<Vector2Int> validPositions = new List<Vector2Int>();
 
@@ -61,6 +66,14 @@ public class GameManager : MonoBehaviour
     private bool timeEventWarnig = false;
     public delegate void TimeEventWarning(bool timeEventWarnig);
     public event TimeEventWarning OnTimeEventWarning;
+
+    [Header("HitPause Stuff")]
+    [SerializeField, Range(0,1)] private float freezeDuration = 0.2f;
+    private bool isForzen = false;
+    [Header("DEBUG")]
+    [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
+    [SerializeField] private Vector3 tank1SpawnPos = Vector3.zero;
+    [SerializeField] private Vector3 tank2SpawnPos = Vector3.zero;
 
     private void Awake()
     {
@@ -76,12 +89,23 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        if (spawnTanksOnStart) // Debug spawn
+        {
+            GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
+        }
+
+
+        timerNextStage = timeForNextStage; 
+    }
+
     private void Update()
     {
         if (endGame)
-        {// timer chungo para cambiar de escena
-            timerNextStage += Time.deltaTime;
-            if(timerNextStage >= timeForNextStage)
+        {
+            timerNextStage -= Time.deltaTime;
+            if(timerNextStage <= 0)
             {
                 nextStage = true;
             }
@@ -93,6 +117,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("leftStages: " + leftStages);
             if (leftStages > 0)
             {
+                ResetVaiables();
                 // Random between all biomes maps
                 int nextMap = Random.Range(0, biomesMaps.Count - 1);
 
@@ -120,8 +145,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count -1)]); // Spawn powerUP 
-            spawnPowerUpTimer = 0; // Reset timer
+            Debug.Log(numPowerUps <= numMaxPowerUps ? "Spawn powerup" : "Cant spawn a pwUp");
+            if(numPowerUps <= numMaxPowerUps)
+            {
+                SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
+                spawnPowerUpTimer = 0; // Reset timer
+                numPowerUps++;
+            }
+            
         }
 
 
@@ -142,6 +173,8 @@ public class GameManager : MonoBehaviour
         {
             timerToStartTimeEvent += Time.deltaTime;
         }
+
+        
     }
 
     private void SpawnPowerUp(Vector2 spawnPoint)
@@ -159,15 +192,40 @@ public class GameManager : MonoBehaviour
     {
         // show for UI game ended             
         endGame = true; // set gameend true
+        OnEndGame.Invoke(endGame);
 
+        
+    }
+
+    private void ResetVaiables()
+    {
         //Reset variables
-        timerNextStage = 0;
-        timerToStartTimeEvent = 0;
+        timerNextStage = timeForNextStage;
         Spawned = false;
         timeEventWarnig = false;
         spawnPowerUpTimer = 0;
+        numPowerUps = 0;
     }
 
+    private IEnumerator HitPause()
+    {
+        isForzen = true;
+        float originalTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+
+        yield return new WaitForSecondsRealtime(freezeDuration);
+        
+
+        Time.timeScale = originalTimeScale;
+        isForzen = false;
+    }
+    public void Freeze()
+    {
+        if (!isForzen) {
+            Debug.Log("Freeze");
+            StartCoroutine(HitPause());
+        }
+    }
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
         if (Spawned) return;
@@ -178,13 +236,11 @@ public class GameManager : MonoBehaviour
         //Rotation temp2
         Vector2 direction = temp1.transform.position - temp2.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
         temp2.transform.rotation = Quaternion.Euler(0f,0f, rotationOffset + (angle));
 
         //Rotation temp1
         Vector2 direction2 = temp2.transform.position - temp1.transform.position;
         float angle2 = Mathf.Atan2(direction2.y, direction2.x) * Mathf.Rad2Deg;
-        Debug.Log(angle2);
         temp1.transform.rotation = Quaternion.Euler(0f, 0f, rotationOffset + (angle2));
 
         //spawn tanks
@@ -216,30 +272,21 @@ public class GameManager : MonoBehaviour
     }
 
     
-    public bool GetEndGame()
-    {
-        return endGame;
-    }
-    public void GoNextStage()
-    {
-        nextStage = true; // Go to the next stage
-    }
 
-    public int GetPlayer1Points()
-    {
-        return player1Points;
-    }
+    public int GetPlayer1Points() { return player1Points; }
 
-    public int GetPlayer2Points()
-    {
-        return player2Points;
-    }
+    public int GetPlayer2Points() { return player2Points; }
 
-    public int GetLeftStages()
-    {
-        return leftStages;
-    }
+    public int GetLeftStages() { return leftStages; }
     
+    public float GetTimeForNextStage() { return timerNextStage; }
+
+    public bool IsForzen() { return isForzen; }
+
+    public void DecreaseNumPowerUps()
+    {
+        numPowerUps--;
+    }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
     {
         this.validPositions = validPositions;

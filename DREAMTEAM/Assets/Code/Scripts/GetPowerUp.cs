@@ -6,6 +6,7 @@ using UnityEngine;
 public class GetPowerUp : MonoBehaviour
 {
     [SerializeField] public PowerUpEffect powerUpEffect;  // Referencia al efecto de PowerUp
+    [SerializeField] private GameObject SpawnParticles;
 
     private SpriteRenderer spriteRenderer;
     private void Awake()
@@ -19,6 +20,12 @@ public class GetPowerUp : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        GameObject temp = Instantiate(SpawnParticles, transform.position, transform.rotation); // spawn particles and sfx
+        Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+    }
+
     private void OnTriggerEnter(Collider trigger)
     {
         Weapon weapon = trigger.gameObject.GetComponent<Weapon>(); // Verifica si el objeto tiene un Weapon
@@ -27,6 +34,7 @@ public class GetPowerUp : MonoBehaviour
         {
             Debug.Log("Collision");
             powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
+            GameManager.Instance.DecreaseNumPowerUps(); 
             Destroy(gameObject);  // Destruye el Power-Up despu�s de activarlo
         }
     }

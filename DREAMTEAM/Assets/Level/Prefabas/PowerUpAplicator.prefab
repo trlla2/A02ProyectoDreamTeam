@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpEffect: {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
+  SpawnParticles: {fileID: 3997845020440037559, guid: 4f88b580c11593140bf7e4b426fd51e1, type: 3}
 --- !u!135 &1587451930571336049
 SphereCollider:
   m_ObjectHideFlags: 0
