@@ -34,7 +34,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TImeEvent_Instrument
+  m_Name: trunpets_instrument
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 771fa21733c2bd94d9e51c0768db035f
   m_Children: []
@@ -57,6 +57,20 @@ AudioMixerEffectController:
   m_EffectID: 48cd8fde00e1d2e4a8b07504d0908d1f
   m_EffectName: Attenuation
   m_MixLevel: 6739778f6d7c05f499772f0ddd5ef995
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-5923009145617809798
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: c2826610e2ac84740849b68612352bbf
+  m_EffectName: Attenuation
+  m_MixLevel: 6384c8c52584b8246be3023bc298e4eb
   m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
@@ -142,6 +156,7 @@ AudioMixerController:
     - 771fa21733c2bd94d9e51c0768db035f
     - 7e0d24bf1d7a1c1409a9d075e4d61ae6
     - 98461f99ebe55664b98083f26942a79e
+    - e8f665aa5c4441c4eab53a5c25f2b944
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -212,7 +227,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PowerUp_Instrument
+  m_Name: kick_Instrument
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 23d64434d2b08d641bcdd52e7804faff
   m_Children: []
@@ -231,7 +246,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BiomeEvent_Instrument
+  m_Name: marima_Instrument
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 7e0d24bf1d7a1c1409a9d075e4d61ae6
   m_Children: []
@@ -244,13 +259,32 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &3190769162109356343
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Agut_Intrument
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: e8f665aa5c4441c4eab53a5c25f2b944
+  m_Children: []
+  m_Volume: 21411daf3c5f88844a7f0701f33cdc8c
+  m_Pitch: f427c2e081841d648819f03d9d276497
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -5923009145617809798}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &3577100577331793871
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FightMusic
+  m_Name: ThemeMusic
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 6252790e9248c6c4bae9e438ab02fc43
   m_Children:
@@ -258,6 +292,7 @@ AudioMixerGroupController:
   - {fileID: -6998569089457994539}
   - {fileID: 3080395263926441788}
   - {fileID: 5169253504981359734}
+  - {fileID: 3190769162109356343}
   m_Volume: 1812807d0de22234989791558af012fb
   m_Pitch: e73065fe5b6d7ca4eb25e5694032a588
   m_Send: 00000000000000000000000000000000
@@ -287,7 +322,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy_Instrument
+  m_Name: tuba_Instrument
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 98461f99ebe55664b98083f26942a79e
   m_Children: []

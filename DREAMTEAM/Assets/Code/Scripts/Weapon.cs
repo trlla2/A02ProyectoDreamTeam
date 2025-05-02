@@ -151,5 +151,6 @@ public class Weapon : MonoBehaviour
         {
             isTripleShotActive = false;
         }
+        GameManager.Instance.ReduceMusicLevel();
     }
 }
