@@ -90,4 +90,10 @@ public class TankMovement : MonoBehaviour
         invertControls = false;
         speed = initialSpeed;
     }
+    public void ResetToDefaultControls()
+    {
+        StopAllCoroutines();
+        invertControls = false;
+        speed = initialSpeed;
+    }
 }

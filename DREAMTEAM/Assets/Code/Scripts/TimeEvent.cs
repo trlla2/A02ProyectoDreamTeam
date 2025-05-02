@@ -5,6 +5,10 @@ using Unity.VisualScripting;
 public class TimeEvent
 {
     public static float speedModifier = 1f; // Global speed modifier
+    private Action action;
+    private float timer;
+    private GameObject timerObject;
+    private bool isDestroyed;
 
     private class TimerComponent : MonoBehaviour
     {
@@ -14,11 +18,6 @@ public class TimeEvent
         private void Update() => onUpdate?.Invoke();
         private void OnDestroy() => onDestroy?.Invoke();
     }
-
-    private Action action;
-    private float timer;
-    private GameObject timerObject;
-    private bool isDestroyed;
 
     public static TimeEvent Create(Action action, float timer, float speedMod = 1f)
     {

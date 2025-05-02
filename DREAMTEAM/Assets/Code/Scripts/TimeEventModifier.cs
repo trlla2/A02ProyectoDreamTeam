@@ -4,17 +4,35 @@ using UnityEngine;
 [RequireComponent(typeof(TankMovement))]
 public class TankControlModifier : MonoBehaviour
 {
-    public enum ModifierType { SpeedUp, SlowDown, InvertControls }
+    public enum ModifierType { SpeedUp, SlowDown, InvertControls, Shrink }
+
+    [Header("Shrink Settings")]
+    [SerializeField] private float shrinkScale = 0.5f;
 
     private TankMovement tankMovement;
+    private Vector3 originalScale;
+    private Coroutine currentEffectRoutine;
+    private Collider2D tankCollider;
 
-    private void Awake() => tankMovement = GetComponent<TankMovement>();
+    private void Awake()
+    {
+        tankMovement = GetComponent<TankMovement>();
+        originalScale = transform.localScale;
+        tankCollider = GetComponent<Collider2D>();
+    }
 
     public void ApplyRandomEffect(float duration)
     {
-        ModifierType randomEffect = (ModifierType)Random.Range(0, 3);
+        if (currentEffectRoutine != null)
+        {
+            StopCoroutine(currentEffectRoutine);
+            ResetToDefault();
+        }
+
+        ModifierType randomEffect = (ModifierType)Random.Range(0, 4);
         float speedMod = 1f;
         bool invert = false;
+        bool shrink = false;
 
         switch (randomEffect)
         {
@@ -30,19 +48,57 @@ public class TankControlModifier : MonoBehaviour
 
             case ModifierType.InvertControls:
                 invert = true;
-                speedMod = Random.Range(0.8f, 1.2f); // Slight speed variation
+                speedMod = 1f; // No speed change
                 Debug.Log("Controls Inverted!");
+                break;
+
+            case ModifierType.Shrink:
+                shrink = true;
+                speedMod = 1f; // No speed change
+                Debug.Log("Shrink Effect!");
                 break;
         }
 
-        // Apply the effect immediately
-        tankMovement.ModifyControls(invert, tankMovement.GetInitialSpeed() * speedMod, duration);
+        currentEffectRoutine = StartCoroutine(ApplyEffectRoutine(speedMod, invert, shrink, duration));
+    }
 
-        // Create timer to log when effect ends
-        TimeEvent.Create(
-            action: () => Debug.Log($"Effect ended: {randomEffect}"),
-            timer: duration,
-            speedMod: speedMod
-        );
+    private IEnumerator ApplyEffectRoutine(float speedMod, bool invert, bool shrink, float duration)
+    {
+        // Apply visual effect
+        if (shrink)
+        {
+            transform.localScale = originalScale * shrinkScale;
+            if (tankCollider != null)
+                tankCollider.transform.localScale = originalScale * shrinkScale;
+        }
+
+        // Only modify controls if not shrinking
+        if (!shrink)
+        {
+            float newSpeed = tankMovement.GetInitialSpeed() * speedMod;
+            tankMovement.ModifyControls(invert, newSpeed, duration);
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        ResetToDefault();
+        Debug.Log("Effect ended");
+        currentEffectRoutine = null;
+    }
+
+    private void ResetToDefault()
+    {
+        transform.localScale = originalScale;
+        tankMovement.ResetToDefaultControls();
+    }
+
+    public void CancelCurrentEffect()
+    {
+        if (currentEffectRoutine != null)
+        {
+            StopCoroutine(currentEffectRoutine);
+            ResetToDefault();
+            currentEffectRoutine = null;
+        }
     }
 }
