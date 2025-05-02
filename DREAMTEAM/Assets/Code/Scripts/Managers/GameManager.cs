@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -66,7 +67,9 @@ public class GameManager : MonoBehaviour
     public delegate void TimeEventWarning(bool timeEventWarnig);
     public event TimeEventWarning OnTimeEventWarning;
 
-
+    [Header("HitPause Stuff")]
+    [SerializeField, Range(0,1)] private float freezeDuration = 0.2f;
+    private bool isForzen = false;
     [Header("DEBUG")]
     [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
     [SerializeField] private Vector3 tank1SpawnPos = Vector3.zero;
@@ -201,6 +204,26 @@ public class GameManager : MonoBehaviour
         spawnPowerUpTimer = 0;
         numPowerUps = 0;
     }
+
+    private IEnumerator HitPause()
+    {
+        isForzen = true;
+        float originalTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+
+        yield return new WaitForSecondsRealtime(freezeDuration);
+        
+
+        Time.timeScale = originalTimeScale;
+        isForzen = false;
+    }
+    public void Freeze()
+    {
+        if (!isForzen) {
+            Debug.Log("Freeze");
+            StartCoroutine(HitPause());
+        }
+    }
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
     {
         if (Spawned) return;
@@ -246,30 +269,17 @@ public class GameManager : MonoBehaviour
         EndGame(); // end game function
     }
 
-    public void GoNextStage()
-    {
-        nextStage = true; // Go to the next stage
-    }
-
-    public int GetPlayer1Points()
-    {
-        return player1Points;
-    }
-
-    public int GetPlayer2Points()
-    {
-        return player2Points;
-    }
-
-    public int GetLeftStages()
-    {
-        return leftStages;
-    }
     
-    public float GetTimeForNextStage()
-    {
-        return timerNextStage;
-    }
+
+    public int GetPlayer1Points() { return player1Points; }
+
+    public int GetPlayer2Points() { return player2Points; }
+
+    public int GetLeftStages() { return leftStages; }
+    
+    public float GetTimeForNextStage() { return timerNextStage; }
+
+    public bool IsForzen() { return isForzen; }
 
     public void DecreaseNumPowerUps()
     {

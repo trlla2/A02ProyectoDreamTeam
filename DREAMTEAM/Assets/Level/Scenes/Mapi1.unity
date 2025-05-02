@@ -170,6 +170,7 @@ MonoBehaviour:
   timeToStartTimeEvent: 10
   timeEventDuration: 5
   timeForTimeEventWarning: 2
+  freezeDuration: 0.3
   spawnTanksOnStart: 0
   tank1SpawnPos: {x: 0, y: 0, z: 0}
   tank2SpawnPos: {x: 0, y: 0, z: 0}
