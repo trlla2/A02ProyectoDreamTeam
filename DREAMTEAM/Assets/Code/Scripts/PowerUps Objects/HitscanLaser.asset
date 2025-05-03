@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9173027763a1c049b19bdf6366a183d, type: 3}
   m_Name: HitscanLaser
   m_EditorClassIdentifier: 
-  powerUpSprite: {fileID: 21300000, guid: 58a037ddf39d49a4eb18ccc98aa4d612, type: 3}
+  powerUpSprite: {fileID: 21300000, guid: f9535112e5742bd49a93f1429b1ade7a, type: 3}
   maxReflectionCount: 5
   maxStepDistance: 10
   laserSpritePrefab: {fileID: 15171538489082504, guid: 1cd6f193eaddfeb4bbf05c845dd30b1c, type: 3}

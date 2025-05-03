@@ -6,7 +6,7 @@ using UnityEngine;
 public class HitscanLaser : PowerUpEffect
 {
     public int maxReflectionCount = 5;
-    public float maxStepDistance = 10.0f;
+    public float maxStepDistance = 100.0f;
     public GameObject laserSpritePrefab;  // Prefab de sprite del rayo
     private float spriteHeight = -1f; // Se inicializa en -1 para calcularla la primera vez
 
@@ -30,7 +30,7 @@ public class HitscanLaser : PowerUpEffect
         {
             RaycastHit hit;
 
-            Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.red, 1f);
+            Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.blue, 1f);
             Debug.Log("Casting ray from: " + currentPos + " in direction: " + currentDir);
 
             if (Physics.Raycast(currentPos, currentDir, out hit, maxStepDistance))
@@ -38,7 +38,7 @@ public class HitscanLaser : PowerUpEffect
                 Vector3 endPos = hit.point;
                 CreateLaserSegment(currentPos, endPos);
 
-                TryKillTank(hit.collider.gameObject);
+                KillTank(hit.collider.gameObject);
 
                 currentDir = Vector3.Reflect(currentDir, hit.normal);
                 currentPos = endPos;
@@ -52,7 +52,6 @@ public class HitscanLaser : PowerUpEffect
             }
 
             Debug.Log("Hit " + hit.collider.name);
-            //Destroy(this.gameObject);
         }
     }
 
@@ -63,6 +62,7 @@ public class HitscanLaser : PowerUpEffect
         float length = direction.magnitude;
 
         GameObject laserSegment = Instantiate(laserSpritePrefab);
+        Destroy(laserSegment, 1f); // Destruir tras 0.5 segundos
 
         // Posicionar en el centro del rayo
         laserSegment.transform.position = start + direction * 0.5f;
@@ -91,7 +91,7 @@ public class HitscanLaser : PowerUpEffect
         laserSegment.transform.localScale = new Vector3(1f, scaleY, 1f);
     }
 
-    private void TryKillTank(GameObject obj)
+    private void KillTank(GameObject obj)
     {
         Tank_Behaviour tank = obj.GetComponent<Tank_Behaviour>();
         if (tank != null)

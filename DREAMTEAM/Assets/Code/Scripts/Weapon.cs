@@ -141,17 +141,6 @@ public class Weapon : MonoBehaviour
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 OnShoot.Invoke();
 
-
-                Vector3 start = firePoint.transform.position;
-                Vector3 dir = firePoint.transform.forward; // o donde quieras lanzar
-
-                if (Physics.Raycast(start, dir, out RaycastHit hit, 100f))
-                {
-                    Debug.Log("Ray hit: " + hit.collider.name);
-                }
-
-                Debug.DrawRay(start, dir * 10f, Color.yellow, 5f);
-                Debug.Log("yellow");
                 return;
             }
             else
