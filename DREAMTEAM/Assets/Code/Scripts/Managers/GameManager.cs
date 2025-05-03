@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Scene management")]
-    [SerializeField] private const int totalStages = 10;
-    private static int leftStages = totalStages;
+    [SerializeField] private int totalStages = 10;
+    private int leftStages;
     [SerializeField] private float timeForNextStage = 3f;
     private float timerNextStage;
     [SerializeField] private List<string> biomesMaps;
@@ -92,6 +92,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        timerNextStage = timeForNextStage;
+        leftStages = totalStages;
     }
 
     private void Start()
@@ -100,9 +102,6 @@ public class GameManager : MonoBehaviour
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
         }
-
-
-        timerNextStage = timeForNextStage; 
     }
 
     private void Update()
@@ -119,7 +118,6 @@ public class GameManager : MonoBehaviour
         if (nextStage) { 
             endGame = false;
             nextStage = false;
-            Debug.Log("leftStages: " + leftStages);
             if (leftStages > 0)
             {
                 ResetVaiables();
@@ -134,7 +132,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                leftStages = totalStages;
+                //leftStagesTMP = totalStages;
                 player1Points = 0;
                 player2Points = 0;
                 Cursor.visible = true;// show cursor
