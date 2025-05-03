@@ -22,6 +22,9 @@ public class ScoreManager : MonoBehaviour
     private int timeForNextStage = 3;
     private int leftStages = 0;
 
+    private int player1Points = 0;
+    private int player2Points = 0;
+
     private void Awake()
     {
         pauseMenu.SetActive(false);
@@ -51,14 +54,19 @@ public class ScoreManager : MonoBehaviour
         {
             if (leftStages <= 0) // last stage?
             {
+                if(player1Points == 0 && player2Points == 0)
+                {
+                    player1Points = GameManager.Instance.GetPlayer1Points();
+                    player2Points = GameManager.Instance.GetPlayer2Points();
+                }
                 // who win
-                if (GameManager.Instance.GetPlayer1Points() > GameManager.Instance.GetPlayer2Points())
+                if (player1Points > player2Points)
                 { // player 1 win
                     gameOverTitlteTMP.text = "Player 1 WIN";
                     gameOverTitlteTMP.color = p1Color;
                     Debug.Log("PLAYER 1 WIN");
                 }
-                else if (GameManager.Instance.GetPlayer1Points() < GameManager.Instance.GetPlayer2Points())
+                else if (player1Points < player2Points)
                 { // player 2 win
                     gameOverTitlteTMP.text = "Player 2 WIN";
                     gameOverTitlteTMP.color = p2Color;
