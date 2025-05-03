@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
     [Header("Scene management")]
     [SerializeField] private const int totalStages = 10;
     private static int leftStages = totalStages;
-    [SerializeField] private static float timeForNextStage = 3f;
-    private static float timerNextStage;
+    [SerializeField] private float timeForNextStage = 3f;
+    private float timerNextStage;
     [SerializeField] private List<string> biomesMaps;
 
     private bool endGame = false;

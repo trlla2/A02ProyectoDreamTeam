@@ -17,6 +17,8 @@ public class ScoreManager : MonoBehaviour
     private bool endGame;
     [SerializeField] private GameObject pauseMenu;
 
+    private int timeForNextStage = 3;
+
     private void Awake()
     {
         pauseMenu.SetActive(false);
@@ -41,11 +43,11 @@ public class ScoreManager : MonoBehaviour
             pauseMenu.SetActive(!pauseMenu.activeSelf);
         }
 
-        if (endGame)
+        if (endGame && timeForNextStage > 0)
         {
-            int tmp = (int)GameManager.Instance.GetTimeForNextStage();
+            timeForNextStage = (int)GameManager.Instance.GetTimeForNextStage();
 
-            gameOverTitlte.text = "Next stage in: " + tmp.ToString();
+            gameOverTitlte.text = "Next stage in: " + timeForNextStage.ToString();
         }
     }
 
