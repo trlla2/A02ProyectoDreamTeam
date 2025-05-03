@@ -6,8 +6,10 @@ using UnityEngine;
 public class HitscanLaser : PowerUpEffect
 {
     public int maxReflectionCount = 5;
-    public float maxStepDistance = 5.0f;
+    public float maxStepDistance = 10.0f;
     public GameObject laserSpritePrefab;  // Prefab de sprite del rayo
+    private float spriteHeight = -1f; // Se inicializa en -1 para calcularla la primera vez
+
 
     public override void Apply(GameObject target)
     {
@@ -27,6 +29,10 @@ public class HitscanLaser : PowerUpEffect
         while (reflectionsRemaining > 0)
         {
             RaycastHit hit;
+
+            Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.red, 1f);
+            Debug.Log("Casting ray from: " + currentPos + " in direction: " + currentDir);
+
             if (Physics.Raycast(currentPos, currentDir, out hit, maxStepDistance))
             {
                 Vector3 endPos = hit.point;
@@ -46,27 +52,43 @@ public class HitscanLaser : PowerUpEffect
             }
 
             Debug.Log("Hit " + hit.collider.name);
+            //Destroy(this.gameObject);
         }
     }
 
 
     private void CreateLaserSegment(Vector3 start, Vector3 end)
     {
-    Vector3 direction = end - start;
-    float length = direction.magnitude;
-    Vector3 normalizedDir = direction.normalized;
+        Vector3 direction = end - start;
+        float length = direction.magnitude;
 
-    GameObject laserSegment = Instantiate(laserSpritePrefab, start, Quaternion.identity);
+        GameObject laserSegment = Instantiate(laserSpritePrefab);
 
-    // Rotar para que apunte en la dirección correcta
-    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-    laserSegment.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        // Posicionar en el centro del rayo
+        laserSegment.transform.position = start + direction * 0.5f;
 
-    // Escalar en Y si el sprite apunta hacia arriba
-    laserSegment.transform.localScale = new Vector3(laserSegment.transform.localScale.x, length, laserSegment.transform.localScale.z);
+        // Rotar el sprite para que apunte en la dirección del rayo
+        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+        laserSegment.transform.rotation = Quaternion.Euler(0f, 0f, -angle);
 
-    // Reposicionar al centro del rayo
-    laserSegment.transform.position += normalizedDir * length * 0.5f;
+        // Calcular la altura del sprite una sola vez
+        if (spriteHeight <= 0f)
+        {
+            SpriteRenderer sr = laserSpritePrefab.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                spriteHeight = sr.bounds.size.y;
+            }
+            else
+            {
+                Debug.LogWarning("SpriteRenderer no encontrado en el prefab del rayo.");
+                spriteHeight = 1f; // fallback por si falla
+            }
+        }
+
+        // Escalar en Y para cubrir la longitud del rayo
+        float scaleY = length / spriteHeight;
+        laserSegment.transform.localScale = new Vector3(1f, scaleY, 1f);
     }
 
     private void TryKillTank(GameObject obj)
