@@ -26,25 +26,35 @@ public class Weapon : MonoBehaviour
 
     private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
 
+    //infinite bounce
     private bool isInfiniteBounceActive = false;
+
+    //bullet speed up
     private bool isBulletSpeedBoostActive = false;
+
+    //triple shoot
     private bool isTripleShotActive = false;
     private float powerTime = 5f;
 
     //Hitscan laser
     private bool isHitscanLaserActive = false;
     private HitscanLaser hitscanLaserPowerUp;
-    //
-
+    
+    //burst fire
     private bool isBurstFireActive = false;
     private int burstCount;
     private float burstDelay;
     private Coroutine burstCoroutine;
 
+    //shield
+    [SerializeField] private GameObject shield;
+    private bool isShieldActive;
+
     private Tank_Behaviour tb;
 
     private bool P1CanSoot = true;
     private bool P2CanSoot = true;
+
 
     [SerializeField]
     private WaitForSeconds wait = new WaitForSeconds(0.7f);
@@ -52,6 +62,10 @@ public class Weapon : MonoBehaviour
     {
         tb = GetComponent<Tank_Behaviour>();
         firePointActive = firePoint.GetComponent<FirePointActive>();
+        if (shield != null)
+        {
+            shield.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -80,6 +94,24 @@ public class Weapon : MonoBehaviour
         yield return wait;
         P2CanSoot = true;
     }
+    public void ActivateShield()
+    {
+        isShieldActive = true;
+        if (shield != null)
+        {
+            shield.SetActive(true);
+        }
+    }
+
+    public void ShieldHit()
+    {
+        isShieldActive = false;
+        if (shield != null)
+        {
+            shield.SetActive(false);
+        }
+    }
+
     void Shoot()
     {
         if (firePointActive.CanShoot)
@@ -170,6 +202,13 @@ public class Weapon : MonoBehaviour
             isHitscanLaserActive = true;
             hitscanLaserPowerUp = hitscan;
         }
+        else if (currentPowerUp is ShieldPowerUp)
+        {
+            Debug.Log("Active Shield");
+            ActivateShield();  // Special activation without timer
+            return;  // Skip the timer setup
+        }
+
 
         StartCoroutine(DisableAfterTime(powerTime));
         Debug.Log("Disabled PowerUp");

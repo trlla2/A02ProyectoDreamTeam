@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
-using UnityEngine;
-
 public class TimeEvent
 {
     public static float speedModifier = 1f; //velocidad normal
