@@ -213,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1607c87ae493e34c88161fe30ea1356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeForNextStage: 3
   biomesMaps:
   - Mapi1
   Spawned: 0
