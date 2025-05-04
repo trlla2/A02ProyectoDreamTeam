@@ -45,7 +45,7 @@ public class GetPowerUp : MonoBehaviour
             Tank_Behaviour tankBehaviour = trigger.gameObject.GetComponent<Tank_Behaviour>();
             if (tankBehaviour != null)
             {
-                int playerNumber = tankBehaviour.GetPlayer(); // Obtener el número real del jugador
+                playerNumber = tankBehaviour.GetPlayer(); // Obtener el número real del jugador
                 scoreManager.ChangePowerUpUI(powerUpEffect, playerNumber);
             }
 
