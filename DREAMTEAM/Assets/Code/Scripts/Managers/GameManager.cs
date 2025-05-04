@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 public class GameManager : MonoBehaviour
 {
 
@@ -101,7 +100,9 @@ public class GameManager : MonoBehaviour
         if (spawnTanksOnStart) // Debug spawn
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
+            
         }
+
     }
 
     private void Update()

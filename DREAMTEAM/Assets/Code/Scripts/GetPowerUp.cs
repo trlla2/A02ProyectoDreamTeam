@@ -7,6 +7,10 @@ public class GetPowerUp : MonoBehaviour
 {
     [SerializeField] public PowerUpEffect powerUpEffect;  // Referencia al efecto de PowerUp
     [SerializeField] private GameObject SpawnParticles;
+    private ScoreManager scoreManager;
+    private Tank_Behaviour tb;
+    //prueba
+    int playerNumber = 1;
 
     private SpriteRenderer spriteRenderer;
     private void Awake()
@@ -24,6 +28,9 @@ public class GetPowerUp : MonoBehaviour
     {
         GameObject temp = Instantiate(SpawnParticles, transform.position, transform.rotation); // spawn particles and sfx
         Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+
+        scoreManager = FindObjectOfType<ScoreManager>();
+        tb = GetComponent<Tank_Behaviour>();
     }
 
     private void OnTriggerEnter(Collider trigger)
@@ -34,10 +41,19 @@ public class GetPowerUp : MonoBehaviour
         {
             Debug.Log("Collision");
             powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
-            GameManager.Instance.DecreaseNumPowerUps(); 
-            Destroy(gameObject);  // Destruye el Power-Up despu�s de activarlo
+
+            Tank_Behaviour tankBehaviour = trigger.gameObject.GetComponent<Tank_Behaviour>();
+            if (tankBehaviour != null)
+            {
+                int playerNumber = tankBehaviour.GetPlayer(); // Obtener el número real del jugador
+                scoreManager.ChangePowerUpUI(powerUpEffect, playerNumber);
+            }
+
+            GameManager.Instance.DecreaseNumPowerUps();
+            Destroy(gameObject);  // Destruye el Power-Up después de activarlo
         }
     }
+
 
     public void SetPowerUp(PowerUpEffect powerUp)
     {

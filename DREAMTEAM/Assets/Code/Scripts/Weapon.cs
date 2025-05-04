@@ -107,7 +107,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void SetPowerUp(PowerUpEffect powerUp)
+    public PowerUpEffect SetPowerUp(PowerUpEffect powerUp)
     {
         currentPowerUp = powerUp;
 
@@ -135,6 +135,8 @@ public class Weapon : MonoBehaviour
 
         powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
         OnSetPowerUp.Invoke();// invoke event
+
+        return powerUp;
     }
     private IEnumerator DisableAfterTime(float duration)
     {
