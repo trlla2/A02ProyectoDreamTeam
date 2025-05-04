@@ -1304,6 +1304,7 @@ GameObject:
   - component: {fileID: 6046688414545530182}
   - component: {fileID: 5309046367316907180}
   - component: {fileID: 7408673728313170657}
+  - component: {fileID: 2075002730415827475}
   m_Layer: 0
   m_Name: PwPlayer1
   m_TagString: Untagged
@@ -1369,6 +1370,18 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2075002730415827475
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7193472926929141771}
+  m_Enabled: 1
+  m_Alpha: 0.7
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7403517149960612030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1751,6 +1764,7 @@ GameObject:
   - component: {fileID: 7826134202295987191}
   - component: {fileID: 7734230452538170413}
   - component: {fileID: 7099901518241225188}
+  - component: {fileID: 1656681246368051539}
   m_Layer: 0
   m_Name: PwPlayer2
   m_TagString: Untagged
@@ -1816,6 +1830,18 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1656681246368051539
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873514402064964434}
+  m_Enabled: 1
+  m_Alpha: 0.7
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7999633127935979168
 GameObject:
   m_ObjectHideFlags: 0
