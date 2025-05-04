@@ -32469,6 +32469,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 561326254}
     m_Modifications:
+    - target: {fileID: 1346178373653454346, guid: 1fe06b1c04553f048a209ed3c8a8005e, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3215473407713327159, guid: 1fe06b1c04553f048a209ed3c8a8005e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -32536,11 +32540,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3174318338364210657, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.16
+      value: 4.733
       objectReference: {fileID: 0}
     - target: {fileID: 3174318338364210657, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.85
+      value: 2.27
       objectReference: {fileID: 0}
     - target: {fileID: 3174318338364210657, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32577,6 +32581,10 @@ PrefabInstance:
     - target: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
       propertyPath: m_Name
       value: ExplodingBidon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
