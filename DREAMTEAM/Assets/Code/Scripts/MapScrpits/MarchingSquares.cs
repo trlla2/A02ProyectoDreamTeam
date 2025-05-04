@@ -115,7 +115,12 @@ public class MarchingSquares : MonoBehaviour
         SpawnObjects();
         textureGenerator.Initial();
         SpawnTanks();
-        WaterController.StartWaterExpansionEvent();
+        /*
+        if (WaterController != null)
+        {
+            WaterController.StartWaterExpansionEvent();
+        }
+        */
     }
     private void GetSpawnablePositions()
     {
