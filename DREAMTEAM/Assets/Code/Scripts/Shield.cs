@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ShieldCollisionHandler : MonoBehaviour
+public class Shield : MonoBehaviour
 {
     private Weapon weapon;
 
