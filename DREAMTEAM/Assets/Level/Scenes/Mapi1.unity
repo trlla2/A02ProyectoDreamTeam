@@ -999,6 +999,7 @@ GameObject:
   - component: {fileID: 975575565}
   - component: {fileID: 975575564}
   - component: {fileID: 975575567}
+  - component: {fileID: 975575569}
   m_Layer: 3
   m_Name: MapGenerator
   m_TagString: Untagged
@@ -2118,6 +2119,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marchingSquares: {fileID: 975575566}
+--- !u!210 &975575569
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975575561}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_SortAtRoot: 0
 --- !u!1001 &1023905077
 PrefabInstance:
   m_ObjectHideFlags: 0
