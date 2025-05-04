@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf5b5b3617933841a7e738edc6675b2, type: 3}
   m_Name: Shield PowerUp
   m_EditorClassIdentifier: 
-  powerUpSprite: {fileID: 0}
+  powerUpSprite: {fileID: 21300000, guid: d88f39cd85deeae45bd18ecb1140bdb9, type: 3}
