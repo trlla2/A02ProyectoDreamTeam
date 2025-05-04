@@ -477,10 +477,11 @@ Transform:
   m_LocalScale: {x: 0.13597047, y: 0.196486, z: 0.14309667}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5036513138792573472}
   - {fileID: 7643288856731535034}
   - {fileID: 2185736222167704204}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4658163398166893794
 SpriteRenderer:
@@ -676,6 +677,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  shield: {fileID: 8397732760167844249}
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0
@@ -978,3 +980,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapGenerator: {fileID: 0}
   waterTile: {fileID: 11400000, guid: a526242c152a1a7458275b6cb406d2aa, type: 2}
+--- !u!1 &8397732760167844249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5036513138792573472}
+  - component: {fileID: 8004096062610045945}
+  m_Layer: 0
+  m_Name: shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5036513138792573472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397732760167844249}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.27989435, z: 0.4759896}
+  m_LocalScale: {x: 7.35454, y: 5.0894194, z: 6.9882812}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8864069764587270349}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8004096062610045945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397732760167844249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2e09fedbe7e58439510fff839db4f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
