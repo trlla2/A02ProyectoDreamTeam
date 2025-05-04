@@ -1,5 +1,5 @@
+using System.Collections;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Bullet : MonoBehaviour
 {
@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] public int bounceTime = 3;
     [SerializeField] private float rayDistance = 0.5f;
     [SerializeField] private GameObject bounceFx;
+    [SerializeField] private AudioSource hitSFX;
 
     Vector3 currentDir;
     Vector3 rigthBound;
@@ -43,17 +44,9 @@ public class Bullet : MonoBehaviour
                 Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
                 if (behaviour != null)
                 {
-                    if (behaviour.GetPlayer() == 1)
-                    {
-                        GameManager.Instance.GetTank1IsDead();
-                        behaviour.Dead();
-                    }
-                    else if (behaviour.GetPlayer() == 2)
-                    {
-                        GameManager.Instance.GetTank2IsDead();
-                        behaviour.Dead();
-                    }
-                    Destroy(gameObject);
+                   GameManager.Instance.Freeze(); // hit stop
+
+                   StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
                 }
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
@@ -88,5 +81,30 @@ public class Bullet : MonoBehaviour
     public void SetVelocity()
     {
         rb.velocity = transform.up * bulletSpeed * TimeEvent.speedModifier;
+    }
+
+    private IEnumerator KillPlayer(int idPlayer, Tank_Behaviour behaviour)
+    {
+        hitSFX.Play();
+
+        while (GameManager.Instance.IsForzen())
+        { // wait until the hitpause is done
+            yield return null;
+        }
+
+
+        if (idPlayer == 1)
+        {
+            GameManager.Instance.GetTank1IsDead();
+
+        }
+        else if (idPlayer == 2)
+        {
+            GameManager.Instance.GetTank2IsDead();
+        }
+
+        behaviour.Dead();
+
+        Destroy(this.gameObject);
     }
 }
