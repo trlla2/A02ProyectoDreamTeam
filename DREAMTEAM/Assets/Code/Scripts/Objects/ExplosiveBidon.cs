@@ -11,6 +11,7 @@ public class ExplosiveBidon : MonoBehaviour
         if (ExplosionEffect != null)
         {
             Instantiate(ExplosionEffect, transform.position, transform.rotation);
+            Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
         }
 
         // Detect players in explosion radius
