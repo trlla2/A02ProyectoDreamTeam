@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             {
                 ResetVaiables();
                 // Random between all biomes maps
-                int nextMap = Random.Range(0, biomesMaps.Count - 1);
+                int nextMap = Random.Range(0, biomesMaps.Count);
 
                 leftStages--; // left stages too end the game
                 Debug.Log("NxtMap: " + nextMap);
