@@ -9,10 +9,19 @@ using UnityEngine;
 *  and unity uses triangles. Luckyly videos like Brakeys mesh basics helped understand the concept, Sebastian Lague's videdo and Freedom Coding's marching squares videdo offered exemples on how 
 *  to implement the mesh genearation in unity
 */
-
+[System.Serializable]
+public class SpawnableObject
+{
+    public int MapID;
+    public int MinTimes, MaxTimes;
+    public GameObject gameObjectToSpawn;
+}
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingSquares : MonoBehaviour
 {
+    [Header("MapID")]
+    public int Mapid;
+
     [Header("Grid Settings")]
     [Range(5, 500)] public int gridSizeX = 15;
     [Range(5, 500)] public int gridSizeY = 15;
@@ -37,6 +46,9 @@ public class MarchingSquares : MonoBehaviour
 
     [Header("Region Detection")]
     [SerializeField] private RegionDetector regionDetector;
+
+    [Header("SpawnBehabiour")]
+    public SpawnableObject[] SpawnedObjects;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -96,6 +108,7 @@ public class MarchingSquares : MonoBehaviour
         UpdatePolygonCollider();
         CreateWallMesh();
         GetSpawnablePositions();
+        SpawnObjects();
         textureGenerator.Initial();
         SpawnTanks();
     }
@@ -145,7 +158,17 @@ public class MarchingSquares : MonoBehaviour
         tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
         GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
-
+    private void SpawnObjects()
+    {
+        foreach (SpawnableObject Obj in SpawnedObjects)
+        {
+            print(Obj.gameObjectToSpawn.name);
+            if(Mapid == Obj.MapID)
+            {
+                regionDetector.SpawnObjects(Obj.gameObjectToSpawn, Random.Range(Obj.MinTimes, Obj.MaxTimes));
+            }
+        }
+    }
     private void GenerateHeightMap(int seed)
     {
         //we add +1 to each array dimention so the borders are not disconected
