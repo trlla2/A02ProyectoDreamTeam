@@ -999,7 +999,6 @@ GameObject:
   - component: {fileID: 975575565}
   - component: {fileID: 975575564}
   - component: {fileID: 975575567}
-  - component: {fileID: 975575569}
   m_Layer: 3
   m_Name: MapGenerator
   m_TagString: Untagged
