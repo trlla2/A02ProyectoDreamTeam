@@ -1085,6 +1085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29619374fa90e64498f3e5b4f7f56251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mapid: 0
   gridSizeX: 59
   gridSizeY: 40
   noiseScale: 0.19
@@ -1100,6 +1101,11 @@ MonoBehaviour:
   lineRendererContainer: {fileID: 561326254}
   outlineWidth: 0.03
   regionDetector: {fileID: 975575568}
+  SpawnedObjects:
+  - MapID: 0
+    MinTimes: 3
+    MaxTimes: 6
+    gameObjectToSpawn: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
   validPositions:
   - {x: 21, y: 11}
   - {x: 22, y: 11}
@@ -2118,6 +2124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marchingSquares: {fileID: 975575566}
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &1023905077
 PrefabInstance:
   m_ObjectHideFlags: 0
