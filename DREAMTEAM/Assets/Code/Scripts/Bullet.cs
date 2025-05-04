@@ -51,6 +51,7 @@ public class Bullet : MonoBehaviour
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
                     hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
+                    DestroyImmediate(gameObject);
                 }
                 else
                 {

@@ -50,6 +50,10 @@ public class MarchingSquares : MonoBehaviour
     [Header("SpawnBehabiour")]
     public SpawnableObject[] SpawnedObjects;
 
+    [Header("Water")]
+    [SerializeField] private WaterController WaterController;
+    [SerializeField] private PlayerWaterDetector waterDetector;
+
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
     public float[,] heightMap; //float array where we'll store perlin noise values
@@ -111,6 +115,7 @@ public class MarchingSquares : MonoBehaviour
         SpawnObjects();
         textureGenerator.Initial();
         SpawnTanks();
+        WaterController.StartWaterExpansionEvent();
     }
     private void GetSpawnablePositions()
     {
@@ -131,7 +136,7 @@ public class MarchingSquares : MonoBehaviour
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
-    private void SpawnTanks()
+    public void SpawnTanks()
     {
         int firstIndex = Random.Range(0, validPositions.Count);
 
