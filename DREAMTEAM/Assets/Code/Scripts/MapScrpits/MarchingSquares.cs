@@ -30,6 +30,11 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField] private MeshFilter walls;
     [SerializeField] private float wallHeight = 5f;
 
+    [Header("Outline Settings")]
+    [SerializeField] private LineRenderer lineRendererPrefab;
+    [SerializeField] private Transform lineRendererContainer;
+    [SerializeField][Range(0.01f, 0.5f)] private float outlineWidth = 0.1f;
+
     [Header("Region Detection")]
     [SerializeField] private RegionDetector regionDetector;
 
@@ -417,6 +422,7 @@ public class MarchingSquares : MonoBehaviour
 
             polygonCollider.SetPath(i, path.ToArray());
         }
+        GenerateOutlines();
     }
     //Trace a single outline starting form a givn vertex
     private void FindOutline(int startVertex, List<int> outline)
@@ -460,6 +466,39 @@ public class MarchingSquares : MonoBehaviour
             processedVertices.Add(nextVertex);
 
             currentVertex = nextVertex; // Move to next vertex
+        }
+    }
+    //Add outline efect to the map
+    private void GenerateOutlines()
+    {
+        // Clear existing outlines
+        if (lineRendererContainer != null)
+        {
+            foreach (Transform child in lineRendererContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Create new outlines
+        foreach (List<int> outline in validOutlines) //well use the same outlines as  the poligon collider outlines
+        {
+            if (outline.Count < 2) continue;
+
+            LineRenderer lr = Instantiate(lineRendererPrefab, lineRendererContainer);
+
+            lr.startWidth = outlineWidth;
+            lr.endWidth = outlineWidth;
+            lr.positionCount = outline.Count;
+
+            Vector3[] positions = new Vector3[outline.Count];
+            for (int i = 0; i < outline.Count; i++)
+            {
+                positions[i] = vertices[outline[i]] + Vector3.forward * -0.1f + Vector3.up * 0.04f; // Offset for visibility
+            }
+
+            lr.SetPositions(positions);
+            lr.loop = true;
         }
     }
 
