@@ -51,7 +51,6 @@ public class Tank_Behaviour : MonoBehaviour
         }
         else if (GetPlayer() == 2)
         {
-
             spriteRenderer.sprite = tank2_body;
             spriteRenderer.material = tank2_material;
 
