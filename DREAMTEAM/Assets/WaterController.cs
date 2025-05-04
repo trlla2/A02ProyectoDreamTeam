@@ -40,6 +40,7 @@ public class WaterController : MonoBehaviour
                 yield break;
             }
 
+            //sotring the blink effect coroutines in a list so we can call all tiles at once
             List<Coroutine> blinkRoutines = new List<Coroutine>();
             foreach (var tilePos in tilesToConvert)
             {
@@ -48,7 +49,7 @@ public class WaterController : MonoBehaviour
 
             yield return new WaitForSeconds(conversionDelay);
 
-            foreach (var routine in blinkRoutines)
+            foreach (var routine in blinkRoutines) // make sure we stop routines to save memory
             {
                 StopCoroutine(routine);
             }
@@ -58,6 +59,7 @@ public class WaterController : MonoBehaviour
         }
     }
 
+    //function to know what heigthband does water ocuppy
     private void FindLowestHeightBand()
     {
         lowestHeightBand = mapGenerator.heightBands[0];
@@ -79,9 +81,11 @@ public class WaterController : MonoBehaviour
         {
             for (int y = 0; y < marchingSquares.gridSizeY; y++)
             {
+                //foreach tile in the map tilemap,  
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 Tile currentTile = mapGenerator.backgroundTilemap.GetTile<Tile>(pos);
 
+                //compare if the tile is water
                 bool valid = false;
                 foreach(Tile tile in  lowestHeightBand.tiles)
                 {
@@ -100,6 +104,7 @@ public class WaterController : MonoBehaviour
         }
     }
 
+    //get non-water neigbours 
     private List<Vector3Int> GetExpandableTiles()
     {
         List<Vector3Int> expandableTiles = new List<Vector3Int>();
@@ -115,9 +120,8 @@ public class WaterController : MonoBehaviour
 
             foreach (var neighbor in neighbors)
             {
-                if (IsValidPosition(neighbor) &&
-                   !allConvertedTiles.Contains(neighbor) &&
-                   !expandableTiles.Contains(neighbor))
+                //if we hav not visited the tile yet
+                if (IsValidPosition(neighbor) && !allConvertedTiles.Contains(neighbor) && !expandableTiles.Contains(neighbor))
                 {
                     expandableTiles.Add(neighbor);
                 }
@@ -158,6 +162,7 @@ public class WaterController : MonoBehaviour
         currentFrontier.AddRange(tiles);
     }
 
+    //function to make sure we are inside the map
     private bool IsValidPosition(Vector3Int position)
     {
         return position.x >= 0 && position.x < marchingSquares.gridSizeX &&
