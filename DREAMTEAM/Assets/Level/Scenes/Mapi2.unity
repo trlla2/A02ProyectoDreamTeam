@@ -1719,6 +1719,7 @@ MonoBehaviour:
   timeForNextStage: 3
   biomesMaps:
   - Mapi1
+  - Mapi2
   Spawned: 0
   rotationOffset: -90
   tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
