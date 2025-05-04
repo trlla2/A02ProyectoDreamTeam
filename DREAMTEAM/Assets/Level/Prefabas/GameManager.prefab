@@ -44,20 +44,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1607c87ae493e34c88161fe30ea1356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalStages: 10
+  timeForNextStage: 3
   biomesMaps:
   - Mapi1
+  - Mapi2
   Spawned: 0
   rotationOffset: -90
   tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   pointsForDeath: 100
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+  spawnPowerUpTime: 5
+  numMaxPowerUps: 5
   powerUpEffects:
   - {fileID: 11400000, guid: b19d630440333ff46a35e53af6369447, type: 2}
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
   - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
-  spawnPowerUpTime: 5
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
   timeToStartTimeEvent: 30
   timeEventDuration: 10
   timeForTimeEventWarning: 3
+  freezeDuration: 0.2
+  spawnTanksOnStart: 0
+  tank1SpawnPos: {x: 0, y: 0, z: 0}
+  tank2SpawnPos: {x: 0, y: 0, z: 0}

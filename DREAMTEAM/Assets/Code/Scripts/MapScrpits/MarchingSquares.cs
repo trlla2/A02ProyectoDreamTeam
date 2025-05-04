@@ -9,10 +9,19 @@ using UnityEngine;
 *  and unity uses triangles. Luckyly videos like Brakeys mesh basics helped understand the concept, Sebastian Lague's videdo and Freedom Coding's marching squares videdo offered exemples on how 
 *  to implement the mesh genearation in unity
 */
-
+[System.Serializable]
+public class SpawnableObject
+{
+    public int MapID;
+    public int MinTimes, MaxTimes;
+    public GameObject gameObjectToSpawn;
+}
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingSquares : MonoBehaviour
 {
+    [Header("MapID")]
+    public int Mapid;
+
     [Header("Grid Settings")]
     [Range(5, 500)] public int gridSizeX = 15;
     [Range(5, 500)] public int gridSizeY = 15;
@@ -30,8 +39,20 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField] private MeshFilter walls;
     [SerializeField] private float wallHeight = 5f;
 
+    [Header("Outline Settings")]
+    [SerializeField] private LineRenderer lineRendererPrefab;
+    [SerializeField] private Transform lineRendererContainer;
+    [SerializeField][Range(0.01f, 0.5f)] private float outlineWidth = 0.1f;
+
     [Header("Region Detection")]
     [SerializeField] private RegionDetector regionDetector;
+
+    [Header("SpawnBehabiour")]
+    public SpawnableObject[] SpawnedObjects;
+
+    [Header("Water")]
+    [SerializeField] private WaterController WaterController;
+    [SerializeField] private PlayerWaterDetector waterDetector;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -91,8 +112,10 @@ public class MarchingSquares : MonoBehaviour
         UpdatePolygonCollider();
         CreateWallMesh();
         GetSpawnablePositions();
+        SpawnObjects();
         textureGenerator.Initial();
         SpawnTanks();
+        WaterController.StartWaterExpansionEvent();
     }
     private void GetSpawnablePositions()
     {
@@ -113,7 +136,7 @@ public class MarchingSquares : MonoBehaviour
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
-    private void SpawnTanks()
+    public void SpawnTanks()
     {
         int firstIndex = Random.Range(0, validPositions.Count);
 
@@ -140,7 +163,17 @@ public class MarchingSquares : MonoBehaviour
         tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
         GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
-
+    private void SpawnObjects()
+    {
+        foreach (SpawnableObject Obj in SpawnedObjects)
+        {
+            print(Obj.gameObjectToSpawn.name);
+            if(Mapid == Obj.MapID)
+            {
+                regionDetector.SpawnObjects(Obj.gameObjectToSpawn, Random.Range(Obj.MinTimes, Obj.MaxTimes));
+            }
+        }
+    }
     private void GenerateHeightMap(int seed)
     {
         //we add +1 to each array dimention so the borders are not disconected
@@ -417,6 +450,7 @@ public class MarchingSquares : MonoBehaviour
 
             polygonCollider.SetPath(i, path.ToArray());
         }
+        GenerateOutlines();
     }
     //Trace a single outline starting form a givn vertex
     private void FindOutline(int startVertex, List<int> outline)
@@ -460,6 +494,39 @@ public class MarchingSquares : MonoBehaviour
             processedVertices.Add(nextVertex);
 
             currentVertex = nextVertex; // Move to next vertex
+        }
+    }
+    //Add outline efect to the map
+    private void GenerateOutlines()
+    {
+        // Clear existing outlines
+        if (lineRendererContainer != null)
+        {
+            foreach (Transform child in lineRendererContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Create new outlines
+        foreach (List<int> outline in validOutlines) //well use the same outlines as  the poligon collider outlines
+        {
+            if (outline.Count < 2) continue;
+
+            LineRenderer lr = Instantiate(lineRendererPrefab, lineRendererContainer);
+
+            lr.startWidth = outlineWidth;
+            lr.endWidth = outlineWidth;
+            lr.positionCount = outline.Count;
+
+            Vector3[] positions = new Vector3[outline.Count];
+            for (int i = 0; i < outline.Count; i++)
+            {
+                positions[i] = vertices[outline[i]] + Vector3.forward * -0.1f + Vector3.up * 0.04f; // Offset for visibility
+            }
+
+            lr.SetPositions(positions);
+            lr.loop = true;
         }
     }
 

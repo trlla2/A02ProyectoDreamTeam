@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Bullet : MonoBehaviour
 {
@@ -42,20 +41,25 @@ public class Bullet : MonoBehaviour
         {
             if (hit.collider != null && !hit.collider.isTrigger)
             {
-                if (hit.collider.gameObject.GetComponent<Tank_Behaviour>()) // if is a tank
+                Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
+                if (behaviour != null)
                 {
-                    GameManager.Instance.Freeze(); // hit stop
+                   GameManager.Instance.Freeze(); // hit stop
 
-                    StartCoroutine(KillPlayer(hit.collider.gameObject.GetComponent<Tank_Behaviour>().GetPlayer(), hit.collider.gameObject));
-                    
+                   StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
+                }
+                else if(hit.collider.gameObject.GetComponent<Interactable>())
+                {
+                    hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
+                    DestroyImmediate(gameObject);
                 }
                 else
                 {
                     GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
-                    Destroy(temp,  temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
                     if (bounces >= bounceTime)
                     {
-                        DestroyImmediate(this.gameObject);
+                        DestroyImmediate(gameObject);
                     }
                     else
                     {
@@ -69,30 +73,6 @@ public class Bullet : MonoBehaviour
             }
         }
     }
-
-    private IEnumerator KillPlayer(int idPlayer, GameObject hit)
-    {
-        hitSFX.Play();
-
-        while (GameManager.Instance.IsForzen()) { // wait until the hitpause is done
-            yield return null;
-        }
-
-
-        if(idPlayer == 1)
-        {
-            GameManager.Instance.GetTank1IsDead();
-
-        }
-        else if(idPlayer == 2)
-        {
-            GameManager.Instance.GetTank2IsDead();
-        }
-
-        hit.GetComponent<Tank_Behaviour>().Dead();
-
-        Destroy(this.gameObject);
-    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + currentDir.normalized * rayDistance);
@@ -102,5 +82,30 @@ public class Bullet : MonoBehaviour
     public void SetVelocity()
     {
         rb.velocity = transform.up * bulletSpeed * TimeEvent.speedModifier;
+    }
+
+    private IEnumerator KillPlayer(int idPlayer, Tank_Behaviour behaviour)
+    {
+        hitSFX.Play();
+
+        while (GameManager.Instance.IsForzen())
+        { // wait until the hitpause is done
+            yield return null;
+        }
+
+
+        if (idPlayer == 1)
+        {
+            GameManager.Instance.GetTank1IsDead();
+
+        }
+        else if (idPlayer == 2)
+        {
+            GameManager.Instance.GetTank2IsDead();
+        }
+
+        behaviour.Dead();
+
+        Destroy(this.gameObject);
     }
 }

@@ -437,12 +437,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48fdfb057bed515478716a115d66404b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score1: {fileID: 6829777015013812074}
-  score2: {fileID: 2062515958563783445}
-  leftStages: {fileID: 2104398496518359075}
-  gameOverTitlte: {fileID: 3476280536392494914}
+  score1TMP: {fileID: 6829777015013812074}
+  score2TMP: {fileID: 2062515958563783445}
+  leftStagesTMP: {fileID: 2104398496518359075}
+  gameOverTitlteTMP: {fileID: 3476280536392494914}
   gameOver: {fileID: 719678959762123418}
   pauseMenu: {fileID: 1058927421918514136}
+  p1Color: {r: 0.32156864, g: 0.6117647, b: 0.32156864, a: 1}
+  p2Color: {r: 0.8078432, g: 0.3647059, b: 0.07450981, a: 1}
 --- !u!114 &8725343924865032925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -679,7 +681,7 @@ Transform:
   m_Children:
   - {fileID: 2016140089533928450}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5428174443458598385
 GameObject:
@@ -1302,6 +1304,7 @@ GameObject:
   - component: {fileID: 6046688414545530182}
   - component: {fileID: 5309046367316907180}
   - component: {fileID: 7408673728313170657}
+  - component: {fileID: 2075002730415827475}
   m_Layer: 0
   m_Name: PwPlayer1
   m_TagString: Untagged
@@ -1357,7 +1360,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e282ff32254a22746b87ff42f7e7db78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f02a178ba149ad47895e358a85efea2, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1367,6 +1370,18 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2075002730415827475
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7193472926929141771}
+  m_Enabled: 1
+  m_Alpha: 0.7
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7403517149960612030
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,6 +1764,7 @@ GameObject:
   - component: {fileID: 7826134202295987191}
   - component: {fileID: 7734230452538170413}
   - component: {fileID: 7099901518241225188}
+  - component: {fileID: 1656681246368051539}
   m_Layer: 0
   m_Name: PwPlayer2
   m_TagString: Untagged
@@ -1804,7 +1820,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e282ff32254a22746b87ff42f7e7db78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f02a178ba149ad47895e358a85efea2, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1814,6 +1830,18 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1656681246368051539
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873514402064964434}
+  m_Enabled: 1
+  m_Alpha: 0.7
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7999633127935979168
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,9 @@ public class RegionDetector : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private MarchingSquares marchingSquares;
 
+    [Header("Collision Settings")]
+    [SerializeField] private LayerMask wallLayerMask;
+
     private int borderSize;
     private float heightThreshold;
 
@@ -80,6 +83,53 @@ public class RegionDetector : MonoBehaviour
         {
             visited[x, y] = true;
             queue.Enqueue(new Vector2Int(x, y)); //enqueue the position to be processed
+        }
+    }
+
+    public void SpawnObjects(GameObject GO, int times)
+    {
+        List<Vector2Int> BiggestRegion = new List<Vector2Int>();
+        foreach (List<Vector2Int> region in Regions)
+        {
+            if (region.Count > BiggestRegion.Count)
+            {
+                BiggestRegion = region;
+            }
+        }
+        if (BiggestRegion.Count == 0)
+        {
+            Debug.LogWarning("Cannot spawn objects: No regions detected.");
+            return;
+        }
+
+        int SpawnedN = 0;
+        int i = 0;
+        int y = Random.Range(0, BiggestRegion.Count);
+
+        while (SpawnedN < times)
+        {
+            while(heightMap[BiggestRegion[i].x,BiggestRegion[y].y] > heightThreshold)
+            {
+                i++;
+                y++;
+                if (i >= BiggestRegion.Count) i = 0;
+                if (y >= BiggestRegion.Count) y = 0;
+            }
+            Vector3 position = new Vector3(BiggestRegion[i].x * marchingSquares.gridResolution, BiggestRegion[y].y * marchingSquares.gridResolution, 0);
+
+            if (Random.value < (1f / times) * 0.25f)
+            {
+                Instantiate(GO, position, Quaternion.identity);
+                SpawnedN++;
+            }
+
+
+            i +=BiggestRegion.Count/5;
+            y+=BiggestRegion.Count/6;
+
+            
+            if (i >= BiggestRegion.Count) i = 0;
+            if (y >= BiggestRegion.Count) y = 0;
         }
     }
 }
