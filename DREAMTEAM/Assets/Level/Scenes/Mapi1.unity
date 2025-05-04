@@ -909,6 +909,17 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &915267300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8830567518496818350, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+  m_PrefabInstance: {fileID: 7721889098073965981}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931c9089f4e93014b8bb552eb4108e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &975575561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1041,8 @@ MonoBehaviour:
     MinTimes: 3
     MaxTimes: 6
     gameObjectToSpawn: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+  WaterController: {fileID: 0}
+  waterDetector: {fileID: 0}
   validPositions:
   - {x: 21, y: 11}
   - {x: 22, y: 11}
@@ -28474,6 +28487,34 @@ PrefabInstance:
     - target: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
       propertyPath: m_Name
       value: ExplodingBidon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 915267300}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Explode
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ExplosiveBidon, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777146087000872573, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
+      propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
