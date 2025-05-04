@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.Mathematics;
+using UnityEngine.UI;
 
 
 public class ScoreManager : MonoBehaviour
@@ -18,6 +19,12 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Color p1Color;
     [SerializeField] private Color p2Color;
+
+    //Changing UI of the PowerUps of the players
+    private GameObject imageUI1;
+    private GameObject imageUI2;
+    private Sprite originalSpritePlayer1;
+    private Sprite originalSpritePlayer2;
 
     private int timeForNextStage = 3;
     private int leftStages = 0;
@@ -36,6 +43,13 @@ public class ScoreManager : MonoBehaviour
         leftStagesTMP.text = "Left Stages: " + leftStages;
         gameOverTitlteTMP.text = "";
 
+        GameObject uiCanvas = GameObject.Find("Canvas");
+
+        if (uiCanvas != null)
+        {
+            imageUI1 = uiCanvas.transform.Find("PwPlayer1")?.gameObject;
+            imageUI2 = uiCanvas.transform.Find("PwPlayer2")?.gameObject;
+        }
 
         GameManager.Instance.OnEndGame += SetNextStage;
     }
@@ -87,6 +101,44 @@ public class ScoreManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void ChangePowerUpUI(PowerUpEffect powerUp, int playerNumber)
+    {
+        GameObject imageUI = (playerNumber == 1) ? imageUI1 : imageUI2;
+
+        // Activar el objeto UI en caso de que esté desactivado
+        imageUI.SetActive(true);
+
+        // Cambiar el sprite por el del power-up activo
+        Image img = imageUI.GetComponent<Image>();
+
+        if (playerNumber == 1 && originalSpritePlayer1 == null)
+            originalSpritePlayer1 = img.sprite;
+        else if (playerNumber == 2 && originalSpritePlayer2 == null)
+            originalSpritePlayer2 = img.sprite;
+
+        if (img != null && powerUp.powerUpSprite != null)
+        {
+            img.sprite = powerUp.powerUpSprite;
+        }
+
+        // Ocultar después de X segundos
+        StartCoroutine(HideAfterDelay(imageUI, 5f, playerNumber)); // o el tiempo que dure el power-up
+    }
+
+
+    private IEnumerator HideAfterDelay(GameObject imageUI, float delay, int playerNumber)
+    {
+        yield return new WaitForSeconds(delay);
+        Image img = imageUI.GetComponent<Image>();
+        if (img != null)
+        {
+            if (playerNumber == 1 && originalSpritePlayer1 != null)
+                img.sprite = originalSpritePlayer1;
+            else if (playerNumber == 2 && originalSpritePlayer2 != null)
+                img.sprite = originalSpritePlayer2;
+        }
     }
 
     private void SetNextStage (bool timeEventWarnig)
