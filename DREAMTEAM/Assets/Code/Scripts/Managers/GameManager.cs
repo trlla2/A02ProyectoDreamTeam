@@ -69,6 +69,13 @@ public class GameManager : MonoBehaviour
     [Header("HitPause Stuff")]
     [SerializeField, Range(0,1)] private float freezeDuration = 0.2f;
     private bool isForzen = false;
+
+    [Header("Water Event Stuff (Only Map2)")]
+    [SerializeField] private bool isMap2 = false;
+    [SerializeField] private WaterController wc;
+    [SerializeField] private float timeToStartWaterEvent = 30f;
+    private float timerToStartWaterEvent = 0f;
+
     [Header("DEBUG")]
     [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
     [SerializeField] private Vector3 tank1SpawnPos = Vector3.zero;
@@ -110,20 +117,21 @@ public class GameManager : MonoBehaviour
         if (endGame)
         {
             timerNextStage -= Time.deltaTime;
-            if(timerNextStage <= 0)
+            if (timerNextStage <= 0)
             {
                 nextStage = true;
             }
         }
 
-        if (nextStage) { 
+        if (nextStage)
+        {
             endGame = false;
             nextStage = false;
             if (leftStages > 0)
             {
                 ResetVaiables();
                 // Random between all biomes maps
-                int nextMap = Random.Range(0, biomesMaps.Count - 1);
+                int nextMap = Random.Range(0, biomesMaps.Count);
 
                 leftStages--; // left stages too end the game
                 Debug.Log("NxtMap: " + nextMap);
@@ -143,45 +151,57 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(spawnPowerUpTimer < spawnPowerUpTime) // Spawn PowerUps
+        if (spawnPowerUpTimer < spawnPowerUpTime) // Spawn PowerUps
         {
             spawnPowerUpTimer += Time.deltaTime;
         }
         else
         {
             Debug.Log(numPowerUps <= numMaxPowerUps ? "Spawn powerup" : "Cant spawn a pwUp");
-            if(numPowerUps <= numMaxPowerUps)
+            if (numPowerUps <= numMaxPowerUps)
             {
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
                 spawnPowerUpTimer = 0; // Reset timer
                 numPowerUps++;
                 AddMusicLevel();
             }
-            
+
         }
 
 
-        if(timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
+        if (timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
         {
             timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
             timerToStartTimeEvent = 0; // Reset timer
             timeEventWarnig = false;
             OnTimeEventWarning.Invoke(timeEventWarnig); // call event
         }
-        else if(timerToStartTimeEvent >= timeToStartTimeEvent - timeForTimeEventWarning && !timeEventWarnig) // Start Warning (One Time Execute)
+        else if (timerToStartTimeEvent >= timeToStartTimeEvent - timeForTimeEventWarning && !timeEventWarnig) // Start Warning (One Time Execute)
         {
             timeEventWarnig = true;
             OnTimeEventWarning.Invoke(timeEventWarnig); // call event
-            timerToStartTimeEvent += Time.deltaTime; 
+            timerToStartTimeEvent += Time.deltaTime;
         }
         else
         {
             timerToStartTimeEvent += Time.deltaTime;
         }
 
-        
-    }
+        if (isMap2)// Water events
+        {
+            if (timerToStartTimeEvent >= timeToStartTimeEvent) 
+            {
+                wc.StartWaterExpansionEvent();
+                
 
+            }
+            else
+            {
+                timerToStartTimeEvent += Time.deltaTime;
+            }
+        }
+
+    }
     private void SpawnPowerUp(Vector2 spawnPoint)
     {
         spawnPoint *= GridRes;
