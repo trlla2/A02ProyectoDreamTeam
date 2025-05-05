@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -72,9 +73,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Water Event Stuff (Only Map2)")]
     [SerializeField] private bool isMap2 = false;
-    [SerializeField] private WaterController wc;
     [SerializeField] private float timeToStartWaterEvent = 30f;
     private float timerToStartWaterEvent = 0f;
+    private bool waterEvent = false;
+    public delegate void WaterEvent();
+    public event WaterEvent OnWaterEvent;
 
     [Header("DEBUG")]
     [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
@@ -138,6 +141,14 @@ public class GameManager : MonoBehaviour
                 Debug.Log("LeftStages: " + leftStages);
 
                 TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
+                if (biomesMaps[nextMap] == "Map2")
+                {
+                    isMap2 = true;
+                }
+                else
+                {
+                    isMap2 = false;
+                }
             }
             else
             {
@@ -189,15 +200,15 @@ public class GameManager : MonoBehaviour
 
         if (isMap2)// Water events
         {
-            if (timerToStartTimeEvent >= timeToStartTimeEvent) 
+            if (timerToStartWaterEvent >= timeToStartWaterEvent && !waterEvent) 
             {
-                wc.StartWaterExpansionEvent();
-                
-
+                Debug.Log("Water Event");
+                OnWaterEvent.Invoke();
+                waterEvent = true;
             }
             else
             {
-                timerToStartTimeEvent += Time.deltaTime;
+                timerToStartWaterEvent += Time.deltaTime;
             }
         }
 

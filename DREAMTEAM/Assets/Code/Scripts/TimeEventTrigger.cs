@@ -7,7 +7,7 @@ public class TestTimeEvent : MonoBehaviour
     [Header("Effect Settings")]
     [SerializeField] private float minDuration = 10f;
     [SerializeField] private float maxDuration = 20f;
-    [SerializeField] private TankControlModifier tankControlModifier;
+    private TankControlModifier tankControlModifier;
 
     private void Awake()
     {

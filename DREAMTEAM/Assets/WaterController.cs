@@ -20,6 +20,15 @@ public class WaterController : MonoBehaviour
     private List<Vector3Int> allConvertedTiles = new List<Vector3Int>();
     private List<Vector3Int> currentFrontier = new List<Vector3Int>();
 
+    private void Start()
+    {
+        GameManager.Instance.OnWaterEvent += StartWaterExpansionEvent;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnWaterEvent -= StartWaterExpansionEvent;
+    }
     public void StartWaterExpansionEvent()
     {
         StartCoroutine(WaterExpansionRoutine());
