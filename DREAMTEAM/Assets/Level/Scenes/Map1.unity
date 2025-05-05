@@ -3112,30 +3112,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 5740388545659505251, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740388545659505251, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740388545659505251, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740388545659505251, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 107
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740388545659505251, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 27
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039853980557330457, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_text
-      value: Event Incoming
-      objectReference: {fileID: 0}
     - target: {fileID: 8593413309438944562, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -3179,26 +3155,6 @@ PrefabInstance:
     - target: {fileID: 8593413309438944562, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727123931558926295, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727123931558926295, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727123931558926295, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727123931558926295, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 107
-      objectReference: {fileID: 0}
-    - target: {fileID: 8727123931558926295, guid: d4003985f4d6a6449b2344bd1cc08785, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 27.000061
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

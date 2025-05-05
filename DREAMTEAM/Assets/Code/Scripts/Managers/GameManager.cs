@@ -242,6 +242,8 @@ public class GameManager : MonoBehaviour
         spawnPowerUpTimer = 0;
         numPowerUps = 0;
         musicLevel = 0;
+        waterEvent = false;
+        timerToStartWaterEvent = 0;
     }
 
     private IEnumerator HitPause()
