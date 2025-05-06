@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
 
     [Header("HitPause Stuff")]
     [SerializeField, Range(0,1)] private float freezeDuration = 0.2f;
+    private float currentFreezeTime = 0;
+    [SerializeField] private AnimationCurve curveFreeze = AnimationCurve.Linear(0, 0, 1, 1);
     private bool isForzen = false;
 
     [Header("Water Event Stuff (Only Map2)")]
@@ -244,20 +246,35 @@ public class GameManager : MonoBehaviour
         musicLevel = 0;
         waterEvent = false;
         timerToStartWaterEvent = 0;
+        currentFreezeTime = 0;
     }
 
     private IEnumerator HitPause()
-    {
+    {   
         isForzen = true;
         float originalTimeScale = Time.timeScale;
-        Time.timeScale = 0;
+        SetTimeScaleForCurrentTime(originalTimeScale);
+        while (currentFreezeTime < freezeDuration)
+        {
+            currentFreezeTime += Time.deltaTime;
 
-        yield return new WaitForSecondsRealtime(freezeDuration);
-        
+            SetTimeScaleForCurrentTime(originalTimeScale);
 
+            yield return new WaitForEndOfFrame();
+        }
+
+        currentFreezeTime = 0;
         Time.timeScale = originalTimeScale;
         isForzen = false;
     }
+
+    private void SetTimeScaleForCurrentTime(float originalTimeScale)
+    {
+        float interpolateValue = currentFreezeTime / freezeDuration;
+        interpolateValue = curveFreeze.Evaluate(interpolateValue);
+        Time.timeScale = originalTimeScale * interpolateValue;
+    }
+
     public void Freeze()
     {
         if (!isForzen) {

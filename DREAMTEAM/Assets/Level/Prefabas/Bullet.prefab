@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1.7
   rb: {fileID: 528216413536906350}
+  cC: {fileID: 8894956597595690265}
   bounceTime: 3
   rayDistance: 0.14
   bounceFx: {fileID: 353025840784019645, guid: 01e9ad1e5326f3e4d8b77c0fd5851081, type: 3}

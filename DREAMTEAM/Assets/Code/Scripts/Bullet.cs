@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour
     [Header("Setup")]
     [SerializeField] public float bulletSpeed = 10f;
     [SerializeField] public Rigidbody rb;
+    [SerializeField] private CapsuleCollider cC;
     [SerializeField] public int bounceTime = 3;
     [SerializeField] private float rayDistance = 0.5f;
     [SerializeField] private GameObject bounceFx;
@@ -107,11 +108,13 @@ public class Bullet : MonoBehaviour
     private IEnumerator KillPlayer(int idPlayer, Tank_Behaviour behaviour)
     {
         hitSFX.Play();
+        //cC.isTrigger = true;
+        //while (GameManager.Instance.IsForzen())
+        //{ // wait until the hitpause is done
+        //    yield return null;
+        //}
 
-        while (GameManager.Instance.IsForzen())
-        { // wait until the hitpause is done
-            yield return null;
-        }
+        yield return new WaitForEndOfFrame();
 
 
         if (idPlayer == 1)
