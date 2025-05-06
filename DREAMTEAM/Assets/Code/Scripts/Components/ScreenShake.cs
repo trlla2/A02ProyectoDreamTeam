@@ -16,6 +16,8 @@ public class ScreenShake : MonoBehaviour
 
     private Vector3 initialPos;
 
+    private bool isShaking = false;
+
     private void Start()
     {
         // Get initial position
@@ -25,10 +27,13 @@ public class ScreenShake : MonoBehaviour
 
     public void Shake()
     {
-        StartCoroutine(CameraShake()); // Start the coroutine
+        if (!isShaking) 
+            StartCoroutine(CameraShake()); // Start the coroutine
     }
     private IEnumerator CameraShake()
     {
+        isShaking = true;
+
         float timer = 0;
 
         while (timer < durationScreenShake)
@@ -42,7 +47,7 @@ public class ScreenShake : MonoBehaviour
 
             timer += Time.deltaTime; // add timer
 
-            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.deltaTime); // move camera to center
+            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.unscaledDeltaTime); // move camera to center
             
             yield return null;
         }
@@ -50,10 +55,13 @@ public class ScreenShake : MonoBehaviour
         while(transform.position != initialPos)
         {
             
-            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.deltaTime);// move camera to center
+            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.unscaledDeltaTime);// move camera to center
             
             yield return null;
 
         }
+
+        isShaking = false;
+
     }
 }

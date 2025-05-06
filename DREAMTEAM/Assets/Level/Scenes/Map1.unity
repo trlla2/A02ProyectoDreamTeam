@@ -519,7 +519,7 @@ MonoBehaviour:
   timeToStartTimeEvent: 30
   timeEventDuration: 10
   timeForTimeEventWarning: 5
-  freezeDuration: 0.15
+  freezeDuration: 0.1
   curveFreeze:
     serializedVersion: 2
     m_Curve:
@@ -27999,6 +27999,10 @@ PrefabInstance:
     - target: {fileID: 237674625252005911, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4538082360888271375, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
+      propertyPath: cameraShakeForce
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8924930952708165554, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_RootOrder
