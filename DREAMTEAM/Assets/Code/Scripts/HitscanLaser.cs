@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PowerUps/HitscanLaser")]
 public class HitscanLaser : PowerUpEffect
 {
-    public int maxReflectionCount = 5;
-    public float maxStepDistance = 100.0f;
+    public int maxReflectionCount = 2;
+    public float maxStepDistance = 20.0f;
     public GameObject laserSpritePrefab;  // Prefab de sprite del rayo
     private float spriteHeight = -1f; // Se inicializa en -1 para calcularla la primera vez
-
+    public LayerMask collisionMask;
 
     public override void Apply(GameObject target)
     {
@@ -29,12 +29,11 @@ public class HitscanLaser : PowerUpEffect
         while (reflectionsRemaining > 0)
         {
             RaycastHit hit;
+            bool hitSomething = Physics.Raycast(currentPos, currentDir, out hit, maxStepDistance, collisionMask);
 
-            Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.blue, 1f);
-            Debug.Log("Casting ray from: " + currentPos + " in direction: " + currentDir);
-
-            if (Physics.Raycast(currentPos, currentDir, out hit, maxStepDistance))
+            if (hitSomething)
             {
+                Debug.DrawLine(currentPos, hit.point, Color.red, 1f);
                 Vector3 endPos = hit.point;
                 CreateLaserSegment(currentPos, endPos);
 
@@ -46,10 +45,12 @@ public class HitscanLaser : PowerUpEffect
             }
             else
             {
+                Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.red, 1f);
                 Vector3 endPos = currentPos + currentDir * maxStepDistance;
                 CreateLaserSegment(currentPos, endPos);
                 break;
             }
+
 
             Debug.Log("Hit " + hit.collider.name);
         }
@@ -62,7 +63,7 @@ public class HitscanLaser : PowerUpEffect
         float length = direction.magnitude;
 
         GameObject laserSegment = Instantiate(laserSpritePrefab);
-        Destroy(laserSegment, 1f); // Destruir tras 0.5 segundos
+        Destroy(laserSegment, 0.5f); // Destruir tras 0.5 segundos
 
         // Posicionar en el centro del rayo
         laserSegment.transform.position = start + direction * 0.5f;
@@ -96,6 +97,7 @@ public class HitscanLaser : PowerUpEffect
         Tank_Behaviour tank = obj.GetComponent<Tank_Behaviour>();
         if (tank != null)
         {
+            Debug.Log("Tank Drestoyed");
             if (tank.GetPlayer() == 1)
             {
                 GameManager.Instance.GetTank1IsDead();
