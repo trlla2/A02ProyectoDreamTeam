@@ -31515,7 +31515,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
   m_Size: {x: 60, y: 41, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 100}
+  m_TileAnchor: {x: 0.5, y: 0.51, z: 100}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -31545,6 +31545,22 @@ PrefabInstance:
     - target: {fileID: 237674625252005911, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832713079070539115, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832713079070539115, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832713079070539115, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.13899964
+      objectReference: {fileID: 0}
+    - target: {fileID: 1832713079070539115, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8924930952708165554, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_RootOrder

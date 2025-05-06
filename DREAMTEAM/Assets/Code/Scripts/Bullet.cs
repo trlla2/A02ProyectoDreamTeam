@@ -73,6 +73,26 @@ public class Bullet : MonoBehaviour
             }
         }
     }
+
+    //mAKE SURE WE ARE DESTROYIG THE BULLET on player colision
+    private void OnCollisionEnter(Collision hit)
+    {
+        if (hit.collider != null && !hit.collider.isTrigger)
+        {
+            Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
+            if (behaviour != null)
+            {
+                GameManager.Instance.Freeze(); // hit stop
+
+                StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
+            }
+            else if (hit.collider.gameObject.GetComponent<Interactable>())
+            {
+                hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
+                DestroyImmediate(gameObject);
+            }
+        }
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, transform.position + currentDir.normalized * rayDistance);
