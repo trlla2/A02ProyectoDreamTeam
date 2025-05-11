@@ -166,6 +166,18 @@ public class MarchingSquares : MonoBehaviour
         Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
         tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y);
         tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
+
+        var Overlap1 = Physics.OverlapSphere(tank1Pos, 0.5f);
+        var Overlap2 = Physics.OverlapSphere(tank2Pos, 0.5f);
+
+        if (Overlap1.Length > 0)
+        {
+            SpawnTanks();
+        }
+        if (Overlap2.Length > 0)
+        {
+            SpawnTanks();
+        }
         GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
     private void SpawnObjects()

@@ -100,10 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac37c1b5d26cda44ad5663c01c5d1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 2
+  bulletSpeed: 1.7
   rb: {fileID: 528216413536906350}
+  cC: {fileID: 8894956597595690265}
   bounceTime: 3
-  rayDistance: 0.1
+  rayDistance: 0.14
   bounceFx: {fileID: 353025840784019645, guid: 01e9ad1e5326f3e4d8b77c0fd5851081, type: 3}
   hitSFX: {fileID: 7684874472912551767}
 --- !u!136 &8894956597595690265

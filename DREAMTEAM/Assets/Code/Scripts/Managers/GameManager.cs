@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviour
     private bool endGame = false;
     public delegate void GetEndGame(bool endGame);
     public event GetEndGame OnEndGame;
-    private bool nextStage = false;
 
     [HideInInspector]
     public bool Spawned = false;
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player1Points = 0;
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
-    private float GridRes = 0.0f;
+    private float gridRes = 0.0f;
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
@@ -68,13 +68,17 @@ public class GameManager : MonoBehaviour
 
     [Header("HitPause Stuff")]
     [SerializeField, Range(0,1)] private float freezeDuration = 0.2f;
+    private float currentFreezeTime = 0;
+    [SerializeField] private AnimationCurve curveFreeze = AnimationCurve.Linear(0, 0, 1, 1);
     private bool isForzen = false;
 
     [Header("Water Event Stuff (Only Map2)")]
-    [SerializeField] private bool isMap2 = false;
-    [SerializeField] private WaterController wc;
+    private bool isMap2 = false;
     [SerializeField] private float timeToStartWaterEvent = 30f;
     private float timerToStartWaterEvent = 0f;
+    private bool waterEvent = false;
+    public delegate void WaterEvent();
+    public event WaterEvent OnWaterEvent;
 
     [Header("DEBUG")]
     [SerializeField] private bool spawnTanksOnStart = false; // FOR DEBUG ONLY (spawn tanks without marching sqares)
@@ -88,7 +92,7 @@ public class GameManager : MonoBehaviour
     public event musicLevelEvent OnMusicLevelChanging;
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (instance != null && instance != this) // makes GameManager 
         {
             Destroy(this.gameObject);
         }
@@ -114,42 +118,45 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (endGame)
+        if (endGame) // if a player was killed waits to change scene
         {
             timerNextStage -= Time.deltaTime;
-            if (timerNextStage <= 0)
+            if (timerNextStage <= 0) // change Scene
             {
-                nextStage = true;
+                if (leftStages > 0)
+                {
+                    ResetVaiables();
+                    // Random between all biomes maps
+                    int nextMap = Random.Range(0, biomesMaps.Count);
+
+                    leftStages--; // left stages too end the game
+                    Debug.Log("NxtMap: " + nextMap);
+                    Debug.Log("LeftStages: " + leftStages);
+
+                    TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
+                    if (biomesMaps[nextMap] == "Map2") // cheks if next scene is map2
+                    {
+                        isMap2 = true;
+                    }
+                    else
+                    {
+                        isMap2 = false;
+                    }
+                }
+                else
+                {
+                    ResetVaiables();
+                    player1Points = 0;
+                    player2Points = 0;
+                    Cursor.visible = true;// show cursor
+                    Cursor.lockState = CursorLockMode.None;// unlock cursor
+                    TransitionManager.Instance.LoadScene("MainMenu");// Go to menu
+
+                }
             }
         }
 
-        if (nextStage)
-        {
-            endGame = false;
-            nextStage = false;
-            if (leftStages > 0)
-            {
-                ResetVaiables();
-                // Random between all biomes maps
-                int nextMap = Random.Range(0, biomesMaps.Count - 1);
-
-                leftStages--; // left stages too end the game
-                Debug.Log("NxtMap: " + nextMap);
-                Debug.Log("LeftStages: " + leftStages);
-
-                TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
-            }
-            else
-            {
-                //leftStagesTMP = totalStages;
-                player1Points = 0;
-                player2Points = 0;
-                Cursor.visible = true;// show cursor
-                Cursor.lockState = CursorLockMode.None;// unlock cursor
-                TransitionManager.Instance.LoadScene("MainMenu");// Go to menu
-
-            }
-        }
+        
 
         if (spawnPowerUpTimer < spawnPowerUpTime) // Spawn PowerUps
         {
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
                 spawnPowerUpTimer = 0; // Reset timer
                 numPowerUps++;
-                AddMusicLevel();
+                AddMusicLevel(); // Add one more level to the adabtative music
             }
 
         }
@@ -187,24 +194,24 @@ public class GameManager : MonoBehaviour
             timerToStartTimeEvent += Time.deltaTime;
         }
 
-        if (isMap2)// Water events
+        if (isMap2)// Water event
         {
-            if (timerToStartTimeEvent >= timeToStartTimeEvent) 
+            if (timerToStartWaterEvent >= timeToStartWaterEvent && !waterEvent) 
             {
-                wc.StartWaterExpansionEvent();
-                
-
+                Debug.Log("Water Event");
+                OnWaterEvent.Invoke(); // Invoke Water Event
+                waterEvent = true;
             }
             else
             {
-                timerToStartTimeEvent += Time.deltaTime;
+                timerToStartWaterEvent += Time.deltaTime;
             }
         }
 
     }
-    private void SpawnPowerUp(Vector2 spawnPoint)
+    private void SpawnPowerUp(Vector2 spawnPoint) // Spawn powerup to the recived position
     {
-        spawnPoint *= GridRes;
+        spawnPoint *= gridRes;
         GameObject temp1 = Instantiate(powerUpBase, spawnPoint, Quaternion.identity); //instantiate powerup
 
 
@@ -213,7 +220,7 @@ public class GameManager : MonoBehaviour
         temp1.GetComponent<GetPowerUp>().SetPowerUp(powerUpEffects[randomPowerUp]); // Set powerUp effect
     }
 
-    private void EndGame()
+    private void EndGame() // start EndGame Stuff
     {
         // show for UI game ended             
         endGame = true; // set gameend true
@@ -222,37 +229,55 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void ResetVaiables()
+    private void ResetVaiables() // Resets variables for the next Scene
     {
         //Reset variables
+        endGame = false;
         timerNextStage = timeForNextStage;
         Spawned = false;
         timeEventWarnig = false;
         spawnPowerUpTimer = 0;
         numPowerUps = 0;
         musicLevel = 0;
+        waterEvent = false;
+        timerToStartWaterEvent = 0;
+        currentFreezeTime = 0;
     }
 
-    private IEnumerator HitPause()
-    {
+    private IEnumerator HitPause() // Slowdown the game for a short time
+    {   
         isForzen = true;
         float originalTimeScale = Time.timeScale;
-        Time.timeScale = 0;
+        SetTimeScaleForCurrentTime(originalTimeScale);
+        while (currentFreezeTime < freezeDuration)
+        {
+            currentFreezeTime += Time.deltaTime;
 
-        yield return new WaitForSecondsRealtime(freezeDuration);
-        
+            SetTimeScaleForCurrentTime(originalTimeScale);
 
+            yield return new WaitForEndOfFrame();
+        }
+
+        currentFreezeTime = 0;
         Time.timeScale = originalTimeScale;
         isForzen = false;
     }
-    public void Freeze()
+
+    private void SetTimeScaleForCurrentTime(float originalTimeScale) // set the timeScale value to the current value of the curve
+    {
+        float interpolateValue = currentFreezeTime / freezeDuration;
+        interpolateValue = curveFreeze.Evaluate(interpolateValue);
+        Time.timeScale = originalTimeScale * interpolateValue;
+    }
+
+    public void Freeze() // Starts the hitpause
     {
         if (!isForzen) {
             Debug.Log("Freeze");
             StartCoroutine(HitPause());
         }
     }
-    public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos)
+    public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos) // Spawn Player Tanks
     {
         if (Spawned) return;
 
@@ -283,7 +308,7 @@ public class GameManager : MonoBehaviour
         Spawned = true;
     }
 
-    public void GetTank1IsDead()
+    public void GetTank1IsDead() // add points too tank2 and Starts the endGame
     {
         player2Points += pointsForDeath; // add points
 
@@ -291,7 +316,7 @@ public class GameManager : MonoBehaviour
 
         EndGame();// end game function
     }
-    public void GetTank2IsDead()
+    public void GetTank2IsDead()// add points too tank1 and Starts the endGame
     {
         player1Points += pointsForDeath; // add poitns
 
@@ -312,17 +337,17 @@ public class GameManager : MonoBehaviour
 
     public bool IsForzen() { return isForzen; }
 
-    public void DecreaseNumPowerUps()
+    public void DecreaseNumPowerUps() 
     {
         numPowerUps--;
     }
-    public void SetValidPositions(List<Vector2Int> validPositions, float gridRes)
+    public void SetValidPositions(List<Vector2Int> validPositions, float gridRes) // set valid positions to spawn the powerUps
     {
         this.validPositions = validPositions;
-        this.GridRes = gridRes;
+        this.gridRes = gridRes;
     }
 
-    private void AddMusicLevel()
+    private void AddMusicLevel() // add a level to the adabtative music
     {
         if (musicLevel <= 6) 
         { // MaxMusicLevelCases
@@ -331,7 +356,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ReduceMusicLevel()
+    public void ReduceMusicLevel() // reduce a level to the adabtative music
     {
         if(musicLevel != 0)
         {

@@ -7,18 +7,19 @@ public class FirePointActive : MonoBehaviour
 {
     public bool CanShoot = true;
     [SerializeField] private int WallLayer = 3;
+
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == WallLayer)
+        if (other.gameObject.layer == WallLayer || other.CompareTag("Player"))
         {
             CanShoot = false;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == WallLayer)
+        if (other.gameObject.layer == WallLayer || other.CompareTag("Player"))
         {
             CanShoot = true;
         }
     }
-}
+}   
