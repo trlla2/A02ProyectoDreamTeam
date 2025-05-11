@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUpSprite: {fileID: 21300000, guid: c3b569b9a503210479ab37d2bb3005c7, type: 3}
   bulletsPerBurst: 3
-  delayBetweenShots: 0.1
+  delayBetweenShots: 0.3

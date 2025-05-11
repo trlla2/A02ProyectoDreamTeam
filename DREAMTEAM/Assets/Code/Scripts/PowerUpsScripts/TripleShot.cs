@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PowerUps/TripleShot")]
@@ -53,6 +54,7 @@ public class TripleShot : PowerUpEffect
             if (firePos.GetComponent<FirePointActive>().CanShoot)
             {
                 Bullet b = Instantiate(bulletPrefab, firePos.transform.position, firePos.transform.rotation).GetComponent<Bullet>();
+                
                 b.SetVelocity();
             }
             //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

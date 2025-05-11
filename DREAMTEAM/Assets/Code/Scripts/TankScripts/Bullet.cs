@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -11,6 +12,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float rayDistance = 0.5f;
     [SerializeField] private GameObject bounceFx;
     [SerializeField] private AudioSource hitSFX;
+    [SerializeField] private float tankParentInmunity = 0.15f;
+    private GameObject tankParentRef;
 
     Vector3 currentDir;
     Vector3 rigthBound;
@@ -37,6 +40,10 @@ public class Bullet : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(transform.forward, currentDir);
         RaycastHit hit;
 
+        if(tankParentInmunity > 0)
+        {
+            tankParentInmunity -= Time.deltaTime;
+        }
 
         if (Physics.Raycast(transform.position, currentDir, out hit, rayDistance) || (Physics.Raycast(rigthBound + transform.position, currentDir, out hit, rayDistance)) || (Physics.Raycast(leftBound + transform.position, currentDir, out hit, rayDistance)))
         {
@@ -45,9 +52,12 @@ public class Bullet : MonoBehaviour
                 Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
                 if (behaviour != null)
                 {
-                   GameManager.Instance.Freeze(); // hit stop
+                   if(!(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
+                    {
+                        GameManager.Instance.Freeze(); // hit stop
 
-                   StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
+                        StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
+                    }
                 }
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
@@ -108,11 +118,6 @@ public class Bullet : MonoBehaviour
     private IEnumerator KillPlayer(int idPlayer, Tank_Behaviour behaviour)
     {
         hitSFX.Play();
-        //cC.isTrigger = true;
-        //while (GameManager.Instance.IsForzen())
-        //{ // wait until the hitpause is done
-        //    yield return null;
-        //}
 
         yield return new WaitForEndOfFrame();
 
@@ -130,5 +135,10 @@ public class Bullet : MonoBehaviour
         behaviour.Dead();
 
         Destroy(this.gameObject);
+    }
+
+    public void SetTankParent(GameObject tankParent)
+    {
+        tankParentRef = tankParent;
     }
 }

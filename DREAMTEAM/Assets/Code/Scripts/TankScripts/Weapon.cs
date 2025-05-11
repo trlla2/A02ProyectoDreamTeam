@@ -128,7 +128,7 @@ public class Weapon : MonoBehaviour
             else if (isBurstFireActive && currentPowerUp is BurstFirePowerUp)
             {
                 if (burstCoroutine != null) StopCoroutine(burstCoroutine);
-                burstCoroutine = StartCoroutine(BurstFireRoutine(firePoint.transform.position, firePoint.transform.rotation));
+                burstCoroutine = StartCoroutine(BurstFireRoutine());
             }
             else if (isHitscanLaserActive && hitscanLaserPowerUp != null)
             {
@@ -146,6 +146,7 @@ public class Weapon : MonoBehaviour
             else
             {
                 GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
+                bulletInstance.GetComponent<Bullet>().SetTankParent(this.gameObject);
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
                 bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
 
@@ -231,25 +232,24 @@ public class Weapon : MonoBehaviour
             isHitscanLaserActive = false;
         }
     }
-    private IEnumerator BurstFireRoutine(Vector3 position, Quaternion rotation)
+    private IEnumerator BurstFireRoutine()
     {
         for (int i = 0; i < burstCount; i++)
         {
            
-            GameObject bulletInstance = Instantiate(bulletSprite, position, rotation);
+            GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
             Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
 
-            
+
             bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
 
             
-            if (i == 0) 
-            {
-                shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
-                OnShoot.Invoke();
-            }
+            
+            shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
+            GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
+            Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+            OnShoot.Invoke();
+            
 
             if (i < burstCount - 1)
             {
