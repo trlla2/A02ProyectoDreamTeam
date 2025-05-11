@@ -1733,13 +1733,35 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
   - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
   - {fileID: 11400000, guid: a7f2cbcb5f7aeb247b51dc0c88385272, type: 2}
-  - {fileID: 11400000, guid: 41e804de41999904f92356be534443c5, type: 2}
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
   timeToStartTimeEvent: 30
   timeEventDuration: 10
   timeForTimeEventWarning: 5
   freezeDuration: 0.3
-  isMap2: 1
+  curveFreeze:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   timeToStartWaterEvent: 1
   spawnTanksOnStart: 0
   tank1SpawnPos: {x: 0, y: 0, z: 0}
