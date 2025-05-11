@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
-public class WaterController : MonoBehaviour
+public class WaterController     : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private MapTextureGenerator mapGenerator;
