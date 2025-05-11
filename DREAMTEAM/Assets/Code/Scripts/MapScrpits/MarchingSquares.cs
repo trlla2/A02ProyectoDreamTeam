@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,19 @@ using UnityEngine;
 *  and unity uses triangles. Luckyly videos like Brakeys mesh basics helped understand the concept, Sebastian Lague's videdo and Freedom Coding's marching squares videdo offered exemples on how 
 *  to implement the mesh genearation in unity
 */
-
+[System.Serializable]
+public class SpawnableObject
+{
+    public int MapID;
+    public int MinTimes, MaxTimes;
+    public GameObject gameObjectToSpawn;
+}
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingSquares : MonoBehaviour
 {
+    [Header("MapID")]
+    public int Mapid;
+
     [Header("Grid Settings")]
     [Range(5, 500)] public int gridSizeX = 15;
     [Range(5, 500)] public int gridSizeY = 15;
@@ -30,8 +40,20 @@ public class MarchingSquares : MonoBehaviour
     [SerializeField] private MeshFilter walls;
     [SerializeField] private float wallHeight = 5f;
 
+    [Header("Outline Settings")]
+    [SerializeField] private LineRenderer lineRendererPrefab;
+    [SerializeField] private Transform lineRendererContainer;
+    [SerializeField][Range(0.01f, 0.5f)] private float outlineWidth = 0.1f;
+
     [Header("Region Detection")]
     [SerializeField] private RegionDetector regionDetector;
+
+    [Header("SpawnBehabiour")]
+    public SpawnableObject[] SpawnedObjects;
+
+    [Header("Water")]
+    [SerializeField] private WaterController WaterController;
+    [SerializeField] private PlayerWaterDetector waterDetector;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -90,9 +112,16 @@ public class MarchingSquares : MonoBehaviour
         CreateMesh();
         UpdatePolygonCollider();
         CreateWallMesh();
-        textureGenerator.Initial();
         GetSpawnablePositions();
-        SpawnTanks();
+        SpawnObjects();
+        textureGenerator.Initial();
+        StartCoroutine(SpawnTanks());
+        /*
+        if (WaterController != null)
+        {
+            WaterController.StartWaterExpansionEvent(); 
+        }
+        */
     }
     private void GetSpawnablePositions()
     {
@@ -110,37 +139,71 @@ public class MarchingSquares : MonoBehaviour
         }
 
         validPositions = BiggestRegion;
+        if (validPositions.Count < 4) Debug.LogError("No valid positions for this map");
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
-    private void SpawnTanks()
-    {
-        int firstIndex = Random.Range(0, validPositions.Count);
+    public IEnumerator SpawnTanks()
+    {   
+        bool spawnSuccessful = false;
+        const int maxTotalAttempts = 10;
+        int totalAttempts = 0;
 
-        Vector2Int tank1GridPos = validPositions[firstIndex];
-        Vector2Int tank2GridPos;
-
-        validPositions.RemoveAt(firstIndex);
-
-        int attempts = 0;
-        const int maxAttempts = 100;
-        float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
-
-        do
+        while (!spawnSuccessful && totalAttempts < maxTotalAttempts)
         {
-            int secondIndex = Random.Range(0, validPositions.Count);
-            tank2GridPos = validPositions[secondIndex];
-            attempts++;
+            totalAttempts++;
+            int firstIndex = Random.Range(0, validPositions.Count);
+
+            Vector2Int tank1GridPos = validPositions[firstIndex];
+            Vector2Int tank2GridPos;
+
+            int distanceAttempts = 0;
+            const int maxDistanceAttempts = 100;
+
+            float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
+            bool validDistance = false;
+
+            do
+            {
+                int secondIndex = Random.Range(0, validPositions.Count);
+                tank2GridPos = validPositions[secondIndex];
+                distanceAttempts++;
+                validDistance = Vector2.Distance(tank1GridPos, tank2GridPos) >= minDistance;
+            }
+            while (distanceAttempts < maxDistanceAttempts && !validDistance);
+
+            // Convert grid positions to world space
+            Vector3 tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank1GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
+            Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank2GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
+
+            // Check for collisions
+            var overlap1 = Physics.OverlapSphere(tank1Pos, 0.2f);
+            var overlap2 = Physics.OverlapSphere(tank2Pos, 0.2f);
+
+            if (overlap1.Length == 0 && overlap2.Length == 0)
+            {
+                // Valid positions found
+                validPositions.RemoveAt(firstIndex);
+                GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
+                spawnSuccessful = true;
+            }
+            else yield return null;
         }
-        while (attempts < maxAttempts && Vector2.Distance(tank1GridPos, tank2GridPos) < minDistance);
 
-        Vector3 tank1Pos = new Vector3(Mathf.Clamp (tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX-BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
-        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
-        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y);
-        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
-        GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
+        if (!spawnSuccessful) Debug.LogError("Failed to find valid tank positions after " + maxTotalAttempts + " attempts");
+        yield return null;
     }
-
+    private void SpawnObjects()
+    {
+        foreach (SpawnableObject Obj in SpawnedObjects)
+        {
+            print(Obj.gameObjectToSpawn.name);
+            if(Mapid == Obj.MapID)
+            {
+                regionDetector.SpawnObjects(Obj.gameObjectToSpawn, Random.Range(Obj.MinTimes, Obj.MaxTimes));
+            }
+        }
+    }
     private void GenerateHeightMap(int seed)
     {
         //we add +1 to each array dimention so the borders are not disconected
@@ -417,6 +480,7 @@ public class MarchingSquares : MonoBehaviour
 
             polygonCollider.SetPath(i, path.ToArray());
         }
+        GenerateOutlines();
     }
     //Trace a single outline starting form a givn vertex
     private void FindOutline(int startVertex, List<int> outline)
@@ -460,6 +524,39 @@ public class MarchingSquares : MonoBehaviour
             processedVertices.Add(nextVertex);
 
             currentVertex = nextVertex; // Move to next vertex
+        }
+    }
+    //Add outline efect to the map
+    private void GenerateOutlines()
+    {
+        // Clear existing outlines
+        if (lineRendererContainer != null)
+        {
+            foreach (Transform child in lineRendererContainer)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        // Create new outlines
+        foreach (List<int> outline in validOutlines) //well use the same outlines as  the poligon collider outlines
+        {
+            if (outline.Count < 2) continue;
+
+            LineRenderer lr = Instantiate(lineRendererPrefab, lineRendererContainer);
+
+            lr.startWidth = outlineWidth;
+            lr.endWidth = outlineWidth;
+            lr.positionCount = outline.Count;
+
+            Vector3[] positions = new Vector3[outline.Count];
+            for (int i = 0; i < outline.Count; i++)
+            {
+                positions[i] = vertices[outline[i]] + Vector3.forward * -0.1f + Vector3.up * 0.04f; // Offset for visibility
+            }
+
+            lr.SetPositions(positions);
+            lr.loop = true;
         }
     }
 
