@@ -48,7 +48,7 @@ public class Weapon : MonoBehaviour
 
     //shield
     [SerializeField] private GameObject shield;
-    private bool isShieldActive;
+    public bool isShieldActive;
 
     private Tank_Behaviour tb;
 

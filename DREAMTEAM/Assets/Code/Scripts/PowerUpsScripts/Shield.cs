@@ -10,15 +10,15 @@ public class Shield : MonoBehaviour
         weapon = GetComponentInParent<Weapon>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        {
-            if (collision.gameObject.CompareTag("Bullet") && weapon != null)
-            {
-                Destroy(collision.gameObject);
-                weapon.ShieldHit();
-            }
-        }
-    }
-
+    /* private void OnCollisionEnter2D(Collision2D collision)
+     {
+         {
+             if (collision.gameObject.CompareTag("Bullet") && weapon != null)
+             {
+                 Destroy(collision.gameObject);
+                 weapon.ShieldHit();
+             }
+         }
+     }
+    */
 }
