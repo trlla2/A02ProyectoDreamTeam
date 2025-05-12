@@ -23,6 +23,7 @@ public class TransitionManager : MonoBehaviour
     [Header("SETUP")]
     [SerializeField] private Animator transition;
     [SerializeField] private float transitionTime = 1f;
+    private bool isTransitioning = false; // is using estrogen
 
     private void Awake()
     {
@@ -41,13 +42,16 @@ public class TransitionManager : MonoBehaviour
     
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(TransitionAnimation(sceneName)); // Start transition animation
+        if (!isTransitioning)
+            StartCoroutine(TransitionAnimation(sceneName)); // Start transition animation
     }
 
     private IEnumerator TransitionAnimation(string sceneName)
     {
+        isTransitioning = true;
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
+        isTransitioning = false;
         SceneManager.LoadScene(sceneName);
     }
 

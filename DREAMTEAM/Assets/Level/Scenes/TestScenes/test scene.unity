@@ -131,6 +131,7 @@ Transform:
 --- !u!1 &914704317
 GameObject:
   m_ObjectHideFlags: 0
+<<<<<<< HEAD:DREAMTEAM/Assets/Level/Scenes/TestScenes/test scene.unity
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -261,6 +262,135 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.000000029802322}
   serializedVersion: 2
   m_Radius: 0.5
+=======
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_Name
+      value: Tank (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8000083843101737936, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: player
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.8937496
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8402486
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+--- !u!1001 &490308252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.6057582
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7477075
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5486039481211385375, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: powerUpEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: 215dd504d69026f41842eadd08c8976c, type: 2}
+    - target: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+      propertyPath: m_Name
+      value: PowerUpAplicator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+>>>>>>> feature/power_up:DREAMTEAM/Assets/Level/Scenes/test scene.unity
 --- !u!1 &957189466
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,27 +712,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_Name
-      value: Tank
+      value: Tank (2)
       objectReference: {fileID: 0}
     - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.165974
-      objectReference: {fileID: 0}
-    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.4409392
-      objectReference: {fileID: 0}
-    - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.32
+      value: -3.4438114
       objectReference: {fileID: 0}
     - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.68
+      value: -1.4270062
       objectReference: {fileID: 0}
     - target: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_LocalPosition.z
@@ -709,6 +831,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
+=======
+>>>>>>> feature/power_up:DREAMTEAM/Assets/Level/Scenes/test scene.unity
 --- !u!1 &1217911096
 GameObject:
   m_ObjectHideFlags: 0
