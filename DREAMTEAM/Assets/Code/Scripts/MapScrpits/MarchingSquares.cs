@@ -144,7 +144,13 @@ public class MarchingSquares : MonoBehaviour
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
     public IEnumerator SpawnTanks()
-    {   
+    {
+        if (validPositions.Count == 0)
+        {
+            Debug.LogError("No valid positions available.");
+            yield break;
+        }
+
         bool spawnSuccessful = false;
         const int maxTotalAttempts = 10;
         int totalAttempts = 0;
@@ -187,7 +193,10 @@ public class MarchingSquares : MonoBehaviour
                 GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
                 spawnSuccessful = true;
             }
-            else yield return null;
+            else
+            {
+                yield return null;
+            }
         }
 
         if (!spawnSuccessful) Debug.LogError("Failed to find valid tank positions after " + maxTotalAttempts + " attempts");

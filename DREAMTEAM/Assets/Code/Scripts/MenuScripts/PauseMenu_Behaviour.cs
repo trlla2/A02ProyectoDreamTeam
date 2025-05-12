@@ -13,24 +13,15 @@ public class PauseMenu_Behaviour : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;// unlock cursor
     }
 
-    private void Start()
-    {
-        //translatorUI.ToTarget();// start animation
-    }
-
     private void OnDisable()
     {
         Time.timeScale = 1; // Set normal TimeScale
         Cursor.visible = false;// unshow cursor
         Cursor.lockState = CursorLockMode.Locked;// lock cursor
-        
-
     }
 
     public void Resume()
     {
-        OnClickButton(); // Click Behaviour
-
         OnExitPauseMenu();// Exit Pause Menu Behaviour
 
         this.gameObject.SetActive(false); // Disable Pause Menu
@@ -38,16 +29,9 @@ public class PauseMenu_Behaviour : MonoBehaviour
 
     public void MainMenu()
     {
-        OnClickButton(); // Click Behaviour
-
         OnExitPauseMenu();// Exit Pause Menu Behaviour
 
-        SceneManager.LoadScene("MainMenu"); 
-    }
-
-    private void OnClickButton()
-    {
-        //clickSFX.Play(); ---------------------------------------------- Depenendcy SFX
+        TransitionManager.Instance.LoadScene("MainMenu");
     }
 
     private void OnExitPauseMenu()
@@ -55,5 +39,7 @@ public class PauseMenu_Behaviour : MonoBehaviour
         Time.timeScale = 1; // Set normal TimeScale
         Cursor.visible = false;// unshow cursor
         Cursor.lockState = CursorLockMode.Locked;// lock cursor
+        GameManager.Instance.ResetVaiables();
+        GameManager.Instance.ResetPlayerPoints();
     }
 }

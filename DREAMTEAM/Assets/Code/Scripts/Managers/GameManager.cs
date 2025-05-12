@@ -146,8 +146,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     ResetVaiables();
-                    player1Points = 0;
-                    player2Points = 0;
+                    ResetPlayerPoints();
                     Cursor.visible = true;// show cursor
                     Cursor.lockState = CursorLockMode.None;// unlock cursor
                     TransitionManager.Instance.LoadScene("MainMenu");// Go to menu
@@ -229,8 +228,9 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void ResetVaiables() // Resets variables for the next Scene
+    public void ResetVaiables() // Resets variables for the next Scene
     {
+        Debug.Log("Reseting Variables");
         //Reset variables
         endGame = false;
         timerNextStage = timeForNextStage;
@@ -242,6 +242,12 @@ public class GameManager : MonoBehaviour
         waterEvent = false;
         timerToStartWaterEvent = 0;
         currentFreezeTime = 0;
+    }
+
+    public void ResetPlayerPoints()
+    {
+        player1Points = 0;
+        player2Points = 0;
     }
 
     private IEnumerator HitPause() // Slowdown the game for a short time
