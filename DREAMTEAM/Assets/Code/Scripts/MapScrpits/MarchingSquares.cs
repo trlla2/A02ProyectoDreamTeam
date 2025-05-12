@@ -158,7 +158,7 @@ public class MarchingSquares : MonoBehaviour
             Vector2Int tank2GridPos;
 
             int distanceAttempts = 0;
-            const int maxDistanceAttempts = 100;
+            const int maxDistanceAttempts = 150;
 
             float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
             bool validDistance = false;
@@ -187,7 +187,11 @@ public class MarchingSquares : MonoBehaviour
                 GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
                 spawnSuccessful = true;
             }
-            else yield return null;
+            else // if failed, spawn random
+            {
+                GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
+                yield return null;
+            }
         }
 
         if (!spawnSuccessful) Debug.LogError("Failed to find valid tank positions after " + maxTotalAttempts + " attempts");
