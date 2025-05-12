@@ -12,8 +12,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float rayDistance = 0.5f;
     [SerializeField] private GameObject bounceFx;
     [SerializeField] private AudioSource hitSFX;
-    [SerializeField] private float tankParentInmunity = 0.15f;
-    private GameObject tankParentRef;
+    [SerializeField] private float tankParentInmunity = 0.25f;
+
+    [HideInInspector]
+    public GameObject tankParentRef;
 
     Vector3 currentDir;
     Vector3 rigthBound;
@@ -42,7 +44,8 @@ public class Bullet : MonoBehaviour
 
         if(tankParentInmunity > 0)
         {
-            tankParentInmunity -= Time.deltaTime;
+            tankParentInmunity -= Time.fixedDeltaTime;
+            print(tankParentInmunity);
         }
 
         if (Physics.Raycast(transform.position, currentDir, out hit, rayDistance) || (Physics.Raycast(rigthBound + transform.position, currentDir, out hit, rayDistance)) || (Physics.Raycast(leftBound + transform.position, currentDir, out hit, rayDistance)))
@@ -53,11 +56,11 @@ public class Bullet : MonoBehaviour
                 if (behaviour != null)
                 {
                    if(!(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
-                    {
+                   {
                         GameManager.Instance.Freeze(); // hit stop
 
                         StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
-                    }
+                   }
                 }
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
@@ -91,7 +94,7 @@ public class Bullet : MonoBehaviour
         if (hit.collider != null && !hit.collider.isTrigger)
         {
             Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
-            if (behaviour != null)
+            if (behaviour != null && !(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
             {
                 GameManager.Instance.Freeze(); // hit stop
 
@@ -100,7 +103,7 @@ public class Bullet : MonoBehaviour
             else if (hit.collider.gameObject.GetComponent<Interactable>())
             {
                 hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
-                DestroyImmediate(gameObject);
+                Destroy(gameObject);
             }
         }
     }

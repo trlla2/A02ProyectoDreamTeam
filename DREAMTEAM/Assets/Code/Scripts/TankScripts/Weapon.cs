@@ -146,8 +146,10 @@ public class Weapon : MonoBehaviour
             else
             {
                 GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
-                bulletInstance.GetComponent<Bullet>().SetTankParent(this.gameObject);
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+                bulletScript.tankParentRef = gameObject;
+                bulletScript.SetTankParent(this.gameObject);
                 bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
 
                 shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
@@ -242,9 +244,10 @@ public class Weapon : MonoBehaviour
 
 
             bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
+            bulletScript.tankParentRef = gameObject;        
 
-            
-            
+
+
             shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
             GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
             Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);

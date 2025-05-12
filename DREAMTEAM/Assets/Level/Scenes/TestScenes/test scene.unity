@@ -123,8 +123,13 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &350905613
-PrefabInstance:
+--- !u!4 &176475063 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2674511055803122898, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  m_PrefabInstance: {fileID: 1029917329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &914704317
+GameObject:
   m_ObjectHideFlags: 0
 <<<<<<< HEAD:DREAMTEAM/Assets/Level/Scenes/TestScenes/test scene.unity
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +224,7 @@ Transform:
   m_LocalScale: {x: 1.7336258, y: 1.5304431, z: 6.9882827}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1029917330}
+  m_Father: {fileID: 176475063}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &914704321
@@ -477,7 +482,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &957189470
 MonoBehaviour:
@@ -681,7 +686,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1023359372
+--- !u!1001 &1029917329
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -689,6 +694,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5263217143365289063, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236034702949292120, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: shield
+      value: 
+      objectReference: {fileID: 914704317}
+    - target: {fileID: 6236034702949292120, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: firePoint2
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6236034702949292120, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: firePoint3
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_Name
       value: Tank (2)
@@ -739,15 +760,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2674511055803122898, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 914704320}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-<<<<<<< HEAD:DREAMTEAM/Assets/Level/Scenes/TestScenes/test scene.unity
---- !u!4 &1029917330 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8864069764587270349, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  m_PrefabInstance: {fileID: 1029917329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1034407400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -758,7 +776,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -766,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.3256912
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 5464002836055089145, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -959,6 +977,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258982276}
   m_CullTransparentMesh: 1
+--- !u!1 &1292828323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7155598858351314515, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  m_PrefabInstance: {fileID: 1483983784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &1292828326
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292828323}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1001 &1483983784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -967,6 +1025,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2674511055803122898, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5263217143365289063, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
       propertyPath: m_Name
       value: Tank (1)
@@ -1022,7 +1088,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7155598858351314515, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1292828326}
   m_SourcePrefab: {fileID: 100100000, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
 --- !u!1 &1636952067
 GameObject:

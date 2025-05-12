@@ -107,7 +107,8 @@ MonoBehaviour:
   rayDistance: 0.14
   bounceFx: {fileID: 353025840784019645, guid: 01e9ad1e5326f3e4d8b77c0fd5851081, type: 3}
   hitSFX: {fileID: 7684874472912551767}
-  tankParentInmunity: 0.15
+  tankParentInmunity: 0.25
+  tankParentRef: {fileID: 0}
 --- !u!136 &8894956597595690265
 CapsuleCollider:
   m_ObjectHideFlags: 0

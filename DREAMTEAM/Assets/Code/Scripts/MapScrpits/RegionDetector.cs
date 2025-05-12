@@ -117,10 +117,15 @@ public class RegionDetector : MonoBehaviour
             }
             Vector3 position = new Vector3(BiggestRegion[i].x * marchingSquares.gridResolution, BiggestRegion[y].y * marchingSquares.gridResolution, 0);
 
-            if (Random.value < (1f / times) * 0.25f)
+            var overlap = Physics.OverlapSphere(position, 0.2f);
+
+            if (overlap.Length == 0)
             {
-                Instantiate(GO, position, Quaternion.identity);
-                SpawnedN++;
+                if (Random.value < (1f / times) * 0.25f)
+                {
+                    Instantiate(GO, position, Quaternion.identity);
+                    SpawnedN++;
+                }
             }
 
 
