@@ -47,7 +47,7 @@ public class ExplosiveBidon : MonoBehaviour
                 Int.BulletHit();
             }
         }
-        DestroyImmediate(gameObject);
+        Destroy(gameObject);
     }
 
     void OnDrawGizmosSelected()
