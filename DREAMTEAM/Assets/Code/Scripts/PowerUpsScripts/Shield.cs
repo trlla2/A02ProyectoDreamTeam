@@ -5,20 +5,13 @@ public class Shield : MonoBehaviour
 {
     private Weapon weapon;
 
+    [SerializeField] private GameObject explosionShield;
+
     private void Awake()
     {
         weapon = GetComponentInParent<Weapon>();
     }
 
-    /* private void OnCollisionEnter2D(Collision2D collision)
-     {
-         {
-             if (collision.gameObject.CompareTag("Bullet") && weapon != null)
-             {
-                 Destroy(collision.gameObject);
-                 weapon.ShieldHit();
-             }
-         }
-     }
-    */
+    //GameObject temp = Instantiate(explosionShield, this.transform.position, Quaternion.identity);// Explotion
+
 }
