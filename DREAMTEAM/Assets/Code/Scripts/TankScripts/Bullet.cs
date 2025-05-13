@@ -124,21 +124,16 @@ public class Bullet : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        if ((idPlayer == 1 || idPlayer == 2) && GetComponent<Weapon>().isShieldActive == true)
-        {
-            Destroy(this.gameObject);
-            GetComponent<Weapon>().ShieldHit();
-        }
-        else if (idPlayer == 1)
-        {
-            GameManager.Instance.GetTank1IsDead();
 
-        }
-        else if (idPlayer == 2)
-        {
-            GameManager.Instance.GetTank2IsDead();
-        }
+            if (idPlayer == 1)
+            {
+                GameManager.Instance.GetTank1IsDead();
 
+            }
+            else if (idPlayer == 2)
+            {
+                GameManager.Instance.GetTank2IsDead();
+            }
         behaviour.Dead();
 
         Destroy(this.gameObject);
