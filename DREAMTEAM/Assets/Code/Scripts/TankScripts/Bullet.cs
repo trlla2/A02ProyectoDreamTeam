@@ -124,10 +124,13 @@ public class Bullet : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        if ((idPlayer == 1 || idPlayer == 2) && GetComponent<Weapon>().isShieldActive == true)
+        Weapon weapon = behaviour.GetComponent<Weapon>();
+
+        if ((idPlayer == 1 || idPlayer == 2) && weapon != null && weapon.isShieldActive)
         {
+            weapon.ShieldHit();
             Destroy(this.gameObject);
-            GetComponent<Weapon>().ShieldHit();
+            yield break;
         }
         else if (idPlayer == 1)
         {
