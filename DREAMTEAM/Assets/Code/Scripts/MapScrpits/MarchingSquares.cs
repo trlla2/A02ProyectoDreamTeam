@@ -115,7 +115,7 @@ public class MarchingSquares : MonoBehaviour
         GetSpawnablePositions();
         SpawnObjects();
         textureGenerator.Initial();
-        StartCoroutine(SpawnTanks());
+        SpawnTanks();
         /*
         if (WaterController != null)
         {
@@ -143,65 +143,46 @@ public class MarchingSquares : MonoBehaviour
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
-    public IEnumerator SpawnTanks()
+    public void SpawnTanks()
     {
-        if (validPositions.Count == 0)
+        int firstIndex = Random.Range(0, validPositions.Count);
+
+        Vector2Int tank1GridPos = validPositions[firstIndex];
+        Vector2Int tank2GridPos;
+
+        validPositions.RemoveAt(firstIndex);
+
+        int attempts = 0;
+        const int maxAttempts = 100;
+        float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
+
+        do
         {
-            Debug.LogError("No valid positions available.");
-            yield break;
+            int secondIndex = Random.Range(0, validPositions.Count);
+            tank2GridPos = validPositions[secondIndex];
+            attempts++;
         }
+        while (attempts < maxAttempts && Vector2.Distance(tank1GridPos, tank2GridPos) < minDistance);
 
-        bool spawnSuccessful = false;
-        const int maxTotalAttempts = 10;
-        int totalAttempts = 0;
+        Vector3 tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y);
+        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
 
-        while (!spawnSuccessful && totalAttempts < maxTotalAttempts)
+        var Overlap1 = Physics.OverlapSphere(tank1Pos, 0.5f);
+        var Overlap2 = Physics.OverlapSphere(tank2Pos, 0.5f);
+
+        if (Overlap1.Length > 0)
         {
-            totalAttempts++;
-            int firstIndex = Random.Range(0, validPositions.Count);
-
-            Vector2Int tank1GridPos = validPositions[firstIndex];
-            Vector2Int tank2GridPos;
-
-            int distanceAttempts = 0;
-            const int maxDistanceAttempts = 100;
-
-            float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
-            bool validDistance = false;
-
-            do
-            {
-                int secondIndex = Random.Range(0, validPositions.Count);
-                tank2GridPos = validPositions[secondIndex];
-                distanceAttempts++;
-                validDistance = Vector2.Distance(tank1GridPos, tank2GridPos) >= minDistance;
-            }
-            while (distanceAttempts < maxDistanceAttempts && !validDistance);
-
-            // Convert grid positions to world space
-            Vector3 tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank1GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
-            Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank2GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
-
-            // Check for collisions
-            var overlap1 = Physics.OverlapSphere(tank1Pos, 0.2f);
-            var overlap2 = Physics.OverlapSphere(tank2Pos, 0.2f);
-
-            if (overlap1.Length == 0 && overlap2.Length == 0)
-            {
-                // Valid positions found
-                validPositions.RemoveAt(firstIndex);
-                GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
-                spawnSuccessful = true;
-            }
-            else
-            {
-                yield return null;
-            }
+            SpawnTanks();
         }
-
-        if (!spawnSuccessful) Debug.LogError("Failed to find valid tank positions after " + maxTotalAttempts + " attempts");
-        yield return null;
+        if (Overlap2.Length > 0)
+        {
+            SpawnTanks();
+        }
+        GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
+
     private void SpawnObjects()
     {
         foreach (SpawnableObject Obj in SpawnedObjects)
