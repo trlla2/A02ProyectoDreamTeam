@@ -692,6 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b494680ef08fa4bbd77575bb7cf11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idTank: 1
   player: 1
   explosionParticles: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
   playerNumberGameObj: {fileID: 1543868601302644855, guid: 3edf55ba74fea7e429405a27e96d602d, type: 3}
@@ -775,6 +776,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   shield: {fileID: 3007282469410881744}
+  isShieldActive: 0
+  waitSecs: 0.7
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0

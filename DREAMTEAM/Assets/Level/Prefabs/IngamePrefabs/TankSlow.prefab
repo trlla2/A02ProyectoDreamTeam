@@ -692,6 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b494680ef08fa4bbd77575bb7cf11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idTank: 3
   player: 1
   explosionParticles: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
   playerNumberGameObj: {fileID: 1543868601302644855, guid: 3edf55ba74fea7e429405a27e96d602d, type: 3}
@@ -719,8 +720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc7c0dee4ca73d41920d3a8cfc69c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.35
-  rotationSpeed: 1.5
+  speed: 0.3
+  rotationSpeed: 1.75
   movementSfx: {fileID: 6378730187570512939}
   maxRandomPitchSfx: 1.2
   minRandomPitchSfx: 0.98
