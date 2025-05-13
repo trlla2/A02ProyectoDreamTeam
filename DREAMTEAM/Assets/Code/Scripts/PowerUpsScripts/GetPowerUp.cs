@@ -46,7 +46,7 @@ public class GetPowerUp : MonoBehaviour
             if (tankBehaviour != null)
             {
                 playerNumber = tankBehaviour.GetPlayer(); // Obtener el número real del jugador
-                scoreManager.ChangePowerUpUI(powerUpEffect, playerNumber);
+                //scoreManager.ChangePowerUpUI(powerUpEffect, playerNumber);
             }
 
             GameManager.Instance.DecreaseNumPowerUps();
