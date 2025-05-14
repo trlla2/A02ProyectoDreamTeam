@@ -18,4 +18,4 @@ MonoBehaviour:
   laserSpritePrefab: {fileID: 15171538489082504, guid: 1cd6f193eaddfeb4bbf05c845dd30b1c, type: 3}
   collisionMask:
     serializedVersion: 2
-    m_Bits: 59
+    m_Bits: 187
