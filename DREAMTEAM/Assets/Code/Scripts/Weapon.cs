@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     //triple shoot
     private bool isTripleShotActive = false;
-    private float powerTime = 5f;
+    private float powerTime = 65f;
 
     //Hitscan laser
     private bool isHitscanLaserActive = false;

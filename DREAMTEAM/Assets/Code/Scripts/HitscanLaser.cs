@@ -22,6 +22,9 @@ public class HitscanLaser : PowerUpEffect
 
     public void FireLaser(Vector3 origin, Vector3 direction)
     {
+        origin.z = 0f;       // Fuerza la posición del rayo al plano Z = 0
+        direction.z = 0f;    // Asegura que la dirección esté en el plano 2D
+
         int reflectionsRemaining = maxReflectionCount;
         Vector3 currentPos = origin;
         Vector3 currentDir = direction;
@@ -33,26 +36,28 @@ public class HitscanLaser : PowerUpEffect
 
             if (hitSomething)
             {
-                Debug.DrawLine(currentPos, hit.point, Color.red, 1f);
                 Vector3 endPos = hit.point;
+                endPos.z = 0f;  // Ajuste extra por si el punto de impacto no está exactamente en 0
+
+                Debug.DrawLine(currentPos, endPos, Color.red, 1f);
                 CreateLaserSegment(currentPos, endPos);
 
                 KillTank(hit.collider.gameObject);
 
                 currentDir = Vector3.Reflect(currentDir, hit.normal);
+                currentDir.z = 0f; // Mantener en plano 2D
                 currentPos = endPos;
                 reflectionsRemaining--;
             }
             else
             {
-                Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.red, 1f);
                 Vector3 endPos = currentPos + currentDir * maxStepDistance;
+                endPos.z = 0f;
+
+                Debug.DrawRay(currentPos, currentDir * maxStepDistance, Color.red, 1f);
                 CreateLaserSegment(currentPos, endPos);
                 break;
             }
-
-
-            Debug.Log("Hit " + hit.collider.name);
         }
     }
 
