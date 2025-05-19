@@ -17,6 +17,7 @@ public class SpawnableObject
     public int MinTimes, MaxTimes;
     public GameObject gameObjectToSpawn;
 }
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingSquares : MonoBehaviour
 {
@@ -104,7 +105,7 @@ public class MarchingSquares : MonoBehaviour
     //public so we can access it thru the editor script
     public void UpdateGrid()
     {
-        meshFilter = GetComponent<MeshFilter>();
+        meshFilter = GetComponent<MeshFilter>();//here so we can use it in inpector
         polygonCollider = GetComponent<PolygonCollider2D>();
 
         GenerateHeightMap(Seed);
@@ -116,15 +117,15 @@ public class MarchingSquares : MonoBehaviour
         SpawnObjects();
         textureGenerator.Initial();
         SpawnTanks();
-        /*
-        if (WaterController != null)
-        {
-            WaterController.StartWaterExpansionEvent(); 
-        }
-        */  
     }
     private void GetSpawnablePositions()
     {
+
+        if (regionDetector == null)
+        {
+            Debug.LogError("RegionDetector not assigned in MarchingSquares!");
+            return;
+        }
         regionDetector.Initialize();
         regionDetector.FindAllRegions();
 
@@ -145,6 +146,12 @@ public class MarchingSquares : MonoBehaviour
     }
     public void SpawnTanks()
     {
+        if (validPositions == null || validPositions.Count == 0)
+        {
+            Debug.LogError("No valid positions available for tank spawning!");
+            return;
+        }
+
         bool finished = false;
         int times = 100;
         while (!finished && times > 0)
@@ -504,8 +511,12 @@ public class MarchingSquares : MonoBehaviour
         outline.Add(currentVertex);
         processedVertices.Add(currentVertex);
 
-        while (true)
+        int maxIterations = vertices.Count; // Prevent infinite loops
+        int iterations = 0;
+
+        while (true && iterations < maxIterations)
         {
+            iterations++;
             int nextVertex = -1; 
             List<Triangle> triangles = vertexToTriangles[vertices[currentVertex]];
 
