@@ -132,13 +132,12 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
             yield break;
         }
-        else if (idPlayer == 1)
+        else
         {
-            GameManager.Instance.GetTank1IsDead();
-
             if (idPlayer == 1)
             {
                 GameManager.Instance.GetTank1IsDead();
+
 
             }
             else if (idPlayer == 2)
