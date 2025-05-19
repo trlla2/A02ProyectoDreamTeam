@@ -520,7 +520,30 @@ MonoBehaviour:
   timeEventDuration: 10
   timeForTimeEventWarning: 5
   freezeDuration: 0.3
-  isMap2: 0
+  curveFreeze:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   timeToStartWaterEvent: 3
   spawnTanksOnStart: 0
   tank1SpawnPos: {x: 0, y: 0, z: 0}
@@ -645,26 +668,31 @@ MonoBehaviour:
   backgroundTilemap: {fileID: 1796503698}
   heightBands:
   - minHeight: -1
-    maxHeight: 0.3
+    maxHeight: 0.15
     tiles:
-    - {fileID: 11400000, guid: f763564ee51e9a042b11af9ecfc8e241, type: 2}
-    - {fileID: 11400000, guid: 2cc6f609e0286f2498263f406fa0b6c5, type: 2}
-    - {fileID: 11400000, guid: fcf7abd17b78255418d18fbac9e0317f, type: 2}
-  - minHeight: 0.3
+    - {fileID: 11400000, guid: 68d4d6d389f46974ea73859dec15d51e, type: 2}
+    - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+    - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+  - minHeight: 0.15
     maxHeight: 1
     tiles:
-    - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
-    - {fileID: 11400000, guid: 46e8d7e26193f1447a2b4d18310e32d0, type: 2}
+    - {fileID: 11400000, guid: 6db0f8ad5f20d2e489e7b312804df6d6, type: 2}
+    - {fileID: 11400000, guid: 7d0b85cf741ce7142831a5b0062f8df5, type: 2}
+    - {fileID: 11400000, guid: 6db0f8ad5f20d2e489e7b312804df6d6, type: 2}
+    - {fileID: 11400000, guid: 205dad3a0669db9438fc7253fe82a055, type: 2}
+    - {fileID: 11400000, guid: e876eb524f61e1a449a865098822be32, type: 2}
+    - {fileID: 11400000, guid: e876eb524f61e1a449a865098822be32, type: 2}
   marchingSquares: {fileID: 975575566}
   regionDetector: {fileID: 975575568}
   OutOfBounds:
-  - {fileID: 11400000, guid: 70d336cd84f89b34db0adf9c9637617b, type: 2}
-  - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
-  - {fileID: 11400000, guid: 80d8ae52af64ded4a8fff9d53e608910, type: 2}
-  - {fileID: 11400000, guid: a53766b6b47121842b5e586807004425, type: 2}
-  - {fileID: 11400000, guid: 255257ad60ee6b54e90bc991288517ae, type: 2}
-  - {fileID: 11400000, guid: fd398d9e9b9231649b3bb0047f080428, type: 2}
-  - {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
+  - {fileID: 11400000, guid: 5fadcf6058fff2c4a993b0091c8c4621, type: 2}
+  - {fileID: 11400000, guid: c5cfd014e6323a740bbc1948094daeda, type: 2}
+  - {fileID: 11400000, guid: 8b6f3c5634ed1df4aa47d743171cc5e8, type: 2}
+  - {fileID: 11400000, guid: a3b8a535e7fef534fbc5c93bf9fd558f, type: 2}
+  - {fileID: 11400000, guid: e35ffe7cc2cd27942b21c9b271e78e05, type: 2}
+  - {fileID: 11400000, guid: e876eb524f61e1a449a865098822be32, type: 2}
+  - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+  - {fileID: 11400000, guid: 8b6f3c5634ed1df4aa47d743171cc5e8, type: 2}
   Default: {fileID: 11400000, guid: 5062d56ee580bff42a7bb39fe20aa953, type: 2}
   gridResolution: 0.16
 --- !u!1 &697209400
