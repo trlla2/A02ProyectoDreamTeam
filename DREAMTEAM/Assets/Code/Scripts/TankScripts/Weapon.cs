@@ -56,8 +56,8 @@ public class Weapon : MonoBehaviour
     private bool P2CanSoot = true;
 
 
-    [SerializeField]
-    private WaitForSeconds wait = new WaitForSeconds(0.7f);
+    [SerializeField] float waitSecs = 0.7f;
+    private WaitForSeconds wait;
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
@@ -66,6 +66,7 @@ public class Weapon : MonoBehaviour
         {
             shield.SetActive(false);
         }
+        wait = new WaitForSeconds(waitSecs);
     }
 
     // Update is called once per frame
