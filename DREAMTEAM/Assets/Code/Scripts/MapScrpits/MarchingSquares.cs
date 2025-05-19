@@ -146,7 +146,7 @@ public class MarchingSquares : MonoBehaviour
     public void SpawnTanks()
     {
         bool finished = false;
-        int times = 500;
+        int times = 100;
         while (!finished && times > 0)
         {
             times--;
