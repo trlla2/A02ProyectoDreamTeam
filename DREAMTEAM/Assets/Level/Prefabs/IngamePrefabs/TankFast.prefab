@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2e09fedbe7e58439510fff839db4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionShield: {fileID: 0}
 --- !u!1 &4566728878441957040
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +778,7 @@ MonoBehaviour:
         m_CallState: 2
   shield: {fileID: 3007282469410881744}
   isShieldActive: 0
-  waitSecs: 1
+  fireRate: 1
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0

@@ -10,7 +10,9 @@ public class MainMenu_Behaviour : MonoBehaviour
 
     [Header("Panels")]
     [SerializeField]
-    private GameObject mainMenu;
+    private GameObject mainMenu; 
+    [SerializeField]
+    private GameObject selectionMenu;
     [SerializeField]
     private GameObject settings;
     [SerializeField]
@@ -46,27 +48,34 @@ public class MainMenu_Behaviour : MonoBehaviour
     public void OnBack()// Show Main Menu, Hide all other panels
     {
         mainMenu.GetComponent<TranslatorUI>().ToTarget();
+        selectionMenu.GetComponent<TranslatorUI>().ToOrigin();
         settings.GetComponent<TranslatorUI>().ToOrigin();
         credits.GetComponent<TranslatorUI>().ToOrigin();
     }
     public void OnSettings() // Show Settings, Hide all other panels
     {
         mainMenu.GetComponent<TranslatorUI>().ToOrigin();
+        selectionMenu.GetComponent<TranslatorUI>().ToOrigin();
         settings.GetComponent<TranslatorUI>().ToTarget();
         credits.GetComponent<TranslatorUI>().ToOrigin();
     }
     public void OnCredits() // Show Credits, Hide all other panels
     {
         mainMenu.GetComponent<TranslatorUI>().ToOrigin();
+        selectionMenu.GetComponent<TranslatorUI>().ToOrigin();
         settings.GetComponent<TranslatorUI>().ToOrigin();
         credits.GetComponent<TranslatorUI>().ToTarget();
     }
     public void OnPlay()
     {
-        Cursor.visible = false;// unshow cursor
-        Cursor.lockState = CursorLockMode.Locked;// lock cursor
-        TransitionManager.Instance.LoadScene(playSceneName);
+        //Cursor.visible = false;// unshow cursor
+        //Cursor.lockState = CursorLockMode.Locked;// lock cursor
+        //TransitionManager.Instance.LoadScene(playSceneName);
 
+        mainMenu.GetComponent<TranslatorUI>().ToOrigin();
+        selectionMenu.GetComponent<TranslatorUI>().ToTarget();
+        settings.GetComponent<TranslatorUI>().ToOrigin();
+        credits.GetComponent<TranslatorUI>().ToOrigin();
     }
     public void OnExit()
     {

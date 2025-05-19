@@ -145,9 +145,10 @@ public class Bullet : MonoBehaviour
             {
                 GameManager.Instance.GetTank2IsDead();
             }
-        behaviour.Dead();
+            behaviour.Dead();
 
-        Destroy(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetTankParent(GameObject tankParent)

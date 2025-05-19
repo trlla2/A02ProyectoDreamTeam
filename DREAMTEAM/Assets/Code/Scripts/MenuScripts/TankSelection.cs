@@ -10,17 +10,19 @@ public class TankSelection : MonoBehaviour
     [Header("Tank1")]
     [SerializeField] private Slider firerateBarP1;
     [SerializeField] private Slider speedBarP1;
-    //[Header("Tank2")]
-    //[SerializeField] private Slider firerateBarP2;
-    //[SerializeField] private Slider speedBarP2;
+    [Header("Tank2")]
+    [SerializeField] private Slider firerateBarP2;
+    [SerializeField] private Slider speedBarP2;
     [Header("Tanks")]
     [SerializeField] private List<GameObject> tankTypes;
-    private int currentP1Tank = 1;
+    private int currentP1Tank = 0;
     private GameObject currentP2Tank;
 
     private void Start()
     {
         Debug.Log("Tank types: " + tankTypes.Count);
+        UpdateP1Slider();
+
     }
 
 
@@ -38,7 +40,7 @@ public class TankSelection : MonoBehaviour
 
     public void SwitctRightTankPlayer1()
     {
-        if (currentP1Tank < tankTypes.Count)
+        if (currentP1Tank < tankTypes.Count - 1)
         {
             currentP1Tank++;
             UpdateP1Slider();
@@ -47,7 +49,7 @@ public class TankSelection : MonoBehaviour
 
     private void UpdateP1Slider()
     {
-        firerateBarP1.value = tankTypes[currentP1Tank].GetComponent<Weapon>().GetFireRate();
+        firerateBarP1.value = 1.5f-tankTypes[currentP1Tank].GetComponent<Weapon>().GetFireRate();
         speedBarP1.value = tankTypes[currentP1Tank].GetComponent<TankMovement>().GetSpeed();
     }
 }
