@@ -16,16 +16,26 @@ public class TankSelection : MonoBehaviour
     [Header("Tanks")]
     [SerializeField] private List<GameObject> tankTypes;
     private int currentP1Tank = 0;
-    private GameObject currentP2Tank;
+    private int currentP2Tank = 0;
+
 
     private void Start()
     {
         Debug.Log("Tank types: " + tankTypes.Count);
         UpdateP1Slider();
-
+        UpdateP2Slider();
     }
 
-
+    private void UpdateP1Slider()
+    {
+        firerateBarP1.value = 1.5f - tankTypes[currentP1Tank].GetComponent<Weapon>().GetFireRate();
+        speedBarP1.value = tankTypes[currentP1Tank].GetComponent<TankMovement>().GetSpeed();
+    }
+    private void UpdateP2Slider()
+    {
+        firerateBarP2.value = 1.5f - tankTypes[currentP2Tank].GetComponent<Weapon>().GetFireRate();
+        speedBarP2.value = tankTypes[currentP2Tank].GetComponent<TankMovement>().GetSpeed();
+    }
 
     public void SwitchLeftTankPlayer1()
     {
@@ -36,8 +46,6 @@ public class TankSelection : MonoBehaviour
         }
     }
 
-
-
     public void SwitctRightTankPlayer1()
     {
         if (currentP1Tank < tankTypes.Count - 1)
@@ -47,9 +55,26 @@ public class TankSelection : MonoBehaviour
         }
     }
 
-    private void UpdateP1Slider()
+    public void SwitchLeftTankPlayer2()
     {
-        firerateBarP1.value = 1.5f-tankTypes[currentP1Tank].GetComponent<Weapon>().GetFireRate();
-        speedBarP1.value = tankTypes[currentP1Tank].GetComponent<TankMovement>().GetSpeed();
+        if (currentP2Tank > 0)
+        {
+            currentP2Tank--;
+            UpdateP2Slider();
+        }
     }
+
+    public void SwitctRightTankPlayer2()
+    {
+        if (currentP2Tank < tankTypes.Count - 1)
+        {
+            currentP2Tank++;
+            UpdateP2Slider();
+        }
+    }
+
+    public void Play()
+    {
+        Debug.LogWarning("FALTA IMPLEMENTAR EL LOAD SCENE");
+    } 
 }
