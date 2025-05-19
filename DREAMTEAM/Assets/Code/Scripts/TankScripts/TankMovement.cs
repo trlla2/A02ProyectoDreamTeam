@@ -64,11 +64,9 @@ public class TankMovement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        float currentSpeed = speed * TimeEvent.speedModifier;
-        float currentRotationSpeed = rotationSpeed * TimeEvent.speedModifier;
 
-        float verticalVel = verticalInput * Time.deltaTime * currentSpeed * 100f;
-        rotation += horizontalInput * Time.deltaTime * currentRotationSpeed * 100f;
+        float verticalVel = verticalInput * Time.deltaTime * speed * 100f;
+        rotation += horizontalInput * Time.deltaTime * rotationSpeed * 100f;
 
         rb.velocity = transform.up * verticalVel;
         rb.transform.rotation = Quaternion.Euler(0, 0, -rotation);
@@ -90,6 +88,7 @@ public class TankMovement : MonoBehaviour
         invertControls = false;
         speed = initialSpeed;
     }
+
     public void ResetToDefaultControls()
     {
         StopAllCoroutines();

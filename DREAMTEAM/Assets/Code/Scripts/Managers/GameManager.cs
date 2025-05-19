@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeEventDuration = 10f;
     [SerializeField] private float timeForTimeEventWarning = 3f;
     private bool timeEventWarnig = false;
-    public delegate void TimeEventWarning(bool timeEventWarnig);
+    public delegate void TimeEventWarning(bool timeEventWarning);
     public event TimeEventWarning OnTimeEventWarning;
 
     [Header("HitPause Stuff")]

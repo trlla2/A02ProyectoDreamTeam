@@ -1,75 +1,92 @@
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
-public class TimeEvent
+using System.Collections;
+
+public class TimeEvent : MonoBehaviour
 {
-    public static float speedModifier = 1f; //velocidad normal
+    public enum EffectType { SpeedUp, SlowDown, InvertControls, Shrink }
 
-    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f)
+    [Header("TimeEvent Settings")]
+    [SerializeField] private float shrinkScale = 0.5f;
+    [SerializeField] private Vector2 speedUpRange = new Vector2(1.2f, 2f);
+    [SerializeField] private Vector2 slowDownRange = new Vector2(0.3f, 0.8f);
+
+    private TankMovement tankMovement;
+    private Vector3 originalScale;
+    private Coroutine activeEffect;
+
+    public static float speedModifier = 1f;
+    private void Awake()
     {
-
-        int randomChoice = UnityEngine.Random.Range(0, 2);
-        float speedMod = randomChoice == 0 ? minSpeedMod : maxSpeedMod;
-
-        GameObject gameObject = new GameObject("TimeEvent", typeof(GetMonoBehaviour));
-        TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod);
-        gameObject.GetComponent<GetMonoBehaviour>().onUpdate = timeEvent.Update;
-        gameObject.GetComponent<GetMonoBehaviour>().onDestroy = timeEvent.DestroyEvent;
-
-        Debug.Log(randomChoice == 0 ? "Slowing down game!" : "Speeding up game!");
-        return timeEvent;
+        tankMovement = GetComponent<TankMovement>();
+        originalScale = transform.localScale;
     }
 
-    private class GetMonoBehaviour : MonoBehaviour
+    public void TriggerRandomEffect(float duration, Action onComplete = null)
     {
-        public Action onUpdate;
-        public Action onDestroy;
-        private void Update()
+        if (activeEffect != null)
         {
-            if (onUpdate != null) onUpdate();
+            StopCoroutine(activeEffect);
+            ResetEffects();
         }
 
-        private void OnDestroy()
-        {
-            if (onDestroy != null) onDestroy();
+        var effect = (EffectType)UnityEngine.Random.Range(0, 4);
+        activeEffect = StartCoroutine(ApplyEffect(effect, duration, onComplete));
+    }
 
+    private IEnumerator ApplyEffect(EffectType effect, float duration, Action onComplete)
+    {
+        // Apply effect immediately
+        switch (effect)
+        {
+            case EffectType.SpeedUp:
+                float speedBoost = UnityEngine.Random.Range(speedUpRange.x, speedUpRange.y);
+                tankMovement.ModifyControls(false, tankMovement.GetInitialSpeed() * speedBoost, duration);
+                speedModifier = UnityEngine.Random.Range(speedUpRange.x, speedUpRange.y);
+                Debug.Log("Speed Boost!");
+                break;
+
+            case EffectType.SlowDown:
+                float speedReduction = UnityEngine.Random.Range(slowDownRange.x, slowDownRange.y);
+                tankMovement.ModifyControls(false, tankMovement.GetInitialSpeed() * speedReduction, duration);
+                speedModifier = UnityEngine.Random.Range(slowDownRange.x, slowDownRange.y);
+                Debug.Log("Slow Down!");
+                break;
+
+            case EffectType.InvertControls:
+                tankMovement.ModifyControls(true, tankMovement.GetInitialSpeed(), duration);
+                Debug.Log("Controls Inverted!");
+                break;
+
+            case EffectType.Shrink:
+                transform.localScale = originalScale * shrinkScale;
+                Debug.Log("Shrunk!");
+                break;
+        }
+
+        // Wait for duration
+        yield return new WaitForSeconds(duration);
+
+        // Clean up
+        ResetEffects();
+        onComplete?.Invoke();
+        activeEffect = null;
+    }
+
+    private void ResetEffects()
+    {
+        transform.localScale = originalScale;
+        tankMovement.ResetToDefaultControls();
+        speedModifier = 1f;
+    }
+
+    public void CancelEffect()
+    {
+        if (activeEffect != null)
+        {
+            StopCoroutine(activeEffect);
+            ResetEffects();
+            activeEffect = null;
         }
     }
-
-    private Action action;
-    private float timer;
-    private GameObject gameObject;
-    private bool isDestroyed;
-
-    public TimeEvent(Action action, float timer, GameObject gameObject, float speedMod = 1f)
-    {
-        this.action = action;
-        this.timer = timer;
-        this.gameObject = gameObject;
-        isDestroyed = false;
-        TimeEvent.speedModifier = speedMod;
-    }
-
-    public void Update()
-    {
-        if (!isDestroyed)
-        {
-            timer -= Time.deltaTime;
-            if (timer < 0)
-            {
-                DestroyEvent();
-            }
-        }
-    }
-
-    private void DestroyEvent()
-    {
-        Debug.Log("Invoke action");
-        action?.Invoke();
-        TimeEvent.speedModifier = 1f;
-        isDestroyed = true;
-        UnityEngine.Object.Destroy(gameObject);
-    }
-
-
 }
