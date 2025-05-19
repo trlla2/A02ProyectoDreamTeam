@@ -57,7 +57,8 @@ public class Weapon : MonoBehaviour
 
 
     [SerializeField]
-    private WaitForSeconds wait = new WaitForSeconds(0.7f);
+    private float fireRate = 0.7f;
+    private WaitForSeconds wait;
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
@@ -66,6 +67,8 @@ public class Weapon : MonoBehaviour
         {
             shield.SetActive(false);
         }
+
+        wait = new WaitForSeconds(fireRate);
     }
 
     // Update is called once per frame
@@ -259,5 +262,10 @@ public class Weapon : MonoBehaviour
                 yield return new WaitForSeconds(burstDelay);
             }
         }
+    }
+
+    public float GetFireRate()
+    {
+        return fireRate;
     }
 }
