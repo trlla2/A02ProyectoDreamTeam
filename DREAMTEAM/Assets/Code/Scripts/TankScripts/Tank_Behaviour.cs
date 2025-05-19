@@ -6,6 +6,8 @@ public class Tank_Behaviour : MonoBehaviour
 {
     [Header("SETUP")]
     [SerializeField]
+    private int idTank;
+    [SerializeField]
     private int player;
 
     [SerializeField] private GameObject explosionParticles;
