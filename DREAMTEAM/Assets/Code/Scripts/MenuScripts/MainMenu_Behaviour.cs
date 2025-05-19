@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class MainMenu_Behaviour : MonoBehaviour
 {
     [Header("SETUP")]
-    [SerializeField]
-    public string playSceneName;
 
     [Header("Panels")]
     [SerializeField]
@@ -68,9 +66,7 @@ public class MainMenu_Behaviour : MonoBehaviour
     }
     public void OnPlay()
     {
-        //Cursor.visible = false;// unshow cursor
-        //Cursor.lockState = CursorLockMode.Locked;// lock cursor
-        //TransitionManager.Instance.LoadScene(playSceneName);
+        
 
         mainMenu.GetComponent<TranslatorUI>().ToOrigin();
         selectionMenu.GetComponent<TranslatorUI>().ToTarget();

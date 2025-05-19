@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 712172858}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1.25
+  m_MaxValue: 2
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -4052,7 +4052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251dbe540e2051d4f9fdf9aee1864e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playSceneName: Map1
   mainMenu: {fileID: 416535733}
   selectionMenu: {fileID: 1619982747}
   settings: {fileID: 1397914602}
@@ -6571,6 +6570,32 @@ MonoBehaviour:
   - {fileID: 6528484826500116643, guid: 94155aac49a7b7145a6a3f794e98dab8, type: 3}
   - {fileID: 6528484826500116643, guid: 8daa9916fa7596f4f834ba9f5302a628, type: 3}
   - {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  animationDuration: 0.5
+  currentTime: 0
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1619982750
 MonoBehaviour:
   m_ObjectHideFlags: 0

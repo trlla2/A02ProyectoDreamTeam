@@ -46,6 +46,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
     private float gridRes = 0.0f;
+    [Header("Tanks")]
+    [SerializeField] private List<GameObject> tankTypes;
+
+    public static class SelectionMenuData
+    {
+        public static string TankP1 { get; set; }
+        public static string TankP2 { get; set; }
+    }
+
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
@@ -104,6 +113,20 @@ public class GameManager : MonoBehaviour
 
         timerNextStage = timeForNextStage;
         leftStages = totalStages;
+
+        foreach(GameObject tank in tankTypes)// set tank types for the players
+        {
+            if(tank.name == SelectionMenuData.TankP1)
+            {
+                tank1 = tank;
+            }
+
+            if (tank.name == SelectionMenuData.TankP2)
+            {
+                tank2 = tank;
+            }
+        }
+
     }
 
     private void Start()
@@ -111,9 +134,7 @@ public class GameManager : MonoBehaviour
         if (spawnTanksOnStart) // Debug spawn
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
-            
         }
-
     }
 
     private void Update()
