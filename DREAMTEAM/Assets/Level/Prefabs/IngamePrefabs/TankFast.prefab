@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 8823656621840144956}
   - component: {fileID: 9016753551381181209}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: TankFast
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b494680ef08fa4bbd77575bb7cf11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idTank: 1
+  idTank: 2
   player: 1
   explosionParticles: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
   playerNumberGameObj: {fileID: 1543868601302644855, guid: 3edf55ba74fea7e429405a27e96d602d, type: 3}
@@ -720,7 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc7c0dee4ca73d41920d3a8cfc69c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 0.7
   rotationSpeed: 1.75
   movementSfx: {fileID: 6378730187570512939}
   maxRandomPitchSfx: 1.2
@@ -777,7 +777,7 @@ MonoBehaviour:
         m_CallState: 2
   shield: {fileID: 3007282469410881744}
   isShieldActive: 0
-  waitSecs: 0.7
+  waitSecs: 1
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0
