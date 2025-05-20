@@ -263,6 +263,7 @@ public class GameManager : MonoBehaviour
         waterEvent = false;
         timerToStartWaterEvent = 0;
         currentFreezeTime = 0;
+        isMap2 = false;
     }
 
     public void ResetPlayerPoints()
