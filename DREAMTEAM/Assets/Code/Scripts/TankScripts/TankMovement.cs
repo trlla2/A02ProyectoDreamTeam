@@ -96,4 +96,6 @@ public class TankMovement : MonoBehaviour
         invertControls = false;
         speed = initialSpeed;
     }
+
+    public float GetSpeed() {  return speed; }
 }
