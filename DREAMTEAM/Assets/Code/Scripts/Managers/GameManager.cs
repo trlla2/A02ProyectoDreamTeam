@@ -91,10 +91,10 @@ public class GameManager : MonoBehaviour
     private bool isForzen = false;
 
     [Header("Water Event Stuff (Only Map2)")]
-    private bool isMap2 = false;
     [SerializeField] private float timeToStartWaterEvent = 30f;
     private float timerToStartWaterEvent = 0f;
     private bool waterEvent = false;
+    private bool isMap2 = false;
     public delegate void WaterEvent();
     public event WaterEvent OnWaterEvent;
 

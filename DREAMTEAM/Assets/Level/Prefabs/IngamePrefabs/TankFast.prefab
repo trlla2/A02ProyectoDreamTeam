@@ -835,7 +835,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -931,7 +931,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1027,7 +1027,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1079,5 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eda23574f8d3d843b7598d3078bc6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGenerator: {fileID: 0}
-  waterTile: {fileID: 11400000, guid: a526242c152a1a7458275b6cb406d2aa, type: 2}
+  waterTile:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

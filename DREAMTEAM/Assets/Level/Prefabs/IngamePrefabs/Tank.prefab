@@ -778,7 +778,7 @@ MonoBehaviour:
         m_CallState: 2
   shield: {fileID: 3007282469410881744}
   isShieldActive: 0
-  waitSecs: 0.7
+  fireRate: 0.7
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0
@@ -835,7 +835,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -931,7 +931,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1027,7 +1027,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

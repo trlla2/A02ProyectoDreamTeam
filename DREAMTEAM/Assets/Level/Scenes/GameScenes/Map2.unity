@@ -1781,7 +1781,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeToStartWaterEvent: 1
+  timeToStartWaterEvent: 4
   spawnTanksOnStart: 0
   tank1SpawnPos: {x: 0, y: 0, z: 0}
   tank2SpawnPos: {x: 0, y: 0, z: 0}
