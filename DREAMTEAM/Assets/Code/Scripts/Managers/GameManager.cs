@@ -192,7 +192,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(numPowerUps <= numMaxPowerUps ? "Spawn powerup" : "Cant spawn a pwUp");
             if (numPowerUps <= numMaxPowerUps)
             {
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
@@ -281,7 +280,8 @@ public class GameManager : MonoBehaviour
     }
 
     private IEnumerator HitPause() // Slowdown the game for a short time
-    {   
+    {
+        Debug.Log("HitPause");
         isForzen = true;
         float originalTimeScale = Time.timeScale;
         SetTimeScaleForCurrentTime(originalTimeScale);

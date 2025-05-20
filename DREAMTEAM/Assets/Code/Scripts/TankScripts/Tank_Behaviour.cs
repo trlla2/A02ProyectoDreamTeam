@@ -71,7 +71,8 @@ public class Tank_Behaviour : MonoBehaviour
     public void Dead() // death function
     {
         // stuff before dying
-
+        Debug.Log(this.gameObject.name + " is dead");
+        GameManager.Instance.Freeze(); // hit stop
         GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);// Explotion
         Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
 

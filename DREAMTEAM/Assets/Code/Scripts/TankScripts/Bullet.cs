@@ -57,8 +57,6 @@ public class Bullet : MonoBehaviour
                 {
                    if(!(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
                    {
-                        GameManager.Instance.Freeze(); // hit stop
-
                         StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
                    }
                 }
@@ -96,8 +94,6 @@ public class Bullet : MonoBehaviour
             Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
             if (behaviour != null && !(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
             {
-                GameManager.Instance.Freeze(); // hit stop
-
                 StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
             }
             else if (hit.collider.gameObject.GetComponent<Interactable>())
