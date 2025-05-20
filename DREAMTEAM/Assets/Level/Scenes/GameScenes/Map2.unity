@@ -1722,9 +1722,10 @@ MonoBehaviour:
   - Map2
   Spawned: 0
   rotationOffset: -90
-  tank1: {fileID: 5510910856451622050, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  tank2: {fileID: 5510910856451622050, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   pointsForDeath: 100
+  tankTypes: []
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
   spawnPowerUpTime: 5
   numMaxPowerUps: 5
@@ -2423,6 +2424,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundTilemap: {fileID: 1796503698}
   heightBands:
+  - minHeight: -1
+    maxHeight: 0.15
+    tiles:
+    - {fileID: 11400000, guid: 64e27db00086d28438726c7f19e60572, type: 2}
+    - {fileID: 11400000, guid: 2ca25dd5cd5b71545bce8d903870acac, type: 2}
+    - {fileID: 11400000, guid: 2ca25dd5cd5b71545bce8d903870acac, type: 2}
   - minHeight: 0.15
     maxHeight: 1.1
     tiles:
@@ -2431,12 +2438,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6f7e8922f6604464994b4a7958e2dfe7, type: 2}
     - {fileID: 11400000, guid: 161cc7d78ebb54843ae3d3fad72e7036, type: 2}
     - {fileID: 11400000, guid: 161cc7d78ebb54843ae3d3fad72e7036, type: 2}
-  - minHeight: -1
-    maxHeight: 0.15
-    tiles:
-    - {fileID: 11400000, guid: 64e27db00086d28438726c7f19e60572, type: 2}
-    - {fileID: 11400000, guid: 2ca25dd5cd5b71545bce8d903870acac, type: 2}
-    - {fileID: 11400000, guid: 2ca25dd5cd5b71545bce8d903870acac, type: 2}
   marchingSquares: {fileID: 975575566}
   regionDetector: {fileID: 975575568}
   OutOfBounds:
@@ -2869,7 +2870,6 @@ MonoBehaviour:
     MaxTimes: 6
     gameObjectToSpawn: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
   WaterController: {fileID: 626910685}
-  waterDetector: {fileID: 0}
   validPositions:
   - {x: 21, y: 11}
   - {x: 22, y: 11}

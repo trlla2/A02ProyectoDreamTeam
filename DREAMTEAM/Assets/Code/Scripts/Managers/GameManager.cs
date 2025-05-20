@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    // Manager stuff
+    // singelton stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -46,6 +46,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
     private float gridRes = 0.0f;
+    [Header("Tanks")]
+    [SerializeField] private List<GameObject> tankTypes;
+
+    public static class SelectionMenuData
+    {
+        public static string TankP1
+        {
+            get { return PlayerPrefs.GetString("TankP1", ""); }
+            set { PlayerPrefs.SetString("TankP1", value); }
+        }
+
+        public static string TankP2
+        {
+            get { return PlayerPrefs.GetString("TankP2", ""); }
+            set { PlayerPrefs.SetString("TankP2", value); }
+        }
+    }
+
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
@@ -104,6 +122,19 @@ public class GameManager : MonoBehaviour
 
         timerNextStage = timeForNextStage;
         leftStages = totalStages;
+
+        foreach(GameObject tank in tankTypes)// set tank types for the players
+        {
+            if(tank.name == SelectionMenuData.TankP1)
+            {
+                tank1 = tank;
+            }
+
+            if (tank.name == SelectionMenuData.TankP2)
+            {
+                tank2 = tank;
+            }
+        }
     }
 
     private void Start()
@@ -111,9 +142,7 @@ public class GameManager : MonoBehaviour
         if (spawnTanksOnStart) // Debug spawn
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
-            
         }
-
     }
 
     private void Update()
@@ -287,6 +316,9 @@ public class GameManager : MonoBehaviour
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos) // Spawn Player Tanks
     {
         if (Spawned) return;
+
+        Debug.Log("P1 tank type: " + tank1.name);
+        Debug.Log("P2 tank type: " + tank2.name);
 
         GameObject temp1 = Instantiate(tank1, tank1Pos, Quaternion.identity);
         GameObject temp2 = Instantiate(tank2, tank2Pos, Quaternion.identity);

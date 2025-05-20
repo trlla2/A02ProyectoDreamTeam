@@ -56,7 +56,8 @@ public class Weapon : MonoBehaviour
     private bool P2CanSoot = true;
 
 
-    [SerializeField] float waitSecs = 0.7f;
+    [SerializeField]
+    private float fireRate = 0.7f;
     private WaitForSeconds wait;
     private void Start()
     {
@@ -66,7 +67,8 @@ public class Weapon : MonoBehaviour
         {
             shield.SetActive(false);
         }
-        wait = new WaitForSeconds(waitSecs);
+
+        wait = new WaitForSeconds(fireRate);
     }
 
     // Update is called once per frame
@@ -260,5 +262,10 @@ public class Weapon : MonoBehaviour
                 yield return new WaitForSeconds(burstDelay);
             }
         }
+    }
+
+    public float GetFireRate()
+    {
+        return fireRate;
     }
 }

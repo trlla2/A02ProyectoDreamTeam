@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 /* This code was made possible thanks to various recources on the internet that give great explanations of the concept
@@ -146,6 +147,7 @@ public class MarchingSquares : MonoBehaviour
 
     private void SpawnTanks()
     {
+        float LowThreshold = textureGenerator.heightBands[0].maxHeight;
 
         Vector2Int tank1GridPos;
         Vector2Int tank2GridPos = Vector2Int.zero;
@@ -159,6 +161,11 @@ public class MarchingSquares : MonoBehaviour
         do
         {
             int firstIndex = Random.Range(0, validPositions.Count);
+            while (heightMap[validPositions[firstIndex].x, validPositions[firstIndex].y] < LowThreshold)
+            {
+                validPositions.RemoveAt(firstIndex); // remove position inside water 
+                firstIndex = Random.Range(0, validPositions.Count);
+            }
             tank1GridPos = validPositions[firstIndex];
 
             tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
@@ -178,6 +185,11 @@ public class MarchingSquares : MonoBehaviour
         do
         {
             int firstIndex = Random.Range(0, validPositions.Count);
+            while (heightMap[validPositions[firstIndex].x, validPositions[firstIndex].y] < LowThreshold)
+            {
+                validPositions.RemoveAt(firstIndex); // remove position inside water 
+                firstIndex = Random.Range(0, validPositions.Count);
+            }
             tank2GridPos = validPositions[firstIndex];
 
             tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);

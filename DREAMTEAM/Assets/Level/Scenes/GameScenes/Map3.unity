@@ -1561,6 +1561,53 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &735182811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 735182813}
+  - component: {fileID: 735182812}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &735182812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735182811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eda23574f8d3d843b7598d3078bc6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterTile:
+  - {fileID: 11400000, guid: 68d4d6d389f46974ea73859dec15d51e, type: 2}
+  - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+--- !u!4 &735182813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735182811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.6761765, y: 2.9351597, z: 0.055598073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &975575561
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,6 +3607,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2601924703721086895, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
+      propertyPath: biomesMaps.Array.data[0]
+      value: Map1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2601924703721086895, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
+      propertyPath: biomesMaps.Array.data[1]
+      value: Map2
+      objectReference: {fileID: 0}
     - target: {fileID: 7132599602115529710, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -3607,31 +3662,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 317890030636344312, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1329054929}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
---- !u!1 &1329054928 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 317890030636344312, guid: 087d87fa90b3c364aa5b4d72e7f250fc, type: 3}
-  m_PrefabInstance: {fileID: 1329054927}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1329054929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329054928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eda23574f8d3d843b7598d3078bc6fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterTile:
-  - {fileID: 11400000, guid: 68d4d6d389f46974ea73859dec15d51e, type: 2}
-  - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
 --- !u!1 &1332040307
 GameObject:
   m_ObjectHideFlags: 0
