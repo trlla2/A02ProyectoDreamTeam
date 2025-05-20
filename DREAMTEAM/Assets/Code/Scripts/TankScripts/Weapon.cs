@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     [Range(0, 3)] private float minRandomPitchSfx = 0.98f;
     [SerializeField] private GameObject shootParticles;
     [SerializeField] private Transform  fireParticlePoint;
+    [SerializeField] private GameObject explosionShield;
 
     [Header("Events")]
     public UnityEvent OnShoot;
@@ -59,6 +60,9 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private float fireRate = 0.7f;
     private WaitForSeconds wait;
+    [SerializeField]
+    private float shieldInvulnerableFrames = 0.1f;
+    private WaitForSeconds waitShield;
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
@@ -69,6 +73,8 @@ public class Weapon : MonoBehaviour
         }
 
         wait = new WaitForSeconds(fireRate);
+        waitShield = new WaitForSeconds(shieldInvulnerableFrames);
+
     }
 
     // Update is called once per frame
@@ -97,6 +103,12 @@ public class Weapon : MonoBehaviour
         yield return wait;
         P2CanSoot = true;
     }
+
+    private IEnumerator InvulnerableShieldFrames()
+    {
+        yield return waitShield;
+        isShieldActive = false;
+    }
     public void ActivateShield()
     {
         isShieldActive = true;
@@ -108,7 +120,8 @@ public class Weapon : MonoBehaviour
 
     public void ShieldHit()
     {
-        isShieldActive = false;
+        Instantiate(explosionShield, transform.position, Quaternion.identity);// Explotion
+        StartCoroutine(InvulnerableShieldFrames());
         if (shield != null)
         {
             shield.SetActive(false);

@@ -1725,7 +1725,10 @@ MonoBehaviour:
   tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   pointsForDeath: 100
-  tankTypes: []
+  tankTypes:
+  - {fileID: 2487414856934800851, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  - {fileID: 6528484826500116643, guid: 94155aac49a7b7145a6a3f794e98dab8, type: 3}
+  - {fileID: 6528484826500116643, guid: 8daa9916fa7596f4f834ba9f5302a628, type: 3}
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
   spawnPowerUpTime: 5
   numMaxPowerUps: 5
@@ -1734,6 +1737,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 945b784b79bd69b4f863138cf7cbfb15, type: 2}
   - {fileID: 11400000, guid: 7554d90290fd2b245a4f44718f16c6b8, type: 2}
   - {fileID: 11400000, guid: a7f2cbcb5f7aeb247b51dc0c88385272, type: 2}
+  - {fileID: 11400000, guid: 41e804de41999904f92356be534443c5, type: 2}
   timeEvent: {fileID: 6549015033389979929, guid: 01f016dfea0eeb44c9a3ab03808598e4, type: 3}
   timeToStartTimeEvent: 30
   timeEventDuration: 10
@@ -1781,7 +1785,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeToStartWaterEvent: 1
+  timeToStartWaterEvent: 4
   spawnTanksOnStart: 0
   tank1SpawnPos: {x: 0, y: 0, z: 0}
   tank2SpawnPos: {x: 0, y: 0, z: 0}
