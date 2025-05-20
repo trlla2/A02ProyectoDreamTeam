@@ -1722,8 +1722,8 @@ MonoBehaviour:
   - Map2
   Spawned: 0
   rotationOffset: -90
-  tank1: {fileID: 5510910856451622050, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
-  tank2: {fileID: 5510910856451622050, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   pointsForDeath: 100
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
   spawnPowerUpTime: 5
