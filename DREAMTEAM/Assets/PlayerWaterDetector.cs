@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class PlayerWaterDetector : MonoBehaviour
 {
+    private MapTextureGenerator mapGenerator;
+
     [Header("References")]
-    [SerializeField] private MapTextureGenerator mapGenerator;
-    [SerializeField] private Tile waterTile;
+    [SerializeField] private Tile[] waterTile;
     public bool IsInWater { get; private set; }
 
     private void Start()
@@ -38,6 +39,11 @@ public class PlayerWaterDetector : MonoBehaviour
     {
         Vector3Int cellPosition = mapGenerator.backgroundTilemap.WorldToCell(worldPosition);
         Tile currentTile = mapGenerator.backgroundTilemap.GetTile<Tile>(cellPosition);
-        return currentTile == waterTile;
+
+        for(int i = 0; i < waterTile.Length; i++)
+        {
+            if(currentTile == waterTile[i]) return true;
+        }
+        return false;
     }
 }

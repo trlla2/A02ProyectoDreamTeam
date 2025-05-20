@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2e09fedbe7e58439510fff839db4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionShield: {fileID: 0}
 --- !u!1 &4566728878441957040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,5 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eda23574f8d3d843b7598d3078bc6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapGenerator: {fileID: 0}
-  waterTile: {fileID: 11400000, guid: a526242c152a1a7458275b6cb406d2aa, type: 2}
+  waterTile:
+  - {fileID: 11400000, guid: 68d4d6d389f46974ea73859dec15d51e, type: 2}
+  - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+  - {fileID: 11400000, guid: a526242c152a1a7458275b6cb406d2aa, type: 2}

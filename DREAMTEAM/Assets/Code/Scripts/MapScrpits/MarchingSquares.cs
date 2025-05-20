@@ -54,7 +54,6 @@ public class MarchingSquares : MonoBehaviour
 
     [Header("Water")]
     [SerializeField] private WaterController WaterController;
-    [SerializeField] private PlayerWaterDetector waterDetector;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
