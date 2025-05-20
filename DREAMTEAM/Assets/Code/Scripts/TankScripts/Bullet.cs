@@ -14,6 +14,23 @@ public class Bullet : MonoBehaviour
     [SerializeField] private AudioSource hitSFX;
     [SerializeField] private float tankParentInmunity = 0.25f;
 
+<<<<<<< HEAD
+=======
+    private TimeEvent timeEvent;
+
+    private void Awake()
+    {
+
+        timeEvent = GetComponent<TimeEvent>();
+
+        if (timeEvent == null)
+        {
+            Debug.LogError("TimeEvent component missing!", this);
+        }
+
+    }
+
+>>>>>>> origin/feature/timeEvent
         [HideInInspector]
     public GameObject tankParentRef;
 

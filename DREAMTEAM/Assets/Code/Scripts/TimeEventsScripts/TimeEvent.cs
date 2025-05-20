@@ -12,7 +12,10 @@ public class TimeEvent : MonoBehaviour
     [SerializeField] private Vector2 slowDownRange = new Vector2(0.3f, 0.8f);
 
     private TankMovement tankMovement;
+<<<<<<< HEAD
     private Bullet bullet;
+=======
+>>>>>>> origin/feature/timeEvent
     private Vector3 originalScale;
     private Coroutine activeEffect;
 
@@ -21,9 +24,12 @@ public class TimeEvent : MonoBehaviour
     {
         tankMovement = GetComponent<TankMovement>();
         originalScale = transform.localScale;
+<<<<<<< HEAD
 
         bullet = GetComponent<Bullet>();
         speedModifier = 1f;
+=======
+>>>>>>> origin/feature/timeEvent
     }
 
     public void TriggerRandomEffect(float duration, Action onComplete = null)
