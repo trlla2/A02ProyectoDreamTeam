@@ -231,7 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2e09fedbe7e58439510fff839db4f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionShield: {fileID: 0}
 --- !u!1 &4566728878441957040
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +745,7 @@ MonoBehaviour:
   powerUpSfx: {fileID: 8823656621840144956}
   shootParticles: {fileID: 3680513417702071984, guid: 21e4bdaefe35eaf4ea928d80fdd6dd95, type: 3}
   fireParticlePoint: {fileID: 8483047764751824496}
+  explosionShield: {fileID: 4752115478465706975, guid: c41a5044d0bd24645b1f0a881e42e223, type: 3}
   OnShoot:
     m_PersistentCalls:
       m_Calls:

@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
     [Range(0, 3)] private float minRandomPitchSfx = 0.98f;
     [SerializeField] private GameObject shootParticles;
     [SerializeField] private Transform  fireParticlePoint;
+    [SerializeField] private GameObject explosionShield;
 
     [Header("Events")]
     public UnityEvent OnShoot;
@@ -108,11 +109,13 @@ public class Weapon : MonoBehaviour
 
     public void ShieldHit()
     {
+        Instantiate(explosionShield, transform.position, Quaternion.identity);// Explotion
         isShieldActive = false;
         if (shield != null)
         {
             shield.SetActive(false);
         }
+        
     }
 
     void Shoot()

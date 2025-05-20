@@ -489,7 +489,7 @@ MonoBehaviour:
   tank2: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   pointsForDeath: 100
   tankTypes:
-  - {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  - {fileID: 2487414856934800851, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
   - {fileID: 6528484826500116643, guid: 94155aac49a7b7145a6a3f794e98dab8, type: 3}
   - {fileID: 6528484826500116643, guid: 8daa9916fa7596f4f834ba9f5302a628, type: 3}
   powerUpBase: {fileID: 8224669447506396293, guid: e63e68b2f52d70741951d312fbb418d1, type: 3}
@@ -1131,7 +1131,6 @@ MonoBehaviour:
     MaxTimes: 6
     gameObjectToSpawn: {fileID: 7782037754162161969, guid: b48cc7cf819518e4ab9347f4fe28b712, type: 3}
   WaterController: {fileID: 0}
-  waterDetector: {fileID: 0}
   validPositions:
   - {x: 21, y: 11}
   - {x: 22, y: 11}
