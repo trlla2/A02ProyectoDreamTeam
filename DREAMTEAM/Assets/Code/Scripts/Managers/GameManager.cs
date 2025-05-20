@@ -143,6 +143,15 @@ public class GameManager : MonoBehaviour
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
         }
+
+        if(SceneManager.GetActiveScene().name == "Map2")// cheks if next scene is map2
+        {
+            isMap2 = true;
+        }
+        else
+        {
+            isMap2 = false;
+        }
     }
 
     private void Update()
