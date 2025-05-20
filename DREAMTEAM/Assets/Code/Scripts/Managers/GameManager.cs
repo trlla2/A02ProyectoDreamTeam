@@ -297,6 +297,7 @@ public class GameManager : MonoBehaviour
         currentFreezeTime = 0;
         Time.timeScale = originalTimeScale;
         isForzen = false;
+        Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
     }
 
     private void SetTimeScaleForCurrentTime(float originalTimeScale) // set the timeScale value to the current value of the curve

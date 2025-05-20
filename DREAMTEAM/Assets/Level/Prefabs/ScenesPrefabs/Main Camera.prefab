@@ -152,5 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraShakeForce: 1
   cameraLerp: 12
-  durationScreenShake: 0.2
-  magnitudeScreenShake: 0.3
+  durationScreenShake: 0.3
+  magnitudeScreenShake: 0.35

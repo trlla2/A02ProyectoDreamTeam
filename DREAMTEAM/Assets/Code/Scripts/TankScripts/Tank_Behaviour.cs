@@ -71,7 +71,6 @@ public class Tank_Behaviour : MonoBehaviour
     public void Dead() // death function
     {
         // stuff before dying
-        Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
 
         GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);// Explotion
         Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
