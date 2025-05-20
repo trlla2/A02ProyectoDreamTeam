@@ -4,25 +4,43 @@ using UnityEngine;
 
 public class TestTimeEvent : MonoBehaviour
 {
+    [Header("Effect Settings")]
+    [SerializeField] private float minDuration = 10f;
+    [SerializeField] private float maxDuration = 20f;
+    private TankControlModifier tankControlModifier;
 
-        [SerializeField] private float eventDuration = 3f;
-        [SerializeField] private float slowSpeed = 0.5f; // 50% speed
-        [SerializeField] private float fastSpeed = 1.5f; // 150% speed
-
-        void Start()
+    private void Awake()
+    {
+        // Auto-get reference if not set in inspector
+        if (tankControlModifier == null)
         {
-            // Create event with random speed modification
-            TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
+            tankControlModifier = GetComponent<TankControlModifier>();
         }
+    }
 
-        private void OnEventComplete()
-        {
-            Debug.Log("Speed event ended - returned to normal speed");
-        }
+    private void OnEffectComplete()
+    {
+        Debug.Log("Tank effect ended - controls returned to normal");
+    }
 
-        // Call this to trigger a new random speed event
-        public void TriggerNewEvent()
+    // Call this to trigger a new random tank effect
+    public void TriggerRandomEffect()
+    {
+        float randomDuration = Random.Range(minDuration, maxDuration);
+        Debug.Log($"Triggering random tank effect for {randomDuration} seconds");
+
+        if (tankControlModifier != null)
         {
-            TimeEvent.Create(OnEventComplete, eventDuration, slowSpeed, fastSpeed);
+            tankControlModifier.ApplyRandomEffect(randomDuration);
+
+            TimeEvent.Create(
+                OnEffectComplete,
+                randomDuration
+            );
         }
+        else
+        {
+            Debug.LogWarning("No TankControlModifier found");
+        }
+    }
 }
