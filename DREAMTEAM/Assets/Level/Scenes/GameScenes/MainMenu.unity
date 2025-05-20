@@ -6902,7 +6902,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2128449676}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1.25
+  m_MaxValue: 2
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -8721,7 +8721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298611329712734862, guid: b3ba3c6d1d795554e8cf91a5a6a30fd5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

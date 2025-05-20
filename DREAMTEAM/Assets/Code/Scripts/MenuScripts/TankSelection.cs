@@ -143,7 +143,8 @@ public class TankSelection : MonoBehaviour
 
         PlayerPrefs.SetString("TankP1", tankTypes[currentP1Tank].name); // set tank types
         PlayerPrefs.SetString("TankP2", tankTypes[currentP2Tank].name);
-        
+        PlayerPrefs.Save();
+
         Cursor.visible = false; // unshow cursor
         Cursor.lockState = CursorLockMode.Locked; // lock cursor
         TransitionManager.Instance.LoadScene("Map1"); // load map1

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    // Manager stuff
+    // singelton stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -51,8 +51,17 @@ public class GameManager : MonoBehaviour
 
     public static class SelectionMenuData
     {
-        public static string TankP1 { get; set; }
-        public static string TankP2 { get; set; }
+        public static string TankP1
+        {
+            get { return PlayerPrefs.GetString("TankP1", ""); }
+            set { PlayerPrefs.SetString("TankP1", value); }
+        }
+
+        public static string TankP2
+        {
+            get { return PlayerPrefs.GetString("TankP2", ""); }
+            set { PlayerPrefs.SetString("TankP2", value); }
+        }
     }
 
 
@@ -126,7 +135,6 @@ public class GameManager : MonoBehaviour
                 tank2 = tank;
             }
         }
-
     }
 
     private void Start()
@@ -308,6 +316,9 @@ public class GameManager : MonoBehaviour
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos) // Spawn Player Tanks
     {
         if (Spawned) return;
+
+        Debug.Log("P1 tank type: " + tank1.name);
+        Debug.Log("P2 tank type: " + tank2.name);
 
         GameObject temp1 = Instantiate(tank1, tank1Pos, Quaternion.identity);
         GameObject temp2 = Instantiate(tank2, tank2Pos, Quaternion.identity);
