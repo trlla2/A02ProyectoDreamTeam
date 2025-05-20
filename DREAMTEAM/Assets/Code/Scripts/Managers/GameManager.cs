@@ -214,7 +214,8 @@ public class GameManager : MonoBehaviour
 
         if (timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
         {
-            timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
+            //timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
+            timeEvent.GetComponent<TestTimeEvent>().TriggerNewEvent();
             timerToStartTimeEvent = 0; // Reset timer
             timeEventWarnig = false;
             OnTimeEventWarning.Invoke(timeEventWarnig); // call event
