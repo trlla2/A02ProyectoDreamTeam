@@ -388,7 +388,11 @@ public class GameManager : MonoBehaviour
 
     public void DecreaseNumPowerUps() 
     {
-        numPowerUps--;
+        if (musicLevel > 0)
+        { // MaxMusicLevelCases
+            musicLevel--;
+            OnMusicLevelChanging.Invoke(musicLevel);
+        }
     }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes) // set valid positions to spawn the powerUps
     {
