@@ -20,20 +20,40 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer barrelRenderer;
 
     [SerializeField] private Sprite tank1_body;
-    [SerializeField] private Sprite tank2_body;
     [SerializeField] private Sprite tank1_barrel;
-    [SerializeField] private Sprite tank2_barrel;
+
     [SerializeField] private Material tank1_material;
-    [SerializeField] private Material tank2_material;
     [SerializeField] private Material tank1_top_material;
-    [SerializeField] private Material tank2_top_material;
     [SerializeField] private Material tank1_barrel_material;
+
+
+    [SerializeField] private Sprite tank2_body;
+    [SerializeField] private Sprite tank2_barrel;
+
     [SerializeField] private Material tank2_barrel_material;
+    [SerializeField] private Material tank2_top_material;
+    [SerializeField] private Material tank2_material;
+
 
     
     
-    
-    
+    public void SetTank1Color(Color color)
+    {
+        if (GetPlayer() == 1)
+        {
+            tank1_material.color = color;
+            tank1_barrel_material.color = color;
+            tank1_top_material.color = color;
+        }
+        else
+        {
+            tank2_material.color = color;
+            tank2_barrel_material.color = color;
+            tank2_top_material.color = color;
+        }
+
+    }
+
 
     private void Start()
     {
