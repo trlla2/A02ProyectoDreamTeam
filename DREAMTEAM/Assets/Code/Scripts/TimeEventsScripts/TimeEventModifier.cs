@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(TankMovement))]
@@ -102,4 +102,3 @@ public class TankControlModifier : MonoBehaviour
         }
     }
 }
-*/
