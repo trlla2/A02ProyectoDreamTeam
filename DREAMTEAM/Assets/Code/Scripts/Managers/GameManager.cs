@@ -61,11 +61,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float timeToStartTimeEvent = 30f;
     private float timerToStartTimeEvent = 0f;
     [SerializeField] private float timeForTimeEventWarning = 3f;
-<<<<<<< HEAD
+
     private bool timeEventWarning = false;
-=======
-    private bool timeEventWarnig = false;
->>>>>>> origin/feature/timeEvent
     public delegate void TimeEventWarning(bool timeEventWarning);
     public event TimeEventWarning OnTimeEventWarning;
 
