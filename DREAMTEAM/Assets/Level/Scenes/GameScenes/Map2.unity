@@ -2849,12 +2849,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mapid: 1
-  gridSizeX: 59
-  gridSizeY: 40
+  gridSizeX: 69
+  gridSizeY: 50
   noiseScale: 0.19
   gridResolution: 0.16
   heightThreshold: 0.59
-  BorderSize: 10
+  BorderSize: 15
   Seed: 131
   textureGenerator: {fileID: 617549058}
   drawGizmos: 1
@@ -31608,11 +31608,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8924930952708165554, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.6
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8924930952708165554, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.1390486
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8924930952708165554, guid: 49fdf0135c1e3b44eb09cde5dbefe9e7, type: 3}
       propertyPath: m_LocalPosition.z
