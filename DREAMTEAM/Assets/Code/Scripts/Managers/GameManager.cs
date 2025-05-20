@@ -57,12 +57,11 @@ public class GameManager : MonoBehaviour
     private List<Vector2Int> validPositions = new List<Vector2Int>();
 
     [Header("Time Event Stuff")]
-    [SerializeField] private GameObject timeEvent;
+    [SerializeField] private GameObject TestTimeEvent;
     [SerializeField] private float timeToStartTimeEvent = 30f;
     private float timerToStartTimeEvent = 0f;
-    [SerializeField] private float timeEventDuration = 10f;
     [SerializeField] private float timeForTimeEventWarning = 3f;
-    private bool timeEventWarnig = false;
+    private bool timeEventWarning = false;
     public delegate void TimeEventWarning(bool timeEventWarning);
     public event TimeEventWarning OnTimeEventWarning;
 
@@ -177,15 +176,15 @@ public class GameManager : MonoBehaviour
 
         if (timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
         {
-            timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
+            TestTimeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
             timerToStartTimeEvent = 0; // Reset timer
-            timeEventWarnig = false;
-            OnTimeEventWarning.Invoke(timeEventWarnig); // call event
+            timeEventWarning = false;
+            OnTimeEventWarning.Invoke(timeEventWarning); // call event
         }
-        else if (timerToStartTimeEvent >= timeToStartTimeEvent - timeForTimeEventWarning && !timeEventWarnig) // Start Warning (One Time Execute)
+        else if (timerToStartTimeEvent >= timeToStartTimeEvent - timeForTimeEventWarning && !timeEventWarning) // Start Warning (One Time Execute)
         {
-            timeEventWarnig = true;
-            OnTimeEventWarning.Invoke(timeEventWarnig); // call event
+            timeEventWarning = true;
+            OnTimeEventWarning.Invoke(timeEventWarning); // call event
             timerToStartTimeEvent += Time.deltaTime;
         }
         else
@@ -235,7 +234,7 @@ public class GameManager : MonoBehaviour
         endGame = false;
         timerNextStage = timeForNextStage;
         Spawned = false;
-        timeEventWarnig = false;
+        timeEventWarning = false;
         spawnPowerUpTimer = 0;
         numPowerUps = 0;
         musicLevel = 0;

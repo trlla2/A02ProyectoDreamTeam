@@ -14,20 +14,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private AudioSource hitSFX;
     [SerializeField] private float tankParentInmunity = 0.25f;
 
-    private TimeEvent timeEvent;
-
-    private void Awake()
-    {
-
-        timeEvent = GetComponent<TimeEvent>();
-
-        if (timeEvent == null)
-        {
-            Debug.LogError("TimeEvent component missing!", this);
-        }
-
-    }
-
         [HideInInspector]
     public GameObject tankParentRef;
 
@@ -52,7 +38,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = currentDir.normalized * bulletSpeed *TimeEvent.speedModifier;
+        rb.velocity = currentDir.normalized * bulletSpeed * TimeEvent.speedModifier;
         transform.rotation = Quaternion.LookRotation(transform.forward, currentDir);
         RaycastHit hit;
 

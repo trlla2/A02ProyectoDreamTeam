@@ -23,6 +23,8 @@ public class TestTimeEvent : MonoBehaviour
 
     public void TriggerRandomEffect()
     {
+        Debug.Log("trigger timeEvent");
+
         if (timeEvent == null) return;
 
         float duration = Random.Range(minDuration, maxDuration);

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1129832047195262990}
   - component: {fileID: 6340765525089262294}
+  - component: {fileID: 4624393779190667767}
   m_Layer: 0
   m_Name: TestTimeEvent
   m_TagString: Untagged
@@ -44,5 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8d46c22414f51499a3fdad84c9e9f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowSpeed: 0.5
-  fastSpeed: 1.2
+  minDuration: 10
+  maxDuration: 20
+--- !u!114 &4624393779190667767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549015033389979929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369642cc51a534d4fb7db68b614391df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shrinkScale: 0.5
+  speedUpRange: {x: 1.2, y: 2}
+  slowDownRange: {x: 0.3, y: 0.8}
