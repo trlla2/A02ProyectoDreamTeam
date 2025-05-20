@@ -389,6 +389,7 @@ public class GameManager : MonoBehaviour
     public void DecreaseNumPowerUps() 
     {
         numPowerUps--;
+        ReduceMusicLevel();
     }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes) // set valid positions to spawn the powerUps
     {

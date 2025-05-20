@@ -779,6 +779,7 @@ MonoBehaviour:
   shield: {fileID: 3007282469410881744}
   isShieldActive: 0
   fireRate: 0.5
+  shieldInvulnerableFrames: 0.1
 --- !u!82 &2226332820350150289
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1080,6 +1081,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterTile:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 68d4d6d389f46974ea73859dec15d51e, type: 2}
+  - {fileID: 11400000, guid: 524d6786d1465b44ba48af2313cfe128, type: 2}
+  - {fileID: 11400000, guid: a526242c152a1a7458275b6cb406d2aa, type: 2}
