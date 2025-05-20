@@ -17,13 +17,17 @@ public class TimeEvent : MonoBehaviour
     private Vector3 originalScale;
     private Coroutine activeEffect;
 
+    [SerializeField] GameObject Tank;
+    [SerializeField] GameObject Bullet;
+
+
     public static float speedModifier = 1f;
     private void Awake()
     {
-        tankMovement = GetComponent<TankMovement>();
+        tankMovement = Tank.GetComponent<TankMovement>();
         originalScale = transform.localScale;
 
-        bullet = GetComponent<Bullet>();
+        bullet = Bullet.GetComponent<Bullet>();
         speedModifier = 1f;
     }
 
