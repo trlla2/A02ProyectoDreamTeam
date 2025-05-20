@@ -140,6 +140,7 @@ public class Weapon : MonoBehaviour
             {
                 Debug.Log("BulletSpeedBoostActive");
                 bulletSpeedBoost.BulletSpeedBoost();
+
             }
             else if (isBurstFireActive && currentPowerUp is BurstFirePowerUp)
             {
@@ -153,8 +154,8 @@ public class Weapon : MonoBehaviour
                 hitscanLaserPowerUp.FireLaser(origin, direction);
 
                 //shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+                //GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
+              //  Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 OnShoot.Invoke();
 
                 return;
@@ -168,11 +169,13 @@ public class Weapon : MonoBehaviour
                 bulletScript.SetTankParent(this.gameObject);
                 bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
 
-                shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
-                OnShoot.Invoke();
+                
             }
+
+            shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
+            GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
+            Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+            OnShoot.Invoke();
         }
     }
 
@@ -223,8 +226,7 @@ public class Weapon : MonoBehaviour
         Debug.Log("Disabled PowerUp");
 
 
-        powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
-        OnSetPowerUp.Invoke();// invoke event
+        
     }
     private IEnumerator DisableAfterTime(float duration)
     {
