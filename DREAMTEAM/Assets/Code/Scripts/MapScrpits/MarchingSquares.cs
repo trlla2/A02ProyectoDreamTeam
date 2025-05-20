@@ -94,7 +94,7 @@ public class MarchingSquares : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         Seed = Random.Range(-1000, 1000);
         UpdateGrid();
