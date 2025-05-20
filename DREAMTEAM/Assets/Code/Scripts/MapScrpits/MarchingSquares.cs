@@ -129,12 +129,6 @@ public class MarchingSquares : MonoBehaviour
         regionDetector.Initialize();
         regionDetector.FindAllRegions();
 
-        StartCoroutine(Waitframe());
-    }
-
-    IEnumerator Waitframe()
-    {
-        yield return new WaitForEndOfFrame();
         List<Vector2Int> BiggestRegion = new List<Vector2Int> { };
 
         foreach (List<Vector2Int> region in regionDetector.Regions)
@@ -153,29 +147,66 @@ public class MarchingSquares : MonoBehaviour
 
     private void SpawnTanks()
     {
-        int firstIndex = Random.Range(0, validPositions.Count);
 
-        Vector2Int tank1GridPos = validPositions[firstIndex];
-        Vector2Int tank2GridPos;
+        Vector2Int tank1GridPos;
+        Vector2Int tank2GridPos = Vector2Int.zero;
+        float maxDistance = (Mathf.Min(gridSizeX, gridSizeY) / 3) / gridResolution;
 
-        validPositions.RemoveAt(firstIndex);
+        Vector3 tank1Pos;
+        Vector3 tank2Pos;
 
-        int attempts = 0;
-        const int maxAttempts = 100;
-        float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
-
+        int attemptsTank1 = 0;
+        const int maxAttemptsTank = 100;
         do
         {
-            int secondIndex = Random.Range(0, validPositions.Count);
-            tank2GridPos = validPositions[secondIndex];
-            attempts++;
-        }
-        while (attempts < maxAttempts && Vector2.Distance(tank1GridPos, tank2GridPos) < minDistance);
+            int firstIndex = Random.Range(0, validPositions.Count);
+            tank1GridPos = validPositions[firstIndex];
 
-        Vector3 tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
-        Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
-        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y);
-        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y);
+            tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+            if (Physics.OverlapSphere(tank1Pos, 0.2f).Length == 0)
+            {
+                validPositions.RemoveAt(firstIndex); // Remove to avoid same position
+                break;
+            }
+            attemptsTank1++;
+        }
+        while (attemptsTank1 < maxAttemptsTank);
+
+
+        int attemptsTank2 = 0;
+        //default to a random pos inside the valid pos
+        Vector3 FailSafePos = new Vector3(Mathf.Clamp(validPositions[Random.Range(0, validPositions.Count)].x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(validPositions[Random.Range(0, validPositions.Count)].y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        do
+        {
+            int firstIndex = Random.Range(0, validPositions.Count);
+            tank2GridPos = validPositions[firstIndex];
+
+            tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+
+            if (Physics.OverlapSphere(tank2Pos, 0.2f).Length == 0)
+            {
+                if(Vector2.Distance(tank1GridPos, tank2GridPos) < maxDistance)
+                {
+                    validPositions.RemoveAt(firstIndex); // Remove from global valid pos
+                    break;
+                }
+                else
+                {
+                    FailSafePos = tank2Pos;
+                }
+            }
+            attemptsTank1++;
+
+        } while (attemptsTank2 < maxAttemptsTank);
+
+        if(attemptsTank2 > maxAttemptsTank)
+        {
+            Debug.LogWarning("No VAlid spawn pos, reverting to no distance check spawn");
+            tank2Pos = FailSafePos;
+        }
+
+        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y,0);
+        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y,0);
         GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
 

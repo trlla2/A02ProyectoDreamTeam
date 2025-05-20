@@ -103,18 +103,11 @@ public class RegionDetector : MonoBehaviour
         }
 
         int SpawnedN = 0;
-        int i = 0;
+        int i = Random.Range(0, BiggestRegion.Count);
         int y = Random.Range(0, BiggestRegion.Count);
 
         while (SpawnedN < times)
         {
-            while(heightMap[BiggestRegion[i].x,BiggestRegion[y].y] > heightThreshold)
-            {
-                i++;
-                y++;
-                if (i >= BiggestRegion.Count) i = 0;
-                if (y >= BiggestRegion.Count) y = 0;
-            }
             Vector3 position = new Vector3(BiggestRegion[i].x * marchingSquares.gridResolution, BiggestRegion[y].y * marchingSquares.gridResolution, 0);
 
             var overlap = Physics.OverlapSphere(position, 0.2f);
@@ -124,13 +117,17 @@ public class RegionDetector : MonoBehaviour
                 if (Random.value < (1f / times) * 0.25f)
                 {
                     Instantiate(GO, position, Quaternion.identity);
+                    marchingSquares.validPositions.Remove(new Vector2Int((int)position.x, (int)position.y));
                     SpawnedN++;
+                    i += BiggestRegion.Count / 5;
+                    y += BiggestRegion.Count / 6;
                 }
             }
-
-
-            i +=BiggestRegion.Count/5;
-            y+=BiggestRegion.Count/6;
+            else
+            {
+                i = Random.Range(0, BiggestRegion.Count);
+                y = Random.Range(0, BiggestRegion.Count);
+            }
 
             
             if (i >= BiggestRegion.Count) i = 0;
