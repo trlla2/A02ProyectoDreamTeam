@@ -179,7 +179,8 @@ public class Weapon : MonoBehaviour
     public void SetPowerUp(PowerUpEffect powerUp)
     {
         currentPowerUp = powerUp;
-
+        powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
+        OnSetPowerUp.Invoke();// invoke event
         if (currentPowerUp is InfiniteBounce)
         {
             Debug.Log("Active InfiniteBounce");
