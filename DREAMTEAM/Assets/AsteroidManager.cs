@@ -13,7 +13,7 @@ public class AsteroidManager : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float meteorSpeed = 5f;
     [SerializeField] private float spawnDistance = 15f;
-
+    [SerializeField] private AudioSource clip;
     private Camera mainCamera;
     private List<Vector2> validWorldPositions = new List<Vector2>();
 
@@ -83,6 +83,7 @@ public class AsteroidManager : MonoBehaviour
 
        
         meteorAnimator.SetBool("Exploded", true);
+        clip.Play();
         Destroy(hitmarker);
 
         // Detect players in explosion radius
