@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 /* This code was made possible thanks to various recources on the internet that give great explanations of the concept
