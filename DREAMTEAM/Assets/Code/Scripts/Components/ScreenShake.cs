@@ -9,47 +9,59 @@ public class ScreenShake : MonoBehaviour
     private float cameraShakeForce = 1;
     [SerializeField]
     private float cameraLerp = 12f;
-
-    [Header("Debug")]
     [SerializeField]
-    private float durationScreenShake = 3;
+    private float durationScreenShake = 0.2f;
     [SerializeField]
-    private float magnitudeScreenShake = 10;
+    private float magnitudeScreenShake = 0.3f;
 
     private Vector3 initialPos;
+
+    private bool isShaking = false;
 
     private void Start()
     {
         // Get initial position
 
         initialPos = transform.position;
-
-        // Debug
-        StartCoroutine(CameraShake(durationScreenShake, magnitudeScreenShake));
     }
-    public IEnumerator CameraShake(float duration, float magnitude)
+
+    public void Shake()
     {
+        if (!isShaking) 
+            StartCoroutine(CameraShake()); // Start the coroutine
+    }
+    private IEnumerator CameraShake()
+    {
+        isShaking = true;
+
         float timer = 0;
 
-        while (timer < magnitude)
+        while (timer < durationScreenShake)
         {
+           
             //Random position
-            float x = Random.Range(-cameraShakeForce, cameraShakeForce) * magnitude;
-            float y = Random.Range(-cameraShakeForce, cameraShakeForce) * magnitude;
+            float x = Random.Range(-cameraShakeForce, cameraShakeForce) * magnitudeScreenShake;
+            float y = Random.Range(-cameraShakeForce, cameraShakeForce) * magnitudeScreenShake;
 
             transform.localPosition += new Vector3(x, y, 0); // ad random position to current position
 
             timer += Time.deltaTime; // add timer
 
-            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.deltaTime); // move camera to center
+            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.unscaledDeltaTime); // move camera to center
+            
             yield return null;
         }
 
         while(transform.position != initialPos)
         {
-            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.deltaTime);// move camera to center
-
+            
+            transform.position = Vector3.Lerp(transform.position, initialPos, cameraLerp * Time.unscaledDeltaTime);// move camera to center
+            
             yield return null;
+
         }
+
+        isShaking = false;
+
     }
 }
