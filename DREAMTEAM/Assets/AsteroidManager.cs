@@ -115,7 +115,7 @@ public class AsteroidManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(0.5f); //duration of explode animation clip, imp no exit time is required
+        yield return new WaitForSeconds(0.4f); //duration of explode animation clip, imp no exit time is required
         Destroy(meteor);
     }
 }
