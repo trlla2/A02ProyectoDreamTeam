@@ -317,6 +317,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = originalTimeScale * interpolateValue;
     }
 
+    // Load a color
+    Color LoadColor(string key)
+    {
+        if (!PlayerPrefs.HasKey(key + "_r"))
+            return Color.white; // Default color if not found
+
+        float r = PlayerPrefs.GetFloat(key + "_r");
+        float g = PlayerPrefs.GetFloat(key + "_g");
+        float b = PlayerPrefs.GetFloat(key + "_b");
+        float a = PlayerPrefs.GetFloat(key + "_a");
+
+        return new Color(r, g, b, a);
+    }
+
     public void Freeze() // Starts the hitpause
     {
         if (!isForzen) {
@@ -349,6 +363,8 @@ public class GameManager : MonoBehaviour
         // set tanks Inputs
         temp1.GetComponent<Tank_Behaviour>().SetPlayer1();
         temp2.GetComponent<Tank_Behaviour>().SetPlayer2();
+
+        
 
         if(temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
         {
