@@ -364,9 +364,10 @@ public class GameManager : MonoBehaviour
         temp1.GetComponent<Tank_Behaviour>().SetPlayer1();
         temp2.GetComponent<Tank_Behaviour>().SetPlayer2();
 
-        
+        temp1.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("Tank1"));
+        temp2.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("Tank2"));
 
-        if(temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
+        if (temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
         {
             endGame = true;
         }

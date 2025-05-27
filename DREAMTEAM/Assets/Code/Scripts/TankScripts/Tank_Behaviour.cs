@@ -37,7 +37,7 @@ public class Tank_Behaviour : MonoBehaviour
 
     
     
-    public void SetTank1Color(Color color)
+    public void SetTankColor(Color color)
     {
         if (GetPlayer() == 1)
         {

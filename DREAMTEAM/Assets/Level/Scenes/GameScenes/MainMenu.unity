@@ -3739,8 +3739,8 @@ RectTransform:
   m_Father: {fileID: 683861016}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1, y: 0.5}
-  m_AnchorMax: {x: 0.2, y: 0.6}
+  m_AnchorMin: {x: 0.075, y: 0.475}
+  m_AnchorMax: {x: 0.225, y: 0.625}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3788,18 +3788,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1619982749}
-        m_TargetAssemblyTypeName: TankSelection, Assembly-CSharp
-        m_MethodName: SwitchLeftTankPlayer1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 973307520}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -3807,18 +3795,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TankSelection, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6723,12 +6699,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firerateBarP1: {fileID: 340242331}
   speedBarP1: {fileID: 617235317}
+  p1Image: {fileID: 0}
   firerateBarP2: {fileID: 1650730439}
   speedBarP2: {fileID: 715216379}
   tankTypes:
   - {fileID: 6528484826500116643, guid: 94155aac49a7b7145a6a3f794e98dab8, type: 3}
   - {fileID: 6528484826500116643, guid: 8daa9916fa7596f4f834ba9f5302a628, type: 3}
   - {fileID: 2487414856934800851, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}
+  tankColors: []
   animationDuration: 0.5
   currentTime: 0
   curve:
@@ -8880,7 +8858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298611329712734862, guid: b3ba3c6d1d795554e8cf91a5a6a30fd5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8921,8 +8899,8 @@ RectTransform:
   m_Father: {fileID: 683861016}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0.5}
-  m_AnchorMax: {x: 0.9, y: 0.6}
+  m_AnchorMin: {x: 0.775, y: 0.475}
+  m_AnchorMax: {x: 0.925, y: 0.625}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8970,18 +8948,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1619982749}
-        m_TargetAssemblyTypeName: TankSelection, Assembly-CSharp
-        m_MethodName: SwitctRightTankPlayer1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 973307520}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
