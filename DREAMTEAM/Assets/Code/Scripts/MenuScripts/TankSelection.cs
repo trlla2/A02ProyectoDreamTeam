@@ -9,13 +9,18 @@ public class TankSelection : MonoBehaviour
     [Header("Tank1")]
     [SerializeField] private Slider firerateBarP1;
     [SerializeField] private Slider speedBarP1;
+    [SerializeField] private Image p1Image;
     [Header("Tank2")]
     [SerializeField] private Slider firerateBarP2;
     [SerializeField] private Slider speedBarP2;
     [Header("Tanks")]
     [SerializeField] private List<GameObject> tankTypes;
+    [SerializeField] private List<Color> tankColors;
     private int currentP1Tank = 0;
     private int currentP2Tank = 0;
+    private int currentP1Color = 0;
+    private int currentP2Color = 0;
+
     [Header("Animation")]
     [SerializeField] private float animationDuration = 0.5f;
     [SerializeField] private float currentTime = 0f;
@@ -31,7 +36,14 @@ public class TankSelection : MonoBehaviour
         StartCoroutine(UpdateSlider(true));
         StartCoroutine(UpdateSlider(false));
     }
-
+    private void SaveColor(string key, Color color)
+    {
+        PlayerPrefs.SetFloat(key + "_r", color.r);
+        PlayerPrefs.SetFloat(key + "_g", color.g);
+        PlayerPrefs.SetFloat(key + "_b", color.b);
+        PlayerPrefs.SetFloat(key + "_a", color.a);
+        PlayerPrefs.Save();
+    }
     private IEnumerator UpdateSlider(bool isP1)
     {
         while (currentTime < animationDuration)
@@ -111,6 +123,24 @@ public class TankSelection : MonoBehaviour
         }
     }
 
+    public void SwitchLeftColorTankPlayer1()
+    {
+        if(currentP1Color > 0)
+        {
+            currentP1Color--;
+            p1Image.color = tankColors[currentP1Color];
+        }
+    }
+
+    public void SwitchRightColorTankPlayer1()
+    {
+        if (currentP1Color < tankTypes.Count - 1)
+        {
+            currentP1Color++;
+            p1Image.color = tankColors[currentP1Color];
+        }
+    }
+
     public void SwitchLeftTankPlayer2()
     {
         if (currentP2Tank > 0 && !isP2Changing)
@@ -140,6 +170,8 @@ public class TankSelection : MonoBehaviour
 
         PlayerPrefs.SetString("TankP1", tankTypes[currentP1Tank].name); // set tank types
         PlayerPrefs.SetString("TankP2", tankTypes[currentP2Tank].name);
+        SaveColor("TankP1", tankColors[currentP1Color]);
+        SaveColor("TankP2", tankColors[currentP2Color]);
         PlayerPrefs.Save();
 
         Cursor.visible = false; // unshow cursor
