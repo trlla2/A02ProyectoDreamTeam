@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PowerUps/HitscanLaser")]
@@ -34,6 +35,7 @@ public class HitscanLaser : PowerUpEffect
             RaycastHit hit;
             bool hitSomething = Physics.Raycast(currentPos, currentDir, out hit, maxStepDistance, collisionMask);
 
+
             if (hitSomething)
             {
                 Vector3 endPos = hit.point;
@@ -42,10 +44,19 @@ public class HitscanLaser : PowerUpEffect
                 Debug.DrawLine(currentPos, endPos, Color.red, 1f);
                 CreateLaserSegment(currentPos, endPos);
 
-                KillTank(hit.collider.gameObject);
+                if (hit.collider.gameObject.GetComponent<Tank_Behaviour>())
+                {
+                    KillTank(hit.collider.gameObject);
+                }
+                else if (hit.collider.gameObject.GetComponent<Interactable>())
+                {
+                    hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
+                }
+
 
                 currentDir = Vector3.Reflect(currentDir, hit.normal);
                 currentDir.z = 0f; // Mantener en plano 2D
+                currentDir = currentDir.normalized;
                 currentPos = endPos;
                 reflectionsRemaining--;
             }
@@ -114,6 +125,7 @@ public class HitscanLaser : PowerUpEffect
                 tank.Dead();
             }
         }
+
     }
 
 }

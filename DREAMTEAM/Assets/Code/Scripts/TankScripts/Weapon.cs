@@ -78,7 +78,7 @@ public class Weapon : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetButtonDown("Fire1") && tb.GetPlayer() == 1 && P1CanSoot)
         {
