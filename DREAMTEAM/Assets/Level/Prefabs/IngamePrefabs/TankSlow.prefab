@@ -457,7 +457,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e5d9784110b9af748806abf7f1233126, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dfc23eab9c3b3ad48a69ea747844c365, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -621,7 +621,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 827fddd0d08402945a800098e13068ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3069b5a34e8a4ab4eab4c4b677dffc71, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -696,18 +696,7 @@ MonoBehaviour:
   player: 1
   explosionParticles: {fileID: 7392353991574028853, guid: 4efd04ca549b2104eab8f1c47704ff2d, type: 3}
   playerNumberGameObj: {fileID: 1543868601302644855, guid: 3edf55ba74fea7e429405a27e96d602d, type: 3}
-  topRenderer: {fileID: 1204318596622699534}
-  barrelRenderer: {fileID: 6276484827342064769}
-  tank1_body: {fileID: 21300000, guid: 827fddd0d08402945a800098e13068ac, type: 3}
-  tank2_body: {fileID: 21300000, guid: 18629a507acf4104490848080495aea4, type: 3}
-  tank1_barrel: {fileID: 21300000, guid: 4fe53244106cd5f4abf5c85cd70aa07f, type: 3}
-  tank2_barrel: {fileID: 21300000, guid: ea5c957587e700744a78571e5485b81c, type: 3}
-  tank1_material: {fileID: 2100000, guid: 4974e0cd9dd431241873ef398be0ece5, type: 2}
-  tank2_material: {fileID: 2100000, guid: 33ee2ee02d838334987da16a1698812d, type: 2}
-  tank1_top_material: {fileID: 2100000, guid: 2b94f61d8d309d04ba164a7f753b140a, type: 2}
-  tank2_top_material: {fileID: 2100000, guid: 3ed1387300f11e4479372bfc83363cb9, type: 2}
-  tank1_barrel_material: {fileID: 2100000, guid: 4974e0cd9dd431241873ef398be0ece5, type: 2}
-  tank2_barrel_material: {fileID: 2100000, guid: 33ee2ee02d838334987da16a1698812d, type: 2}
+  tank_barrel: {fileID: 6276484827342064769}
 --- !u!114 &5605126923846287832
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -246,6 +246,18 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    // Load a color
+    public Color LoadColor(string key)
+    {
+        if (!PlayerPrefs.HasKey(key + "_r"))
+            return Color.white; // Default color if not found
+
+        float r = PlayerPrefs.GetFloat(key + "_r");
+        float g = PlayerPrefs.GetFloat(key + "_g");
+        float b = PlayerPrefs.GetFloat(key + "_b");
+        float a = PlayerPrefs.GetFloat(key + "_a");
+        return new Color(r, g, b, a);
+    }
     private void SpawnPowerUp(Vector2 spawnPoint) // Spawn powerup to the recived position
     {
         spawnPoint *= gridRes;
@@ -317,6 +329,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = originalTimeScale * interpolateValue;
     }
 
+    
+
     public void Freeze() // Starts the hitpause
     {
         if (!isForzen) {
@@ -350,7 +364,11 @@ public class GameManager : MonoBehaviour
         temp1.GetComponent<Tank_Behaviour>().SetPlayer1();
         temp2.GetComponent<Tank_Behaviour>().SetPlayer2();
 
-        if(temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
+        // SetColor
+        temp1.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("TankP1"));
+        temp2.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("TankP2"));
+
+        if (temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
         {
             endGame = true;
         }
