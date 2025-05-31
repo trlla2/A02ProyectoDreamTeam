@@ -16,6 +16,7 @@ public class TestTimeEvent : MonoBehaviour
         // Reset both speed and size
         TimeEvent.speedModifier = 1f;
         TimeEvent.sizeModifier = 1f;
+        TimeEvent.invertControls = false;
     }
 
     // Call this to trigger a new random speed event

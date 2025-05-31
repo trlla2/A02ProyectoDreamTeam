@@ -6,14 +6,17 @@ public class TimeEvent
 {
     public static float speedModifier = 1f; // normal speed
     public static float sizeModifier = 1f; // normal size
+    public static bool invertControls = false; // normal controls
 
-    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f, float minSizeMod = 0.75f, float maxSizeMod = 1.25f)
+    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f,
+                                float minSizeMod = 0.75f, float maxSizeMod = 1.25f)
     {
-        // Randomly choose between speed or size event
-        int eventType = UnityEngine.Random.Range(0, 2); // 0 = speed, 1 = size
+        // Randomly choose between different event types
+        int eventType = UnityEngine.Random.Range(0, 3); // 0 = speed, 1 = size, 2 = controls
 
         float speedMod = 1f;
         float sizeMod = 1f;
+        bool controlsInverted = false;
         string eventMessage = "";
 
         switch (eventType)
@@ -29,10 +32,15 @@ public class TimeEvent
                 sizeMod = sizeChoice == 0 ? minSizeMod : maxSizeMod;
                 eventMessage = sizeChoice == 0 ? "Shrinking tanks!" : "Enlarging tanks!";
                 break;
+
+            case 2: // Control inversion event
+                controlsInverted = true;
+                eventMessage = "Inverted controls!";
+                break;
         }
 
         GameObject gameObject = new GameObject("TimeEvent", typeof(GetMonoBehaviour));
-        TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod, sizeMod);
+        TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod, sizeMod, controlsInverted);
         gameObject.GetComponent<GetMonoBehaviour>().onUpdate = timeEvent.Update;
         gameObject.GetComponent<GetMonoBehaviour>().onDestroy = timeEvent.DestroyEvent;
 
@@ -55,12 +63,13 @@ public class TimeEvent
         }
     }
 
+
     private Action action;
     private float timer;
     private GameObject gameObject;
     private bool isDestroyed;
 
-    public TimeEvent(Action action, float timer, GameObject gameObject, float speedMod = 1f, float sizeMod = 1f)
+    public TimeEvent(Action action, float timer, GameObject gameObject, float speedMod = 1f, float sizeMod = 1f, bool invertControls = false)
     {
         this.action = action;
         this.timer = timer;
@@ -68,6 +77,7 @@ public class TimeEvent
         isDestroyed = false;
         TimeEvent.speedModifier = speedMod;
         TimeEvent.sizeModifier = sizeMod;
+        TimeEvent.invertControls = invertControls;
     }
 
     public void Update()
