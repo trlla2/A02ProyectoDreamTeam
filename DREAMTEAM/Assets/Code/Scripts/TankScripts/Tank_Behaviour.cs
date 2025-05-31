@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using static UnityEditorInternal.ReorderableList;
 
 
 public class Tank_Behaviour : MonoBehaviour
@@ -15,78 +16,28 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private GameObject playerNumberGameObj;
 
     [Header("Player sprites")]
-    private SpriteRenderer spriteRenderer;
-    [SerializeField] private SpriteRenderer topRenderer;
-    [SerializeField] private SpriteRenderer barrelRenderer;
+    private SpriteRenderer tank_body;
+    [SerializeField] private SpriteRenderer tank_barrel;
 
-    [SerializeField] private Sprite tank1_body;
-    [SerializeField] private Sprite tank1_barrel;
+    private Color tankColor;
 
-    [SerializeField] private Material tank1_material;
-    [SerializeField] private Material tank1_top_material;
-    [SerializeField] private Material tank1_barrel_material;
-
-
-    [SerializeField] private Sprite tank2_body;
-    [SerializeField] private Sprite tank2_barrel;
-
-    [SerializeField] private Material tank2_barrel_material;
-    [SerializeField] private Material tank2_top_material;
-    [SerializeField] private Material tank2_material;
-
-
-    
-    
-    public void SetTankColor(Color color)
+    private void Awake()
     {
-        if (GetPlayer() == 1)
-        {
-            tank1_material.color = color;
-            tank1_barrel_material.color = color;
-            tank1_top_material.color = color;
-        }
-        else
-        {
-            tank2_material.color = color;
-            tank2_barrel_material.color = color;
-            tank2_top_material.color = color;
-        }
-
+        tank_body = GetComponent<SpriteRenderer>();
     }
-
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-
-
-        if (GetPlayer() == 1)
-        {
-            spriteRenderer.sprite = tank1_body;
-            spriteRenderer.material = tank1_material;
-
-            //topRenderer.sprite = tank1_top;
-            topRenderer.material = tank1_top_material;
-            barrelRenderer.sprite = tank1_barrel;
-            barrelRenderer.material = tank1_barrel_material;
-        }
-        else if (GetPlayer() == 2)
-        {
-            spriteRenderer.sprite = tank2_body;
-            spriteRenderer.material = tank2_material;
-
-            //topRenderer.sprite = tank1_top;
-            topRenderer.material = tank2_top_material;
-            barrelRenderer.sprite = tank2_barrel;
-            barrelRenderer.material = tank2_barrel_material;
-        }
-
         // UI that show the number of the player
         GameObject temp = Instantiate(playerNumberGameObj, this.transform.position, Quaternion.identity);
         temp.GetComponent<PlayerNumberUI>().SetPlayer(this.gameObject);
     }
 
+    public void SetTankColor(Color color)
+    {
+        tank_body.material.color = color;
+        tank_barrel.material.color = color;
+    }
 
     public void Dead() // death function
     {

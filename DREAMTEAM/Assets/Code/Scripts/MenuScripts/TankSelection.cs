@@ -9,13 +9,15 @@ public class TankSelection : MonoBehaviour
     [Header("Tank1")]
     [SerializeField] private Slider firerateBarP1;
     [SerializeField] private Slider speedBarP1;
-    [SerializeField] private Image p1Image;
+    [SerializeField] private RawImage p1Image;
     [Header("Tank2")]
     [SerializeField] private Slider firerateBarP2;
     [SerializeField] private Slider speedBarP2;
+    [SerializeField] private RawImage p2Image;
     [Header("Tanks")]
     [SerializeField] private List<GameObject> tankTypes;
-    [SerializeField] private List<Color> tankColors;
+    [SerializeField] private List<Color> tank1Colors;
+    [SerializeField] private List<Color> tank2Colors;
     private int currentP1Tank = 0;
     private int currentP2Tank = 0;
     private int currentP1Color = 0;
@@ -35,6 +37,10 @@ public class TankSelection : MonoBehaviour
     {
         StartCoroutine(UpdateSlider(true));
         StartCoroutine(UpdateSlider(false));
+
+        p1Image.color = tank1Colors[currentP1Color];
+        p2Image.color = tank2Colors[currentP2Color];
+
     }
     private void SaveColor(string key, Color color)
     {
@@ -128,16 +134,33 @@ public class TankSelection : MonoBehaviour
         if(currentP1Color > 0)
         {
             currentP1Color--;
-            p1Image.color = tankColors[currentP1Color];
+            p1Image.color = tank1Colors[currentP1Color];
         }
     }
 
     public void SwitchRightColorTankPlayer1()
     {
-        if (currentP1Color < tankTypes.Count - 1)
+        if (currentP1Color < tank1Colors.Count - 1)
         {
             currentP1Color++;
-            p1Image.color = tankColors[currentP1Color];
+            p1Image.color = tank1Colors[currentP1Color];
+        }
+    }
+    public void SwitchLeftColorTankPlayer2()
+    {
+        if(currentP2Color > 0)
+        {
+            currentP2Color--;
+            p2Image.color = tank2Colors[currentP2Color];
+        }
+    }
+
+    public void SwitchRightColorTankPlayer2()
+    {
+        if (currentP2Color < tank1Colors.Count - 1)
+        {
+            currentP2Color++;
+            p2Image.color = tank2Colors[currentP2Color];
         }
     }
 
@@ -170,8 +193,8 @@ public class TankSelection : MonoBehaviour
 
         PlayerPrefs.SetString("TankP1", tankTypes[currentP1Tank].name); // set tank types
         PlayerPrefs.SetString("TankP2", tankTypes[currentP2Tank].name);
-        SaveColor("TankP1", tankColors[currentP1Color]);
-        SaveColor("TankP2", tankColors[currentP2Color]);
+        SaveColor("TankP1", tank1Colors[currentP1Color]);
+        SaveColor("TankP2", tank2Colors[currentP2Color]);
         PlayerPrefs.Save();
 
         Cursor.visible = false; // unshow cursor
