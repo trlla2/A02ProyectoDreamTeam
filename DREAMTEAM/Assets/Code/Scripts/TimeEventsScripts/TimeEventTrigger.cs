@@ -7,8 +7,8 @@ public class TestTimeEvent : MonoBehaviour
 
     [SerializeField] private float slowSpeed = 0.5f; // 50% speed
     [SerializeField] private float fastSpeed = 1.5f; // 150% speed
-    [SerializeField] private float smallSize = 0.75f; // 75% size
-    [SerializeField] private float largeSize = 1.25f; // 125% size
+    [SerializeField] private float smallSize = 0.50f; // 50% size
+    [SerializeField] private float largeSize = 1.50f; // 150% size
 
     private void OnEventComplete()
     {

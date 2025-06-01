@@ -21,22 +21,43 @@ public class Tank_Behaviour : MonoBehaviour
 
     private Color tankColor;
 
-    private void Awake()
-    {
-        tank_body = GetComponent<SpriteRenderer>();
-    }
+    private Vector3 originalScale;
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        originalScale = transform.localScale;
+
+        if (GetPlayer() == 1)
+        {
+            spriteRenderer.sprite = tank1_body;
+            spriteRenderer.material = tank1_material;
+
+            //topRenderer.sprite = tank1_top;
+            topRenderer.material = tank1_top_material;
+            barrelRenderer.sprite = tank1_barrel;
+            barrelRenderer.material = tank1_barrel_material;
+        }
+        else if (GetPlayer() == 2)
+        {
+            spriteRenderer.sprite = tank2_body;
+            spriteRenderer.material = tank2_material;
+
+            //topRenderer.sprite = tank1_top;
+            topRenderer.material = tank2_top_material;
+            barrelRenderer.sprite = tank2_barrel;
+            barrelRenderer.material = tank2_barrel_material;
+        }
+
         // UI that show the number of the player
         GameObject temp = Instantiate(playerNumberGameObj, this.transform.position, Quaternion.identity);
         temp.GetComponent<PlayerNumberUI>().SetPlayer(this.gameObject);
     }
 
-    public void SetTankColor(Color color)
+    private void Update()
     {
-        tank_body.material.color = color;
-        tank_barrel.material.color = color;
+        transform.localScale = originalScale * TimeEvent.sizeModifier;
     }
 
     public void Dead() // death function
@@ -47,12 +68,11 @@ public class Tank_Behaviour : MonoBehaviour
         GameObject temp = Instantiate(explosionParticles, this.transform.position, Quaternion.identity);// Explotion
         Destroy(temp, temp.GetComponent<AudioSource>().clip.length);
 
-
+        
         Destroy(this.gameObject);
     }
 
     public void SetPlayer1() { player = 1; } // Set player 1
     public void SetPlayer2() { player = 2; } // Set player 2
-
     public int GetPlayer() { return player; } // return player 
 }
