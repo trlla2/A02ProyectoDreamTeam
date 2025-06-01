@@ -30,16 +30,18 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private Material tank1_barrel_material;
     [SerializeField] private Material tank2_barrel_material;
 
-    
-    
-    
-    
+    private Vector3 originalScale;
+
+
+
+
+
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-
+        originalScale = transform.localScale;
 
         if (GetPlayer() == 1)
         {
@@ -67,6 +69,10 @@ public class Tank_Behaviour : MonoBehaviour
         temp.GetComponent<PlayerNumberUI>().SetPlayer(this.gameObject);
     }
 
+    private void Update()
+    {
+        transform.localScale = originalScale * TimeEvent.sizeModifier;
+    }
 
     public void Dead() // death function
     {

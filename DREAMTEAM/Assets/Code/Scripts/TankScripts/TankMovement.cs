@@ -47,8 +47,8 @@ public class TankMovement : MonoBehaviour
             verticalInput = Input.GetAxisRaw("VerticalKeys");
         }
 
-        // Apply control inversion
-        if (invertControls)
+        // Apply control inversion from TimeEvent
+        if (TimeEvent.invertControls)
         {
             horizontalInput *= -1;
             verticalInput *= -1;
