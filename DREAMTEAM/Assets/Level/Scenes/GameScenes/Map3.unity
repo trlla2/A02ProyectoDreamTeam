@@ -38114,6 +38114,10 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 3570
     m_Data: {r: 1, g: 1, b: 1, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: 5.2495e-41, g: 5.2495e-41, b: 5.2495e-41, a: 5.2495e-41}
+  - m_RefCount: 0
+    m_Data: {r: 5.2495e-41, g: 5.2495e-41, b: 5.2495e-41, a: 5.2495e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -39095,7 +39099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 585716578077690919, guid: f1bc8ab39d8a1c0428cede8fd41a13df, type: 3}
       propertyPath: spawnDelayRange.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 748073564479286207, guid: f1bc8ab39d8a1c0428cede8fd41a13df, type: 3}
       propertyPath: m_Name
