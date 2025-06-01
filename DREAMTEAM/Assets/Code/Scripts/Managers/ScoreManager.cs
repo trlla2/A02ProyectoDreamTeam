@@ -17,9 +17,10 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject gameOver;
     private bool endGame;
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private Color p1Color;
-    [SerializeField] private Color p2Color;
-
+    private Color p1Color;
+    private Color p2Color;
+    [SerializeField] private RawImage tank1Image;
+    [SerializeField] private RawImage tank2Image;
     //Changing UI of the PowerUps of the players
     private GameObject imageUI1;
     private GameObject imageUI2;
@@ -52,6 +53,14 @@ public class ScoreManager : MonoBehaviour
         }
 
         GameManager.Instance.OnEndGame += SetNextStage;
+
+
+        // set player color
+        p1Color = GameManager.Instance.LoadColor("TankP1");
+        p2Color = GameManager.Instance.LoadColor("TankP2");
+        tank1Image.color = p1Color;
+        tank2Image.color = p2Color;
+
     }
 
     void Update()
@@ -107,7 +116,7 @@ public class ScoreManager : MonoBehaviour
     {
         GameObject imageUI = (playerNumber == 1) ? imageUI1 : imageUI2;
 
-        // Activar el objeto UI en caso de que esté desactivado
+        // Activar el objeto UI en caso de que estï¿½ desactivado
         imageUI.SetActive(true);
 
         // Cambiar el sprite por el del power-up activo
@@ -123,7 +132,7 @@ public class ScoreManager : MonoBehaviour
             img.sprite = powerUp.powerUpSprite;
         }
 
-        // Ocultar después de X segundos
+        // Ocultar despuï¿½s de X segundos
         StartCoroutine(HideAfterDelay(imageUI, 5f, playerNumber)); // o el tiempo que dure el power-up
     }
 

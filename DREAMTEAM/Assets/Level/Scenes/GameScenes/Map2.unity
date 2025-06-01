@@ -1720,6 +1720,7 @@ MonoBehaviour:
   biomesMaps:
   - Map1
   - Map2
+  - Map3
   Spawned: 0
   rotationOffset: -90
   tank1: {fileID: 6528484826500116643, guid: b260b9ca2bf0a8b44ab29bd4bb1fb547, type: 3}

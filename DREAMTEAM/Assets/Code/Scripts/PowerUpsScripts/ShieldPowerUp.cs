@@ -10,7 +10,7 @@ public class ShieldPowerUp : PowerUpEffect
         Weapon weapon = target.GetComponent<Weapon>();
         if (weapon != null)
         {
-            weapon.ActivateShield();  
+            weapon.SetPowerUp(this);
         }
     }
 }

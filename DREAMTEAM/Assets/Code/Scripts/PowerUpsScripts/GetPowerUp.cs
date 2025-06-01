@@ -40,6 +40,7 @@ public class GetPowerUp : MonoBehaviour
         if (weapon != null)
         {
             Debug.Log("Collision");
+
             powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
             GameManager.Instance.DecreaseNumPowerUps();
 

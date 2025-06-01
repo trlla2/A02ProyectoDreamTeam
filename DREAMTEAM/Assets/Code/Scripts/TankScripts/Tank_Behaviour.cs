@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using static UnityEditorInternal.ReorderableList;
 
 
 public class Tank_Behaviour : MonoBehaviour
@@ -15,20 +16,10 @@ public class Tank_Behaviour : MonoBehaviour
     [SerializeField] private GameObject playerNumberGameObj;
 
     [Header("Player sprites")]
-    private SpriteRenderer spriteRenderer;
-    [SerializeField] private SpriteRenderer topRenderer;
-    [SerializeField] private SpriteRenderer barrelRenderer;
+    private SpriteRenderer tank_body;
+    [SerializeField] private SpriteRenderer tank_barrel;
 
-    [SerializeField] private Sprite tank1_body;
-    [SerializeField] private Sprite tank2_body;
-    [SerializeField] private Sprite tank1_barrel;
-    [SerializeField] private Sprite tank2_barrel;
-    [SerializeField] private Material tank1_material;
-    [SerializeField] private Material tank2_material;
-    [SerializeField] private Material tank1_top_material;
-    [SerializeField] private Material tank2_top_material;
-    [SerializeField] private Material tank1_barrel_material;
-    [SerializeField] private Material tank2_barrel_material;
+    private Color tankColor;
 
     private Vector3 originalScale;
 

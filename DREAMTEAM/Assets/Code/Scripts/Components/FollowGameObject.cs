@@ -8,8 +8,6 @@ public class PlayerNumberUI : MonoBehaviour
 {
     [Header("SETUP")]
     [SerializeField] private Vector3 offset = Vector3.zero;
-    [SerializeField] private Color colorPlayer1;
-    [SerializeField] private Color colorPlayer2;
     [SerializeField] private float numberDuration = 3;
     [SerializeField] private TextMeshProUGUI playerTextNumber;
     private SpriteRenderer sr;
@@ -38,16 +36,10 @@ public class PlayerNumberUI : MonoBehaviour
         idPlayer = playerReference.GetComponent<Tank_Behaviour>().GetPlayer();  // Setplayer
 
         playerTextNumber.text = idPlayer.ToString(); // set text
-
-        switch (idPlayer) // set color depending off the player
-        {
-            case 1:
-                sr.color = colorPlayer1;
-                break;
-            case 2:
-                sr.color = colorPlayer2;
-                break;
-        }
+        if(idPlayer == 1)
+            sr.color = GameManager.Instance.LoadColor("TankP1");// set color
+        else
+            sr.color = GameManager.Instance.LoadColor("TankP2");// set color
 
         Destroy(this.gameObject, numberDuration);
     }

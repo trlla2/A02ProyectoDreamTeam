@@ -301,7 +301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: f61f4c7b1a612164e8cbcea1cba92077, type: 3}
+  m_Texture: {fileID: 2800000, guid: 2efa77490d89b264e81936b20049e8d1, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -443,8 +443,8 @@ MonoBehaviour:
   gameOverTitlteTMP: {fileID: 3476280536392494914}
   gameOver: {fileID: 719678959762123418}
   pauseMenu: {fileID: 1058927421918514136}
-  p1Color: {r: 0.32156864, g: 0.6117647, b: 0.32156864, a: 1}
-  p2Color: {r: 0.8078432, g: 0.3647059, b: 0.07450981, a: 1}
+  tank1Image: {fileID: 6091454231018408944}
+  tank2Image: {fileID: 2282782013324263713}
 --- !u!114 &8725343924865032925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,7 +681,7 @@ Transform:
   m_Children:
   - {fileID: 2016140089533928450}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5428174443458598385
 GameObject:
@@ -1908,7 +1908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 8d10420f92491844d8fdbb85e262cf0a, type: 3}
+  m_Texture: {fileID: 2800000, guid: 2efa77490d89b264e81936b20049e8d1, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
