@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("LeftStages: " + leftStages);
 
                     TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
-                    if (biomesMaps[nextMap] == "Map2") // cheks if next scene is map2
+                    if (biomesMaps[nextMap] == "Map2") // checks if next scene is map2
                     {
                         isMap2 = true;
                     }
@@ -214,7 +214,6 @@ public class GameManager : MonoBehaviour
 
         if (timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
         {
-            //timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
             timeEvent.GetComponent<TestTimeEvent>().TriggerNewEvent(timeEventDuration);
             timerToStartTimeEvent = 0; // Reset timer
             timeEventWarnig = false;

@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
     public UnityEvent OnSetPowerUp;
     
 
-    private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
+    private PowerUpEffect currentPowerUp; // Reference of power up
 
     //infinite bounce
     private bool isInfiniteBounceActive = false;
@@ -153,9 +153,6 @@ public class Weapon : MonoBehaviour
                 Vector3 direction = firePoint.transform.up;
                 hitscanLaserPowerUp.FireLaser(origin, direction);
 
-                //shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                //GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-              //  Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 OnShoot.Invoke();
 
                 return;

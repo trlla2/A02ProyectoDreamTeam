@@ -32,7 +32,6 @@ public class Bullet : MonoBehaviour
         // Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z);
         Destroy(this.gameObject, 10f);
     }
 
@@ -68,7 +67,7 @@ public class Bullet : MonoBehaviour
                 else
                 {
                     GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
-                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// destroy gameobject at the end
                     if (bounces >= bounceTime)
                     {
                         DestroyImmediate(gameObject);
@@ -86,7 +85,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    //mAKE SURE WE ARE DESTROYIG THE BULLET on player colision
+    //MAKE SURE WE ARE DESTROYIG THE BULLET on player colision
     private void OnCollisionEnter(Collision hit)
     {
         if (hit.collider != null && !hit.collider.isTrigger)
