@@ -32,11 +32,6 @@ public class Tank_Behaviour : MonoBehaviour
 
     private Vector3 originalScale;
 
-
-
-
-
-
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

@@ -8,8 +8,7 @@ public class TimeEvent
     public static float sizeModifier = 1f; // normal size
     public static bool invertControls = false; // normal controls
 
-    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f,
-                                float minSizeMod = 0.75f, float maxSizeMod = 1.25f)
+    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f, float minSizeMod = 0.75f, float maxSizeMod = 1.25f)
     {
         // Randomly choose between different event types
         int eventType = UnityEngine.Random.Range(0, 3); // 0 = speed, 1 = size, 2 = controls
@@ -48,7 +47,7 @@ public class TimeEvent
         return timeEvent;
     }
 
-    private class GetMonoBehaviour : MonoBehaviour
+    private class GetMonoBehaviour : MonoBehaviour //A getter for monobehaviour stuffs
     {
         public Action onUpdate;
         public Action onDestroy;
