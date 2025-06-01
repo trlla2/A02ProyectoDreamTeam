@@ -277,7 +277,6 @@ public class GameManager : MonoBehaviour
 
         
     }
-
     public void ResetVaiables() // Resets variables for the next Scene
     {
         Debug.Log("Reseting Variables");
@@ -392,8 +391,6 @@ public class GameManager : MonoBehaviour
 
         EndGame(); // end game function
     }
-
-    
 
     public int GetPlayer1Points() { return player1Points; }
 

@@ -23,11 +23,6 @@ public class Tank_Behaviour : MonoBehaviour
 
     private Vector3 originalScale;
 
-
-
-
-
-
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -79,6 +74,5 @@ public class Tank_Behaviour : MonoBehaviour
 
     public void SetPlayer1() { player = 1; } // Set player 1
     public void SetPlayer2() { player = 2; } // Set player 2
-
     public int GetPlayer() { return player; } // return player 
 }
