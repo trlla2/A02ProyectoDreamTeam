@@ -9,13 +9,20 @@ public class TankSelection : MonoBehaviour
     [Header("Tank1")]
     [SerializeField] private Slider firerateBarP1;
     [SerializeField] private Slider speedBarP1;
+    [SerializeField] private RawImage p1Image;
     [Header("Tank2")]
     [SerializeField] private Slider firerateBarP2;
     [SerializeField] private Slider speedBarP2;
+    [SerializeField] private RawImage p2Image;
     [Header("Tanks")]
     [SerializeField] private List<GameObject> tankTypes;
+    [SerializeField] private List<Color> tank1Colors;
+    [SerializeField] private List<Color> tank2Colors;
     private int currentP1Tank = 0;
     private int currentP2Tank = 0;
+    private int currentP1Color = 0;
+    private int currentP2Color = 0;
+
     [Header("Animation")]
     [SerializeField] private float animationDuration = 0.5f;
     [SerializeField] private float currentTime = 0f;
@@ -30,8 +37,19 @@ public class TankSelection : MonoBehaviour
     {
         StartCoroutine(UpdateSlider(true));
         StartCoroutine(UpdateSlider(false));
-    }
 
+        p1Image.color = tank1Colors[currentP1Color];
+        p2Image.color = tank2Colors[currentP2Color];
+
+    }
+    private void SaveColor(string key, Color color)
+    {
+        PlayerPrefs.SetFloat(key + "_r", color.r);
+        PlayerPrefs.SetFloat(key + "_g", color.g);
+        PlayerPrefs.SetFloat(key + "_b", color.b);
+        PlayerPrefs.SetFloat(key + "_a", color.a);
+        PlayerPrefs.Save();
+    }
     private IEnumerator UpdateSlider(bool isP1)
     {
         while (currentTime < animationDuration)
@@ -111,6 +129,41 @@ public class TankSelection : MonoBehaviour
         }
     }
 
+    public void SwitchLeftColorTankPlayer1()
+    {
+        if(currentP1Color > 0)
+        {
+            currentP1Color--;
+            p1Image.color = tank1Colors[currentP1Color];
+        }
+    }
+
+    public void SwitchRightColorTankPlayer1()
+    {
+        if (currentP1Color < tank1Colors.Count - 1)
+        {
+            currentP1Color++;
+            p1Image.color = tank1Colors[currentP1Color];
+        }
+    }
+    public void SwitchLeftColorTankPlayer2()
+    {
+        if(currentP2Color > 0)
+        {
+            currentP2Color--;
+            p2Image.color = tank2Colors[currentP2Color];
+        }
+    }
+
+    public void SwitchRightColorTankPlayer2()
+    {
+        if (currentP2Color < tank1Colors.Count - 1)
+        {
+            currentP2Color++;
+            p2Image.color = tank2Colors[currentP2Color];
+        }
+    }
+
     public void SwitchLeftTankPlayer2()
     {
         if (currentP2Tank > 0 && !isP2Changing)
@@ -140,6 +193,8 @@ public class TankSelection : MonoBehaviour
 
         PlayerPrefs.SetString("TankP1", tankTypes[currentP1Tank].name); // set tank types
         PlayerPrefs.SetString("TankP2", tankTypes[currentP2Tank].name);
+        SaveColor("TankP1", tank1Colors[currentP1Color]);
+        SaveColor("TankP2", tank2Colors[currentP2Color]);
         PlayerPrefs.Save();
 
         Cursor.visible = false; // unshow cursor
