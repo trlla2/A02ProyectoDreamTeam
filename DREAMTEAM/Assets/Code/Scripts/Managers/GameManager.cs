@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    // Manager stuff
+    // singelton stuff
     private static GameManager instance;
     static public GameManager Instance
     {
@@ -46,6 +46,24 @@ public class GameManager : MonoBehaviour
     [SerializeField] private static int player2Points = 0;
     [SerializeField] private int pointsForDeath = 100;
     private float gridRes = 0.0f;
+    [Header("Tanks")]
+    [SerializeField] private List<GameObject> tankTypes;
+
+    public static class SelectionMenuData
+    {
+        public static string TankP1
+        {
+            get { return PlayerPrefs.GetString("TankP1", ""); }
+            set { PlayerPrefs.SetString("TankP1", value); }
+        }
+
+        public static string TankP2
+        {
+            get { return PlayerPrefs.GetString("TankP2", ""); }
+            set { PlayerPrefs.SetString("TankP2", value); }
+        }
+    }
+
 
     [Header("PowerUp Stuff")]
     [SerializeField] private GameObject powerUpBase;
@@ -73,10 +91,10 @@ public class GameManager : MonoBehaviour
     private bool isForzen = false;
 
     [Header("Water Event Stuff (Only Map2)")]
-    private bool isMap2 = false;
     [SerializeField] private float timeToStartWaterEvent = 30f;
     private float timerToStartWaterEvent = 0f;
     private bool waterEvent = false;
+    private bool isMap2 = false;
     public delegate void WaterEvent();
     public event WaterEvent OnWaterEvent;
 
@@ -104,6 +122,19 @@ public class GameManager : MonoBehaviour
 
         timerNextStage = timeForNextStage;
         leftStages = totalStages;
+
+        foreach(GameObject tank in tankTypes)// set tank types for the players
+        {
+            if(tank.name == SelectionMenuData.TankP1)
+            {
+                tank1 = tank;
+            }
+
+            if (tank.name == SelectionMenuData.TankP2)
+            {
+                tank2 = tank;
+            }
+        }
     }
 
     private void Start()
@@ -111,9 +142,16 @@ public class GameManager : MonoBehaviour
         if (spawnTanksOnStart) // Debug spawn
         {
             GetSpawnLocation(tank1SpawnPos, tank2SpawnPos);
-            
         }
 
+        if(SceneManager.GetActiveScene().name == "Map2")// cheks if next scene is map2
+        {
+            isMap2 = true;
+        }
+        else
+        {
+            isMap2 = false;
+        }
     }
 
     private void Update()
@@ -134,7 +172,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("LeftStages: " + leftStages);
 
                     TransitionManager.Instance.LoadScene(biomesMaps[nextMap]);
-                    if (biomesMaps[nextMap] == "Map2") // cheks if next scene is map2
+                    if (biomesMaps[nextMap] == "Map2") // checks if next scene is map2
                     {
                         isMap2 = true;
                     }
@@ -146,8 +184,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     ResetVaiables();
-                    player1Points = 0;
-                    player2Points = 0;
+                    ResetPlayerPoints();
                     Cursor.visible = true;// show cursor
                     Cursor.lockState = CursorLockMode.None;// unlock cursor
                     TransitionManager.Instance.LoadScene("MainMenu");// Go to menu
@@ -164,7 +201,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(numPowerUps <= numMaxPowerUps ? "Spawn powerup" : "Cant spawn a pwUp");
             if (numPowerUps <= numMaxPowerUps)
             {
                 SpawnPowerUp(validPositions[Random.Range(0, validPositions.Count - 1)]); // Spawn powerUP 
@@ -178,7 +214,7 @@ public class GameManager : MonoBehaviour
 
         if (timerToStartTimeEvent >= timeToStartTimeEvent) // Time events
         {
-            timeEvent.GetComponent<TestTimeEvent>().TriggerRandomEffect(); // Start TimeEvent
+            timeEvent.GetComponent<TestTimeEvent>().TriggerNewEvent(timeEventDuration);
             timerToStartTimeEvent = 0; // Reset timer
             timeEventWarnig = false;
             OnTimeEventWarning.Invoke(timeEventWarnig); // call event
@@ -209,6 +245,18 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    // Load a color
+    public Color LoadColor(string key)
+    {
+        if (!PlayerPrefs.HasKey(key + "_r"))
+            return Color.white; // Default color if not found
+
+        float r = PlayerPrefs.GetFloat(key + "_r");
+        float g = PlayerPrefs.GetFloat(key + "_g");
+        float b = PlayerPrefs.GetFloat(key + "_b");
+        float a = PlayerPrefs.GetFloat(key + "_a");
+        return new Color(r, g, b, a);
+    }
     private void SpawnPowerUp(Vector2 spawnPoint) // Spawn powerup to the recived position
     {
         spawnPoint *= gridRes;
@@ -228,9 +276,9 @@ public class GameManager : MonoBehaviour
 
         
     }
-
-    private void ResetVaiables() // Resets variables for the next Scene
+    public void ResetVaiables() // Resets variables for the next Scene
     {
+        Debug.Log("Reseting Variables");
         //Reset variables
         endGame = false;
         timerNextStage = timeForNextStage;
@@ -242,10 +290,18 @@ public class GameManager : MonoBehaviour
         waterEvent = false;
         timerToStartWaterEvent = 0;
         currentFreezeTime = 0;
+        isMap2 = false;
+    }
+
+    public void ResetPlayerPoints()
+    {
+        player1Points = 0;
+        player2Points = 0;
     }
 
     private IEnumerator HitPause() // Slowdown the game for a short time
-    {   
+    {
+        Debug.Log("HitPause");
         isForzen = true;
         float originalTimeScale = Time.timeScale;
         SetTimeScaleForCurrentTime(originalTimeScale);
@@ -261,6 +317,7 @@ public class GameManager : MonoBehaviour
         currentFreezeTime = 0;
         Time.timeScale = originalTimeScale;
         isForzen = false;
+        Camera.main.GetComponent<ScreenShake>().Shake();// CameraShake
     }
 
     private void SetTimeScaleForCurrentTime(float originalTimeScale) // set the timeScale value to the current value of the curve
@@ -269,6 +326,8 @@ public class GameManager : MonoBehaviour
         interpolateValue = curveFreeze.Evaluate(interpolateValue);
         Time.timeScale = originalTimeScale * interpolateValue;
     }
+
+    
 
     public void Freeze() // Starts the hitpause
     {
@@ -280,6 +339,9 @@ public class GameManager : MonoBehaviour
     public void GetSpawnLocation(Vector3 tank1Pos, Vector3 tank2Pos) // Spawn Player Tanks
     {
         if (Spawned) return;
+
+        Debug.Log("P1 tank type: " + tank1.name);
+        Debug.Log("P2 tank type: " + tank2.name);
 
         GameObject temp1 = Instantiate(tank1, tank1Pos, Quaternion.identity);
         GameObject temp2 = Instantiate(tank2, tank2Pos, Quaternion.identity);
@@ -300,7 +362,11 @@ public class GameManager : MonoBehaviour
         temp1.GetComponent<Tank_Behaviour>().SetPlayer1();
         temp2.GetComponent<Tank_Behaviour>().SetPlayer2();
 
-        if(temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
+        // SetColor
+        temp1.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("TankP1"));
+        temp2.GetComponent<Tank_Behaviour>().SetTankColor(LoadColor("TankP2"));
+
+        if (temp1.GetComponent<PlayerWaterDetector>().IsInWater || temp2.GetComponent<PlayerWaterDetector>().IsInWater)
         {
             endGame = true;
         }
@@ -325,8 +391,6 @@ public class GameManager : MonoBehaviour
         EndGame(); // end game function
     }
 
-    
-
     public int GetPlayer1Points() { return player1Points; }
 
     public int GetPlayer2Points() { return player2Points; }
@@ -340,6 +404,7 @@ public class GameManager : MonoBehaviour
     public void DecreaseNumPowerUps() 
     {
         numPowerUps--;
+        ReduceMusicLevel();
     }
     public void SetValidPositions(List<Vector2Int> validPositions, float gridRes) // set valid positions to spawn the powerUps
     {

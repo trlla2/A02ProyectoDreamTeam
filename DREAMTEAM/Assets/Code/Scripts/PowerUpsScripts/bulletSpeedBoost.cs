@@ -9,6 +9,8 @@ public class bulletSpeedBoost : PowerUpEffect
     private GameObject firePoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeedBoosted = 5f;
+
+    private GameObject TankParent;
     public override void Apply(GameObject target) //apply power up
     {
         Weapon weapon = target.GetComponent<Weapon>();
@@ -16,6 +18,7 @@ public class bulletSpeedBoost : PowerUpEffect
         firePoint = weapon.firePoint;
 
         weapon.SetPowerUp(this);
+        TankParent = weapon.gameObject;
     }
 
     public void BulletSpeedBoost()
@@ -30,6 +33,7 @@ public class bulletSpeedBoost : PowerUpEffect
             if (bulletScript != null)
             {
                 bulletScript.bulletSpeed = bulletSpeedBoosted; //powerup for player to speed up bullet
+                bulletScript.tankParentRef = TankParent;
             }
         }
     }

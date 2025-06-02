@@ -14,6 +14,8 @@ public class TripleShot : PowerUpEffect
     private GameObject firePointR;
     //private bool isTripleShotActive = false;
 
+    private GameObject TankParent;
+
     public override void Apply(GameObject target)
     {
         Weapon weapon = target.GetComponent<Weapon>();
@@ -25,6 +27,7 @@ public class TripleShot : PowerUpEffect
             firePointL = weapon.firePointL;
             firePointR = weapon.firePointR;
             weapon.SetPowerUp(this);  // Asigna este Power-Up al arma
+            TankParent = weapon.gameObject;
         }
 
         //StartCoroutine(ActivateTripleShot(powerUpDuration));
@@ -54,7 +57,7 @@ public class TripleShot : PowerUpEffect
             if (firePos.GetComponent<FirePointActive>().CanShoot)
             {
                 Bullet b = Instantiate(bulletPrefab, firePos.transform.position, firePos.transform.rotation).GetComponent<Bullet>();
-                
+                b.GetComponent<Bullet>().tankParentRef = TankParent;
                 b.SetVelocity();
             }
             //Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);

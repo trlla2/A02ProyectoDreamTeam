@@ -107,7 +107,8 @@ MonoBehaviour:
   rayDistance: 0.14
   bounceFx: {fileID: 353025840784019645, guid: 01e9ad1e5326f3e4d8b77c0fd5851081, type: 3}
   hitSFX: {fileID: 7684874472912551767}
-  tankParentInmunity: 0.15
+  tankParentInmunity: 0.25
+  tankParentRef: {fileID: 0}
 --- !u!136 &8894956597595690265
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -127,10 +128,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6666667
+  m_Radius: 0.27820072
   m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.0026791668, y: 0, z: 0}
 --- !u!54 &528216413536906350
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -214,7 +215,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.692
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

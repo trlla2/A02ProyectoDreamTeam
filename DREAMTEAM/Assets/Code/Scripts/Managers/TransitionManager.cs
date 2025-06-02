@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TransitionManager : MonoBehaviour
 {
-    // Manager stuff
+    // singelton stuff
     private static TransitionManager instance;
     static public TransitionManager Instance
     {
@@ -23,10 +23,11 @@ public class TransitionManager : MonoBehaviour
     [Header("SETUP")]
     [SerializeField] private Animator transition;
     [SerializeField] private float transitionTime = 1f;
+    private bool isTransitioning = false; // is using estrogen
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (instance != null && instance != this) // singelton stuff
         {
             Destroy(this.gameObject);
         }
@@ -38,16 +39,21 @@ public class TransitionManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded; // calls when a new scene is loaded
     }
-    
+
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(TransitionAnimation(sceneName)); // Start transition animation
+        if (!isTransitioning)
+        {
+            Debug.Log("TRANSITIONING TO: " + sceneName);
+            StartCoroutine(TransitionAnimation(sceneName)); // Start transition animation
+        }
     }
-
-    private IEnumerator TransitionAnimation(string sceneName)
+    public IEnumerator TransitionAnimation(string sceneName)
     {
+        isTransitioning = true;
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
+        isTransitioning = false;
         SceneManager.LoadScene(sceneName);
     }
 

@@ -5,8 +5,12 @@ public class ExplosiveBidon : MonoBehaviour
     [SerializeField] private GameObject ExplosionEffect;
     [SerializeField] private float explosionRadius;
 
+    bool exploded = false; //make sure we have no feedback explosions
+
     public void Explode()
     {
+        if(exploded) return;
+
         // Create explosion effect
         if (ExplosionEffect != null)
         {
@@ -19,7 +23,10 @@ public class ExplosiveBidon : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
+
             Tank_Behaviour tank = hit.GetComponent<Tank_Behaviour>();
+            Interactable Int = hit.GetComponent<Interactable>();       
+
             if (tank != null)
             {
                 // Check which player was killed
@@ -34,8 +41,12 @@ public class ExplosiveBidon : MonoBehaviour
                     tank.Dead();
                 }
             }
+            if (Int != null && Int.gameObject != gameObject)
+            {
+                exploded = true;
+                Int.BulletHit();
+            }
         }
-
         Destroy(gameObject);
     }
 

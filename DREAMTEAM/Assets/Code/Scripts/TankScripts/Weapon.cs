@@ -18,13 +18,14 @@ public class Weapon : MonoBehaviour
     [Range(0, 3)] private float minRandomPitchSfx = 0.98f;
     [SerializeField] private GameObject shootParticles;
     [SerializeField] private Transform  fireParticlePoint;
+    [SerializeField] private GameObject explosionShield;
 
     [Header("Events")]
     public UnityEvent OnShoot;
     public UnityEvent OnSetPowerUp;
     
 
-    private PowerUpEffect currentPowerUp; // Referencia al Power-Up actual
+    private PowerUpEffect currentPowerUp; // Reference of power up
 
     //infinite bounce
     private bool isInfiniteBounceActive = false;
@@ -48,7 +49,7 @@ public class Weapon : MonoBehaviour
 
     //shield
     [SerializeField] private GameObject shield;
-    private bool isShieldActive;
+    public bool isShieldActive;
 
     private Tank_Behaviour tb;
 
@@ -57,7 +58,11 @@ public class Weapon : MonoBehaviour
 
 
     [SerializeField]
-    private WaitForSeconds wait = new WaitForSeconds(0.7f);
+    private float fireRate = 0.7f;
+    private WaitForSeconds wait;
+    [SerializeField]
+    private float shieldInvulnerableFrames = 0.1f;
+    private WaitForSeconds waitShield;
     private void Start()
     {
         tb = GetComponent<Tank_Behaviour>();
@@ -66,6 +71,10 @@ public class Weapon : MonoBehaviour
         {
             shield.SetActive(false);
         }
+
+        wait = new WaitForSeconds(fireRate);
+        waitShield = new WaitForSeconds(shieldInvulnerableFrames);
+
     }
 
     // Update is called once per frame
@@ -94,6 +103,12 @@ public class Weapon : MonoBehaviour
         yield return wait;
         P2CanSoot = true;
     }
+
+    private IEnumerator InvulnerableShieldFrames()
+    {
+        yield return waitShield;
+        isShieldActive = false;
+    }
     public void ActivateShield()
     {
         isShieldActive = true;
@@ -105,7 +120,8 @@ public class Weapon : MonoBehaviour
 
     public void ShieldHit()
     {
-        isShieldActive = false;
+        Instantiate(explosionShield, transform.position, Quaternion.identity);// Explotion
+        StartCoroutine(InvulnerableShieldFrames());
         if (shield != null)
         {
             shield.SetActive(false);
@@ -124,6 +140,7 @@ public class Weapon : MonoBehaviour
             {
                 Debug.Log("BulletSpeedBoostActive");
                 bulletSpeedBoost.BulletSpeedBoost();
+
             }
             else if (isBurstFireActive && currentPowerUp is BurstFirePowerUp)
             {
@@ -136,9 +153,6 @@ public class Weapon : MonoBehaviour
                 Vector3 direction = firePoint.transform.up;
                 hitscanLaserPowerUp.FireLaser(origin, direction);
 
-                //shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 OnShoot.Invoke();
 
                 return;
@@ -146,22 +160,27 @@ public class Weapon : MonoBehaviour
             else
             {
                 GameObject bulletInstance = Instantiate(bulletSprite, firePoint.transform.position, firePoint.transform.rotation);
-                bulletInstance.GetComponent<Bullet>().SetTankParent(this.gameObject);
                 Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+
+                bulletScript.tankParentRef = gameObject;
+                bulletScript.SetTankParent(this.gameObject);
                 bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
 
-                shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
-                GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
-                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
-                OnShoot.Invoke();
+                
             }
+
+            shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
+            GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
+            Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+            OnShoot.Invoke();
         }
     }
 
     public void SetPowerUp(PowerUpEffect powerUp)
     {
         currentPowerUp = powerUp;
-
+        powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
+        OnSetPowerUp.Invoke();// invoke event
         if (currentPowerUp is InfiniteBounce)
         {
             Debug.Log("Active InfiniteBounce");
@@ -204,8 +223,7 @@ public class Weapon : MonoBehaviour
         Debug.Log("Disabled PowerUp");
 
 
-        powerUpSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx); //Random Pitch
-        OnSetPowerUp.Invoke();// invoke event
+        
     }
     private IEnumerator DisableAfterTime(float duration)
     {
@@ -242,9 +260,10 @@ public class Weapon : MonoBehaviour
 
 
             bulletScript.bounceTime = isInfiniteBounceActive ? 9999 : 3;
+            bulletScript.tankParentRef = gameObject;        
 
-            
-            
+
+
             shootSfx.pitch = Random.Range(minRandomPitchSfx, maxRandomPitchSfx);
             GameObject temp = Instantiate(shootParticles, fireParticlePoint.position, fireParticlePoint.rotation);
             Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
@@ -256,5 +275,10 @@ public class Weapon : MonoBehaviour
                 yield return new WaitForSeconds(burstDelay);
             }
         }
+    }
+
+    public float GetFireRate()
+    {
+        return fireRate;
     }
 }

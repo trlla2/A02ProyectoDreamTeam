@@ -12,8 +12,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float rayDistance = 0.5f;
     [SerializeField] private GameObject bounceFx;
     [SerializeField] private AudioSource hitSFX;
-    [SerializeField] private float tankParentInmunity = 0.15f;
-    private GameObject tankParentRef;
+    [SerializeField] private float tankParentInmunity = 0.25f;
+
+    [HideInInspector]
+    public GameObject tankParentRef;
 
     Vector3 currentDir;
     Vector3 rigthBound;
@@ -30,7 +32,6 @@ public class Bullet : MonoBehaviour
         // Clamp z values
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z);
         Destroy(this.gameObject, 10f);
     }
 
@@ -42,7 +43,8 @@ public class Bullet : MonoBehaviour
 
         if(tankParentInmunity > 0)
         {
-            tankParentInmunity -= Time.deltaTime;
+            tankParentInmunity -= Time.fixedDeltaTime;
+            print(tankParentInmunity);
         }
 
         if (Physics.Raycast(transform.position, currentDir, out hit, rayDistance) || (Physics.Raycast(rigthBound + transform.position, currentDir, out hit, rayDistance)) || (Physics.Raycast(leftBound + transform.position, currentDir, out hit, rayDistance)))
@@ -53,11 +55,9 @@ public class Bullet : MonoBehaviour
                 if (behaviour != null)
                 {
                    if(!(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
-                    {
-                        GameManager.Instance.Freeze(); // hit stop
-
+                   {
                         StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
-                    }
+                   }
                 }
                 else if(hit.collider.gameObject.GetComponent<Interactable>())
                 {
@@ -67,7 +67,7 @@ public class Bullet : MonoBehaviour
                 else
                 {
                     GameObject temp = Instantiate(bounceFx, transform.position, transform.rotation); // spawn particles and sfx
-                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// desptroy gameobject at the end
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);// destroy gameobject at the end
                     if (bounces >= bounceTime)
                     {
                         DestroyImmediate(gameObject);
@@ -85,22 +85,20 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    //mAKE SURE WE ARE DESTROYIG THE BULLET on player colision
+    //MAKE SURE WE ARE DESTROYIG THE BULLET on player colision
     private void OnCollisionEnter(Collision hit)
     {
         if (hit.collider != null && !hit.collider.isTrigger)
         {
             Tank_Behaviour behaviour = hit.collider.gameObject.GetComponent<Tank_Behaviour>();
-            if (behaviour != null)
+            if (behaviour != null && !(hit.collider.gameObject == tankParentRef && tankParentInmunity > 0))
             {
-                GameManager.Instance.Freeze(); // hit stop
-
                 StartCoroutine(KillPlayer(behaviour.GetPlayer(), behaviour));
             }
             else if (hit.collider.gameObject.GetComponent<Interactable>())
             {
                 hit.collider.gameObject.GetComponent<Interactable>().BulletHit();
-                DestroyImmediate(gameObject);
+                Destroy(gameObject);
             }
         }
     }
@@ -121,20 +119,30 @@ public class Bullet : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
+        Weapon weapon = behaviour.GetComponent<Weapon>();
 
-        if (idPlayer == 1)
+        if ((idPlayer == 1 || idPlayer == 2) && weapon != null && weapon.isShieldActive)
         {
-            GameManager.Instance.GetTank1IsDead();
-
+            weapon.ShieldHit();
+            Destroy(this.gameObject);
+            yield break;
         }
-        else if (idPlayer == 2)
+        else
         {
-            GameManager.Instance.GetTank2IsDead();
+            if (idPlayer == 1)
+            {
+                GameManager.Instance.GetTank1IsDead();
+
+
+            }
+            else if (idPlayer == 2)
+            {
+                GameManager.Instance.GetTank2IsDead();
+            }
+            behaviour.Dead();
+
+            Destroy(this.gameObject);
         }
-
-        behaviour.Dead();
-
-        Destroy(this.gameObject);
     }
 
     public void SetTankParent(GameObject tankParent)

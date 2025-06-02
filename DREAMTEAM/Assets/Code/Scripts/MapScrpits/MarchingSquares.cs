@@ -17,6 +17,7 @@ public class SpawnableObject
     public int MinTimes, MaxTimes;
     public GameObject gameObjectToSpawn;
 }
+
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class MarchingSquares : MonoBehaviour
 {
@@ -53,7 +54,6 @@ public class MarchingSquares : MonoBehaviour
 
     [Header("Water")]
     [SerializeField] private WaterController WaterController;
-    [SerializeField] private PlayerWaterDetector waterDetector;
 
     private MeshFilter meshFilter;
     private PolygonCollider2D polygonCollider;
@@ -94,7 +94,7 @@ public class MarchingSquares : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         Seed = Random.Range(-1000, 1000);
         UpdateGrid();
@@ -104,7 +104,7 @@ public class MarchingSquares : MonoBehaviour
     //public so we can access it thru the editor script
     public void UpdateGrid()
     {
-        meshFilter = GetComponent<MeshFilter>();
+        meshFilter = GetComponent<MeshFilter>();//here so we can use it in inpector
         polygonCollider = GetComponent<PolygonCollider2D>();
 
         GenerateHeightMap(Seed);
@@ -115,24 +115,24 @@ public class MarchingSquares : MonoBehaviour
         GetSpawnablePositions();
         SpawnObjects();
         textureGenerator.Initial();
-        StartCoroutine(SpawnTanks());
-        /*
-        if (WaterController != null)
-        {
-            WaterController.StartWaterExpansionEvent(); 
-        }
-        */
+        SpawnTanks();
     }
     private void GetSpawnablePositions()
     {
+
+        if (regionDetector == null)
+        {
+            Debug.LogError("RegionDetector not assigned in MarchingSquares!");
+            return;
+        }
         regionDetector.Initialize();
         regionDetector.FindAllRegions();
 
         List<Vector2Int> BiggestRegion = new List<Vector2Int> { };
 
-        foreach(List<Vector2Int> region in regionDetector.Regions)
+        foreach (List<Vector2Int> region in regionDetector.Regions)
         {
-            if(region.Count > BiggestRegion.Count)
+            if (region.Count > BiggestRegion.Count)
             {
                 BiggestRegion = region;
             }
@@ -143,56 +143,83 @@ public class MarchingSquares : MonoBehaviour
 
         GameManager.Instance.SetValidPositions(validPositions, gridResolution); // send valid positions to the GameManager
     }
-    public IEnumerator SpawnTanks()
-    {   
-        bool spawnSuccessful = false;
-        const int maxTotalAttempts = 10;
-        int totalAttempts = 0;
 
-        while (!spawnSuccessful && totalAttempts < maxTotalAttempts)
+    private void SpawnTanks()
+    {
+        float LowThreshold = textureGenerator.heightBands[0].maxHeight;
+
+        Vector2Int tank1GridPos;
+        Vector2Int tank2GridPos = Vector2Int.zero;
+        float maxDistance = (Mathf.Min(gridSizeX, gridSizeY) / 3) / gridResolution;
+
+        Vector3 tank1Pos;
+        Vector3 tank2Pos;
+
+        int attemptsTank1 = 0;
+        const int maxAttemptsTank = 100;
+        do
         {
-            totalAttempts++;
             int firstIndex = Random.Range(0, validPositions.Count);
-
-            Vector2Int tank1GridPos = validPositions[firstIndex];
-            Vector2Int tank2GridPos;
-
-            int distanceAttempts = 0;
-            const int maxDistanceAttempts = 100;
-
-            float minDistance = Mathf.Min(gridSizeX - BorderSize, gridSizeY - BorderSize) / 3f;
-            bool validDistance = false;
-
-            do
+            while (heightMap[validPositions[firstIndex].x, validPositions[firstIndex].y] < LowThreshold)
             {
-                int secondIndex = Random.Range(0, validPositions.Count);
-                tank2GridPos = validPositions[secondIndex];
-                distanceAttempts++;
-                validDistance = Vector2.Distance(tank1GridPos, tank2GridPos) >= minDistance;
+                validPositions.RemoveAt(firstIndex); // remove position inside water 
+                firstIndex = Random.Range(0, validPositions.Count);
             }
-            while (distanceAttempts < maxDistanceAttempts && !validDistance);
+            tank1GridPos = validPositions[firstIndex];
 
-            // Convert grid positions to world space
-            Vector3 tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank1GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
-            Vector3 tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution,BorderSize * gridResolution,(gridSizeX - BorderSize) * gridResolution),Mathf.Clamp(tank2GridPos.y * gridResolution,BorderSize * gridResolution,(gridSizeY - BorderSize) * gridResolution),0);
-
-            // Check for collisions
-            var overlap1 = Physics.OverlapSphere(tank1Pos, 0.2f);
-            var overlap2 = Physics.OverlapSphere(tank2Pos, 0.2f);
-
-            if (overlap1.Length == 0 && overlap2.Length == 0)
+            tank1Pos = new Vector3(Mathf.Clamp(tank1GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank1GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+            if (Physics.OverlapSphere(tank1Pos, 0.2f).Length == 0)
             {
-                // Valid positions found
-                validPositions.RemoveAt(firstIndex);
-                GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
-                spawnSuccessful = true;
+                validPositions.RemoveAt(firstIndex); // Remove to avoid same position
+                break;
             }
-            else yield return null;
+            attemptsTank1++;
+        }
+        while (attemptsTank1 < maxAttemptsTank);
+
+
+        int attemptsTank2 = 0;
+        //default to a random pos inside the valid pos
+        Vector3 FailSafePos = new Vector3(Mathf.Clamp(validPositions[Random.Range(0, validPositions.Count)].x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(validPositions[Random.Range(0, validPositions.Count)].y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+        do
+        {
+            int firstIndex = Random.Range(0, validPositions.Count);
+            while (heightMap[validPositions[firstIndex].x, validPositions[firstIndex].y] < LowThreshold)
+            {
+                validPositions.RemoveAt(firstIndex); // remove position inside water 
+                firstIndex = Random.Range(0, validPositions.Count);
+            }
+            tank2GridPos = validPositions[firstIndex];
+
+            tank2Pos = new Vector3(Mathf.Clamp(tank2GridPos.x * gridResolution, BorderSize * gridResolution, gridSizeX - BorderSize * gridResolution), Mathf.Clamp(tank2GridPos.y * gridResolution, BorderSize * gridResolution, gridSizeY - BorderSize * gridResolution), 0);
+
+            if (Physics.OverlapSphere(tank2Pos, 0.2f).Length == 0)
+            {
+                if(Vector2.Distance(tank1GridPos, tank2GridPos) < maxDistance)
+                {
+                    validPositions.RemoveAt(firstIndex); // Remove from global valid pos
+                    break;
+                }
+                else
+                {
+                    FailSafePos = tank2Pos;
+                }
+            }
+            attemptsTank1++;
+
+        } while (attemptsTank2 < maxAttemptsTank);
+
+        if(attemptsTank2 > maxAttemptsTank)
+        {
+            Debug.LogWarning("No VAlid spawn pos, reverting to no distance check spawn");
+            tank2Pos = FailSafePos;
         }
 
-        if (!spawnSuccessful) Debug.LogError("Failed to find valid tank positions after " + maxTotalAttempts + " attempts");
-        yield return null;
+        tank1Pos = new Vector3(tank1Pos.x, tank1Pos.y,0);
+        tank2Pos = new Vector3(tank2Pos.x, tank2Pos.y,0);
+        GameManager.Instance.GetSpawnLocation(tank1Pos, tank2Pos);
     }
+
     private void SpawnObjects()
     {
         foreach (SpawnableObject Obj in SpawnedObjects)
@@ -490,8 +517,12 @@ public class MarchingSquares : MonoBehaviour
         outline.Add(currentVertex);
         processedVertices.Add(currentVertex);
 
-        while (true)
+        int maxIterations = vertices.Count; // Prevent infinite loops
+        int iterations = 0;
+
+        while (true && iterations < maxIterations)
         {
+            iterations++;
             int nextVertex = -1; 
             List<Triangle> triangles = vertexToTriangles[vertices[currentVertex]];
 

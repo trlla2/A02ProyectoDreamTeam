@@ -1,26 +1,53 @@
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+
 public class TimeEvent
 {
-    public static float speedModifier = 1f; //velocidad normal
+    public static float speedModifier = 1f; // normal speed
+    public static float sizeModifier = 1f; // normal size
+    public static bool invertControls = false; // normal controls
 
-    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f)
+    public static TimeEvent Create(Action action, float timer, float minSpeedMod = 0.5f, float maxSpeedMod = 1.5f, float minSizeMod = 0.75f, float maxSizeMod = 1.25f)
     {
+        // Randomly choose between different event types
+        int eventType = UnityEngine.Random.Range(0, 3); // 0 = speed, 1 = size, 2 = controls
 
-        int randomChoice = UnityEngine.Random.Range(0, 2);
-        float speedMod = randomChoice == 0 ? minSpeedMod : maxSpeedMod;
+        float speedMod = 1f;
+        float sizeMod = 1f;
+        bool controlsInverted = false;
+        string eventMessage = "";
+
+        switch (eventType)
+        {
+            case 0: // Speed event
+                int speedChoice = UnityEngine.Random.Range(0, 2);
+                speedMod = speedChoice == 0 ? minSpeedMod : maxSpeedMod;
+                eventMessage = speedChoice == 0 ? "Slowing down game!" : "Speeding up game!";
+                break;
+
+            case 1: // Size event
+                int sizeChoice = UnityEngine.Random.Range(0, 2);
+                sizeMod = sizeChoice == 0 ? minSizeMod : maxSizeMod;
+                eventMessage = sizeChoice == 0 ? "Shrinking tanks!" : "Enlarging tanks!";
+                break;
+
+            case 2: // Control inversion event
+                controlsInverted = true;
+                eventMessage = "Inverted controls!";
+                break;
+        }
 
         GameObject gameObject = new GameObject("TimeEvent", typeof(GetMonoBehaviour));
-        TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod);
+        TimeEvent timeEvent = new TimeEvent(action, timer, gameObject, speedMod, sizeMod, controlsInverted);
         gameObject.GetComponent<GetMonoBehaviour>().onUpdate = timeEvent.Update;
         gameObject.GetComponent<GetMonoBehaviour>().onDestroy = timeEvent.DestroyEvent;
 
-        Debug.Log(randomChoice == 0 ? "Slowing down game!" : "Speeding up game!");
+        Debug.Log(eventMessage);
         return timeEvent;
     }
 
-    private class GetMonoBehaviour : MonoBehaviour
+    private class GetMonoBehaviour : MonoBehaviour //A getter for monobehaviour stuffs
     {
         public Action onUpdate;
         public Action onDestroy;
@@ -32,22 +59,24 @@ public class TimeEvent
         private void OnDestroy()
         {
             if (onDestroy != null) onDestroy();
-
         }
     }
+
 
     private Action action;
     private float timer;
     private GameObject gameObject;
     private bool isDestroyed;
 
-    public TimeEvent(Action action, float timer, GameObject gameObject, float speedMod = 1f)
+    public TimeEvent(Action action, float timer, GameObject gameObject, float speedMod = 1f, float sizeMod = 1f, bool invertControls = false)
     {
         this.action = action;
         this.timer = timer;
         this.gameObject = gameObject;
         isDestroyed = false;
         TimeEvent.speedModifier = speedMod;
+        TimeEvent.sizeModifier = sizeMod;
+        TimeEvent.invertControls = invertControls;
     }
 
     public void Update()
@@ -66,10 +95,7 @@ public class TimeEvent
     {
         Debug.Log("Invoke action");
         action?.Invoke();
-        TimeEvent.speedModifier = 1f;
         isDestroyed = true;
         UnityEngine.Object.Destroy(gameObject);
     }
-
-
 }

@@ -40,7 +40,10 @@ public class GetPowerUp : MonoBehaviour
         if (weapon != null)
         {
             Debug.Log("Collision");
+
             powerUpEffect.Apply(trigger.gameObject);  // Aplica el efecto al objeto con Weapon
+            GameManager.Instance.DecreaseNumPowerUps();
+
 
             Tank_Behaviour tankBehaviour = trigger.gameObject.GetComponent<Tank_Behaviour>();
             if (tankBehaviour != null)
@@ -49,7 +52,6 @@ public class GetPowerUp : MonoBehaviour
                 scoreManager.ChangePowerUpUI(powerUpEffect, playerNumber);
             }
 
-            GameManager.Instance.DecreaseNumPowerUps();
             Destroy(gameObject);  // Destruye el Power-Up después de activarlo
         }
     }
